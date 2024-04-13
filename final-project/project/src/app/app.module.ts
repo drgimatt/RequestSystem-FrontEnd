@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfessorDashboardComponent } from './professor-dashboard/professor-dashboard.component';
 import { IndexComponent } from './index/index.component';
 import { LoginComponent } from './login/login.component';
 import { ContactComponent } from './contact/contact.component';
@@ -29,6 +30,7 @@ import { ShowMyRequestComponent } from './show-my-request/show-my-request.compon
     DashboardComponent,
     IndexComponent,
     LoginComponent,
+    ProfessorDashboardComponent,
     ContactComponent,
     ViewDogInfoComponent,
     AddDogComponent,
