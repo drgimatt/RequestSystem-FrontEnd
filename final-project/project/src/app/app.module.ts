@@ -24,6 +24,11 @@ import { AllRequestsNotifComponent } from './all-requests-notif/all-requests-not
 import { ShowRequestComponent } from './show-request/show-request.component';
 import { MyRequestsComponent } from './my-requests/my-requests.component';
 import { ShowMyRequestComponent } from './show-my-request/show-my-request.component';
+import { AddDepartmentComponent } from './add-department/add-department.component';
+import { AddStudentComponent } from './add-student/add-student.component';
+import { AddSubjectsComponent } from './add-subjects/add-subjects.component';
+import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { AddUserComponent } from './add-user/add-user.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +49,12 @@ import { ShowMyRequestComponent } from './show-my-request/show-my-request.compon
     AllRequestsNotifComponent,
     ShowRequestComponent,
     ShowMyRequestComponent,
-    MyRequestsComponent
+    MyRequestsComponent,
+    AddDepartmentComponent,
+    AddStudentComponent,
+    AddSubjectsComponent,
+    AddEmployeeComponent,
+    AddUserComponent
   ],
   imports: [
     ReactiveFormsModule,
