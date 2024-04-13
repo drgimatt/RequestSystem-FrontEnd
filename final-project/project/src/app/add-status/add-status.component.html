@@ -3,10 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Deparment</title>
+        <title>Add Status</title>
         <!-- Add Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="add-department.component.css">
+        <link rel="stylesheet" href="add-status.component.css">
         <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <!-- Popper.js -->
@@ -45,13 +45,13 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card rounded-card shadow p-4">
-                    <h2 class="text-center">Add a Department</h2>
-                    <form [formGroup]="newDepartment" (ngSubmit)="checkFields()">                                                                                    
+                    <h2 class="text-center">Add a Status</h2>
+                    <form [formGroup]="newStatus" (ngSubmit)="checkFields()">                                                                                    
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter Name of Department" required>
                         </div>   
-                        <button type="submit" class="btn btn-success">Add Department</button>
+                        <button type="submit" class="btn btn-success">Add Status</button>
                     </form>
                 </div>
             </div>

@@ -17,6 +17,7 @@ import { AllRequestsNotifComponent } from './all-requests-notif/all-requests-not
 import { ShowRequestComponent } from './show-request/show-request.component';
 import { MyRequestsComponent } from './my-requests/my-requests.component';
 import { ShowMyRequestComponent } from './show-my-request/show-my-request.component';
+import { AddDepartmentComponent } from './add-department/add-department.component';
 
 /* const routes: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full' }, 
@@ -65,6 +66,10 @@ const routes: Routes = [
   { 
     path: 'add-dog', 
     component: AddDogComponent 
+  },
+  { 
+    path: 'add-department', 
+    component: AddDepartmentComponent
   },
   { 
     path: 'view-dog-info/:id', 

@@ -29,6 +29,8 @@ import { AddStudentComponent } from './add-student/add-student.component';
 import { AddSubjectsComponent } from './add-subjects/add-subjects.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { AddUserComponent } from './add-user/add-user.component';
+import { AddStatusComponent } from './add-status/add-status.component';
+import { AddAdvisingtypeComponent } from './add-advisingtype/add-advisingtype.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { AddUserComponent } from './add-user/add-user.component';
     AddStudentComponent,
     AddSubjectsComponent,
     AddEmployeeComponent,
-    AddUserComponent
+    AddUserComponent,
+    AddStatusComponent,
+    AddAdvisingtypeComponent
   ],
   imports: [
     ReactiveFormsModule,
