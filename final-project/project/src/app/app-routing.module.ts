@@ -5,9 +5,11 @@ import { AdminDashboardComponent } from './admin_dash/admin_dash.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { IndexComponent } from './index/index.component';
 import { LoginComponent } from './login/login.component';
+import { AddAdvisingtypeComponent } from './add-advisingtype/add-advisingtype.component';
 import { ContactComponent } from './contact/contact.component';
 import { ViewDogInfoComponent } from './view-dog-info/view-dog-info.component';
 import { AddDogComponent } from './add-dog/add-dog.component';
+import { AddStatusComponent } from './add-status/add-status.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { SignupComponent } from './signup/signup.component';
 import { RequestFormComponent } from './request-form/request-form.component';
@@ -46,7 +48,15 @@ const routes: Routes = [
   { 
     path: 'admin-dashboard', 
     component: AdminDashboardComponent
-  },  
+  }, 
+  { 
+    path: 'add-advisingtype', 
+    component: AddAdvisingtypeComponent
+  },
+  { 
+    path: 'add-status', 
+    component: AddStatusComponent
+  },     
   { 
     path: 'dashboard', 
     component: DashboardComponent 
