@@ -26,20 +26,20 @@ export class MyRequestsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.account = this.dataService.getDataPersistent('account');
-    this.userId = this.account.myId;
+    // this.account = this.dataService.getDataPersistent('account');
+    // this.userId = this.account.myId;
 
-    this.requestService.getRequests().subscribe((data: Request[]) => {
-      // Filter requests to show only those made by the current user
-      this.requests = data.filter((request) => request.userId === this.userId);
+    // this.requestService.getRequests().subscribe((data: Request[]) => {
+    //   // Filter requests to show only those made by the current user
+    //   this.requests = data.filter((request) => request.userId === this.userId);
 
-      // Iterate through requests and fetch dog names
-      this.requests.forEach((request) => {
-        this.dogService.getDog(request.dogId).subscribe((dog: Dog) => {
-          // Assign the dog's name to the request object
-          this.reqDogNames.push(dog.name);
-        });
-      });
-    });
+    //   // Iterate through requests and fetch dog names
+    //   this.requests.forEach((request) => {
+    //     this.dogService.getDog(request.dogId).subscribe((dog: Dog) => {
+    //       // Assign the dog's name to the request object
+    //       this.reqDogNames.push(dog.name);
+    //     });
+    //   });
+    // });
   }
 }

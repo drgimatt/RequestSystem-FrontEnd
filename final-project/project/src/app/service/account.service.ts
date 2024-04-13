@@ -24,4 +24,18 @@ export class AccountService {
   public createAccount(formData: FormData)  {
     return this.http.post<Account>(this.accountsUrl + '/create-account/', formData);
   }
+
+  public getAccounts(): Observable<Account[]> {
+    return this.http.get<Account[]>(this.accountsUrl + '/accounts');
+  }
+
+  public updateAccount(id: number, formData: FormData) {
+    return this.http.put<Account>(this.accountsUrl + '/update-account/' + id.toString(), formData);
+  }
+
+  public deleteAccount(id: number): Observable<void> {
+    return this.http.delete<void>(this.accountsUrl + '/delete-account/' + id.toString());
+  }
+
+  
 }

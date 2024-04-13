@@ -40,15 +40,15 @@ export class ShowMyRequestComponent implements OnInit {
   }
 
   initializeForm(): void {
-    this.showReq = this.fb.group({
-      reqId: this.request.reqId,
-      dogId: this.request.dogId,
-      reqName: this.request.reqName,
-      reqContact: this.request.reqContact,
-      reqMessage: this.request.reqMessage,
-      reqStatus: this.request.reqStatus,
-      userId: this.request.userId
-    });
+    // this.showReq = this.fb.group({
+    //   reqId: this.request.reqId,
+    //   dogId: this.request.dogId,
+    //   reqName: this.request.reqName,
+    //   reqContact: this.request.reqContact,
+    //   reqMessage: this.request.reqMessage,
+    //   reqStatus: this.request.reqStatus,
+    //   userId: this.request.userId
+    // });
   }
 
 
@@ -57,20 +57,20 @@ export class ShowMyRequestComponent implements OnInit {
   }
 
   update() {
-    if (this.showReq.valid) {
-      const updatedRequest = this.showReq.value;
-      this.requestService.updateRequest(this.request.reqId, updatedRequest)
-        .subscribe(
-          response => {
-            console.log('Request updated:', response);
-            //this.request = Object.assign(this.request, updatedRequest);
-            this.goBack();
-          },
-          error => {
-            console.error('Error resolving request', error);
-          }
-        );
-    }
+    // if (this.showReq.valid) {
+    //   const updatedRequest = this.showReq.value;
+    //   this.requestService.updateRequest(this.request.reqId, updatedRequest)
+    //     .subscribe(
+    //       response => {
+    //         console.log('Request updated:', response);
+    //         //this.request = Object.assign(this.request, updatedRequest);
+    //         this.goBack();
+    //       },
+    //       error => {
+    //         console.error('Error resolving request', error);
+    //       }
+    //     );
+    // }
   }
 }
 

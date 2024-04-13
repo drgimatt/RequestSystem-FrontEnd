@@ -26,7 +26,7 @@ export class UserDashboardComponent implements OnInit{
       this.sortDogsAlphabetically();
       this.isDataLoaded = true;
     });
-    this.accountCheck();
+    //this.accountCheck();
   }
   
 

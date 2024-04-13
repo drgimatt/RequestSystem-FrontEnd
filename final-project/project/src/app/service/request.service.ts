@@ -29,4 +29,9 @@ export class RequestService {
     public updateRequest(id: number, formData: FormData) {
         return this.http.put<any>(this.requestsUrl + '/update-request/'+ id.toString(), formData);
     }
+
+    public deleteRequest(id: number): Observable<void> {
+        return this.http.delete<void>(this.requestsUrl + '/delete-request/' + id.toString());
+      }
+
 }
