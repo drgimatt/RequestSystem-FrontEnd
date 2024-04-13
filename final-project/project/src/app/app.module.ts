@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminDashboardComponent } from './admin_dash/admin_dash.component';
 import { ProfessorDashboardComponent } from './professor-dashboard/professor-dashboard.component';
 import { IndexComponent } from './index/index.component';
 import { LoginComponent } from './login/login.component';
@@ -27,6 +28,7 @@ import { ShowMyRequestComponent } from './show-my-request/show-my-request.compon
 @NgModule({
   declarations: [
     AppComponent,
+    AdminDashboardComponent,
     DashboardComponent,
     IndexComponent,
     LoginComponent,
