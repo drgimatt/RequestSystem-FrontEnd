@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProfessorDashboardComponent } from './professor-dashboard/professor-dashboard.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { IndexComponent } from './index/index.component';
 import { LoginComponent } from './login/login.component';
@@ -91,6 +92,10 @@ const routes: Routes = [
   { 
     path: 'my-show-request/:id', 
     component: ShowMyRequestComponent 
+  },
+  { 
+    path: 'professor-dashboard', 
+    component: ProfessorDashboardComponent 
   },
   { path: 'create-account', 
     component: SignupComponent }
