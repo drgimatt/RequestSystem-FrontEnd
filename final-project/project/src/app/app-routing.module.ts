@@ -9,6 +9,8 @@ import { AddAdvisingtypeComponent } from './add-advisingtype/add-advisingtype.co
 import { ContactComponent } from './contact/contact.component';
 import { ViewDogInfoComponent } from './view-dog-info/view-dog-info.component';
 import { AddDogComponent } from './add-dog/add-dog.component';
+import { AddStudentComponent } from './add-student/add-student.component';
+import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { AddStatusComponent } from './add-status/add-status.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { SignupComponent } from './signup/signup.component';
@@ -56,7 +58,15 @@ const routes: Routes = [
   { 
     path: 'add-status', 
     component: AddStatusComponent
-  },     
+  },  
+  { 
+    path: 'add-student', 
+    component: AddStudentComponent
+  },
+  { 
+    path: 'add-employee', 
+    component: AddEmployeeComponent
+  },       
   { 
     path: 'dashboard', 
     component: DashboardComponent 

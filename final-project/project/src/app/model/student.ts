@@ -1,3 +1,5 @@
+import { Department } from "./department";
+
 export class Student {
     myId: number = 0;
     studentID: string = '';
@@ -5,8 +7,9 @@ export class Student {
     middleName: string = '';
     lastName: string = '';
     program: string = '';
+    department: Department;
     yearLevel: number = 0;
     email: string = '';
     gender: string = '';    
-    photo: Uint8Array = new Uint8Array(0);
+    photo: File;
 }

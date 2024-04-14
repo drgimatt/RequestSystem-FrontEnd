@@ -21,7 +21,7 @@ export class StudentService {
   }
 
   public createStudent(formData: FormData) {
-    return this.http.post<Student>(this.backendUrl + '/create-student/', formData);
+    return this.http.post<Student>(this.backendUrl + '/add-student/', formData);
   }
 
   public updateStudent(id: number, formData: FormData) {
