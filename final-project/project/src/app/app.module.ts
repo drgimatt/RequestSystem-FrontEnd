@@ -31,6 +31,7 @@ import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { AddStatusComponent } from './add-status/add-status.component';
 import { AddAdvisingtypeComponent } from './add-advisingtype/add-advisingtype.component';
+import { AddRoleComponent } from './add-role/add-role.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { AddAdvisingtypeComponent } from './add-advisingtype/add-advisingtype.co
     AddEmployeeComponent,
     AddUserComponent,
     AddStatusComponent,
-    AddAdvisingtypeComponent
+    AddAdvisingtypeComponent,
+    AddRoleComponent
   ],
   imports: [
     ReactiveFormsModule,

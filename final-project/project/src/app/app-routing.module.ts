@@ -7,7 +7,9 @@ import { ProfessorDashboardUnresolvedComponent } from './professor-dashboard-unr
 import { AdminDashboardComponent } from './admin_dash/admin_dash.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { IndexComponent } from './index/index.component';
+import { AddRoleComponent } from './add-role/add-role.component';
 import { LoginComponent } from './login/login.component';
+import { AddSubjectsComponent } from './add-subjects/add-subjects.component';
 import { AddAdvisingtypeComponent } from './add-advisingtype/add-advisingtype.component';
 import { ContactComponent } from './contact/contact.component';
 import { ViewDogInfoComponent } from './view-dog-info/view-dog-info.component';
@@ -63,9 +65,21 @@ const routes: Routes = [
     component: AddStatusComponent
   },  
   { 
+    path: 'add-advisingtype', 
+    component: AddAdvisingtypeComponent
+  },
+  { 
+    path: 'add-role', 
+    component: AddRoleComponent
+  },  
+  { 
+    path: 'add-subject', 
+    component: AddSubjectsComponent
+  },
+  { 
     path: 'add-student', 
     component: AddStudentComponent
-  },
+  },    
   { 
     path: 'add-employee', 
     component: AddEmployeeComponent
