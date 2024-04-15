@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProfessorDashboardComponent } from './professor-dashboard/professor-dashboard.component';
+import { ProfessorDashboardCompletedComponent } from './professor-dashboard-completed/professor-dashboard-completed.component';
+import { ProfessorDashboardRejectedComponent } from './professor-dashboard-rejected/professor-dashboard-rejected.component';
+import { ProfessorDashboardUnresolvedComponent } from './professor-dashboard-unresolved/professor-dashboard-unresolved.component';
 import { AdminDashboardComponent } from './admin_dash/admin_dash.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { IndexComponent } from './index/index.component';
@@ -126,6 +129,18 @@ const routes: Routes = [
   { 
     path: 'professor-dashboard', 
     component: ProfessorDashboardComponent 
+  },
+  {
+    path: 'professor-dashboard-completed',
+    component: ProfessorDashboardCompletedComponent
+  },
+  {
+    path: 'professor-dashboard-rejected',
+    component: ProfessorDashboardRejectedComponent
+  },
+  {
+    path: 'professor-dashboard-unresolved',
+    component: ProfessorDashboardUnresolvedComponent
   },
   { path: 'create-account', 
     component: SignupComponent }
