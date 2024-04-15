@@ -48,8 +48,8 @@
                     <h2 class="text-center">Add an Advising Type</h2>
                     <form [formGroup]="newAdvisingtype" (ngSubmit)="checkFields()">                                                                                    
                         <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter a New Advising Type" required>
+                            <label for="advisingtypeName">Name</label>
+                            <input type="text" formControlName="advisingtypeName" class="form-control" id="advisingtypeName" placeholder="Enter a New Advising Type" required>
                         </div>   
                         <button type="submit" class="btn btn-success">Add Advising Type</button>
                     </form>
