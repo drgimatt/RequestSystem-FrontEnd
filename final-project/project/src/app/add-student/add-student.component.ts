@@ -55,7 +55,7 @@ navigateToHome() {
 onUpload(){
   console.log(this.selectedFile);
   const student = new FormData();
-  student.append('photo', this.selectedFile);
+  student.append('photoBytes', this.selectedFile);
   student.append('studentID', this.newStudent.value.studentID);
   student.append('firstName', this.newStudent.value.firstName);
   student.append('middleName', this.newStudent.value.middleName);
