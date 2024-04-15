@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./student-form.component.css']
 })
 export class StudentFormComponent implements OnInit {
-  studentForm!: FormGroup;
+  studentForm: FormGroup
   concerns = [
     'Thesis/Design Subject concerns',
     'Requirements in Courses Enrolled',
@@ -18,7 +18,18 @@ export class StudentFormComponent implements OnInit {
     'Concerns regarding Personal/Family, etc.'
   ];
 
-  constructor(private fb: FormBuilder) {}
+
+  constructor(private fb: FormBuilder) {    
+    this.studentForm = this.fb.group({
+      studentNumber: ['', Validators.required],
+      studentName: ['', Validators.required],
+      programYear: ['', Validators.required],
+      emailAddress: ['', [Validators.required, Validators.email]],
+      phoneNumber: ['', Validators.required],
+      concern: ['', Validators.required],
+      formType: ['', Validators.required],
+      otherOffice: ['']
+    });}
 
   ngOnInit() {
     this.initializeForm();

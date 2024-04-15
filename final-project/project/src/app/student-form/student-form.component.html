@@ -10,10 +10,11 @@
   <title>Student Form</title>
 </head>
 <body>
+  <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
   <div class="container">
     <div class="left-section">
       <h2>Student Information</h2>
-      <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+      
         <div class="form-group">
           <input type="number" class="form-control" id="studentNumber" formControlName="studentNumber" placeholder="Student Number" required>
         </div>
@@ -29,7 +30,7 @@
         <div class="form-group">
           <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" placeholder="Phone Number" required>
         </div>
-      </form>
+
     </div>
     <div class="right-section">
       <div class="nature-advising">
@@ -80,7 +81,7 @@
   <div class="text-center mt-3">
     <button type="submit" class="btn btn-primary">SUBMIT</button>
   </div>
-  
+</form>  
   <footer>
     <div class="text-center p-3">
         &copy; Mapúa University | Center of Student Advising
