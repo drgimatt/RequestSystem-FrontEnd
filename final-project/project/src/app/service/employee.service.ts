@@ -21,7 +21,7 @@ export class EmployeeService {
   }
 
   public createEmployee(formData: FormData) {
-    return this.http.post<Employee>(this.backendUrl + '/create-employee/', formData);
+    return this.http.post<Employee>(this.backendUrl + '/add-employee/', formData);
   }
 
   public updateEmployee(id: number, formData: FormData) {
