@@ -24,7 +24,6 @@ export class AddSubjectsComponent {
 
   navigateToHome() {
     this.router.navigate(['index']);
-
   }
 
   checkFields(): boolean {

@@ -10,7 +10,34 @@
   <title>Student Form</title>
 </head>
 <body>
-  <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+      <!-- Navigation Bar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand">
+            <img src="/assets/logo.svg" height="50px" alt="Your Logo">
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" (click) = "navigateToHome()" >Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/aboutus">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+       
+        <a class="btn btn-outline-danger ml-2" href="/login">Login</a>
+        <a class="btn btn-danger ml-2" href="/inquire">Inquire for Completion</a>
+    </nav>
+    <div style = "padding: 30px">
+  <form *ngIf="studentForm" [formGroup]="studentForm" (ngSubmit)="onSubmit()">
   <div class="container">
     <div class="left-section">
       <h2>Student Information</h2>
@@ -82,15 +109,16 @@
     <button type="submit" class="btn btn-primary">SUBMIT</button>
   </div>
 </form>  
-  <footer>
-    <div class="text-center p-3">
-        &copy; Mapúa University | Center of Student Advising
-    </div>
-  </footer>
+</div>
 
   <!-- Bootstrap JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+</body>  
+<footer>
+    <div class="text-center p-3">
+        &copy; Mapúa University | Center of Student Advising
+    </div>
+  </footer>
 </html>

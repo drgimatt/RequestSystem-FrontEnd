@@ -14,6 +14,7 @@ import { AboutusComponent } from './aboutus/aboutus.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { StudentFormComponent } from './student-form/student-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SignupComponent } from './signup/signup.component';
 import { RequestFormComponent } from './request-form/request-form.component';
@@ -47,6 +48,7 @@ import { AddRoleComponent } from './add-role/add-role.component';
     AboutusComponent,
     RequestFormComponent,
     SignupComponent,
+    StudentFormComponent,
     UserDashboardComponent,
     UserViewDogInfoComponent,
     AllRequestsNotifComponent,

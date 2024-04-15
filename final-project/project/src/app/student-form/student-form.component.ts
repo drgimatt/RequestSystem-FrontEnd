@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-form',
@@ -19,7 +20,7 @@ export class StudentFormComponent implements OnInit {
   ];
 
 
-  constructor(private fb: FormBuilder) {    
+  constructor(private fb: FormBuilder, private router: Router) {    
     this.studentForm = this.fb.group({
       studentNumber: ['', Validators.required],
       studentName: ['', Validators.required],
@@ -33,6 +34,10 @@ export class StudentFormComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
+  }
+
+  navigateToHome() {
+    this.router.navigate(['index']);
   }
 
   initializeForm() {
