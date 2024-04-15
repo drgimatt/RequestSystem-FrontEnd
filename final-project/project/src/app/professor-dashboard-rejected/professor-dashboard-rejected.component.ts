@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './professor-dashboard-rejected.component.html',
-  styleUrl: './professor-dashboard-rejected.component.css'
+  styleUrls: ['./professor-dashboard-rejected.component.css']
 })
 export class ProfessorDashboardRejectedComponent {
 
