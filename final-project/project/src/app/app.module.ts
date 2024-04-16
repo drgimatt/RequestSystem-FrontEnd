@@ -29,7 +29,6 @@ import { AddDepartmentComponent } from './add-department/add-department.componen
 import { AddStudentComponent } from './add-student/add-student.component';
 import { AddSubjectsComponent } from './add-subjects/add-subjects.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
-import { AddUserComponent } from './add-user/add-user.component';
 import { AddStatusComponent } from './add-status/add-status.component';
 import { AddAdvisingtypeComponent } from './add-advisingtype/add-advisingtype.component';
 import { AddRoleComponent } from './add-role/add-role.component';
@@ -59,7 +58,6 @@ import { AddRoleComponent } from './add-role/add-role.component';
     AddStudentComponent,
     AddSubjectsComponent,
     AddEmployeeComponent,
-    AddUserComponent,
     AddStatusComponent,
     AddAdvisingtypeComponent,
     AddRoleComponent
