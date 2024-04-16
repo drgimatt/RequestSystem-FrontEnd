@@ -161,7 +161,7 @@ const routes: Routes = [
     path: 'professor-dashboard-unresolved',
     component: ProfessorDashboardUnresolvedComponent
   },
-  { path: 'create-account', 
+  { path: 'signup', 
     component: SignupComponent }
 ];
 
