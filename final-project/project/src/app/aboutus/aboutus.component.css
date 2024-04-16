@@ -35,3 +35,7 @@ body {
 .text-black {
     color: rgb(27, 25, 25);
 }
+.resizable {
+    resize: both;
+    overflow: auto;
+}

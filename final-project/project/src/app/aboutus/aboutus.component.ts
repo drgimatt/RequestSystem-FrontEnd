@@ -21,7 +21,7 @@ export class AboutusComponent {
   navigateToHome(){
     this.account = this.dataService.getDataPersistent('account');
     if (this.account == null) {
-      this.router.navigate(['index']);
+      this.router.navigate(['/index']);
     } else if (this.account.role.roleName === "ADMIN"){
       this.router.navigate(['/dashboard']);
     } else if (this.account.role.roleName === "USER"){
