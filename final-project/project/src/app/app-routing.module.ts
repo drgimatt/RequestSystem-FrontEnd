@@ -5,6 +5,9 @@ import { ProfessorDashboardCompletedComponent } from './professor-dashboard-comp
 import { ProfessorDashboardRejectedComponent } from './professor-dashboard-rejected/professor-dashboard-rejected.component';
 import { ProfessorDashboardUnresolvedComponent } from './professor-dashboard-unresolved/professor-dashboard-unresolved.component';
 import { AdminDashboardComponent } from './admin_dash/admin_dash.component';
+import { AdminDashboardCompletedComponent } from './admin_dash_completed/admin_dash_completed.component';
+import { AdminDashboardRejectedComponent } from './admin_dash_rejected/admin_dash_rejected.component';
+import { AdminDashboardUnresolvedComponent } from './admin_dash_unresolved/admin_dash_unresolved.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { IndexComponent } from './index/index.component';
 import { AddRoleComponent } from './add-role/add-role.component';
@@ -56,6 +59,18 @@ const routes: Routes = [
   { 
     path: 'admin-dashboard', 
     component: AdminDashboardComponent
+  }, 
+  { 
+    path: 'admin-dashboard-completed', 
+    component: AdminDashboardCompletedComponent
+  }, 
+  { 
+    path: 'admin-dashboard-rejected', 
+    component: AdminDashboardRejectedComponent
+  }, 
+  { 
+    path: 'admin-dashboard-unresolved', 
+    component: AdminDashboardUnresolvedComponent
   }, 
   { 
     path: 'add-advisingtype', 
