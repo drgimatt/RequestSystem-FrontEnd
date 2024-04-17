@@ -39,8 +39,8 @@
             </ul>
         </div>
        
+        <!-- <button class= "btn btn-outline-danger ml-2" type = "submit" onclick="document.location='/signup'">SIGNUP</button>-->
         
-        <a class="btn btn-danger ml-2" href="#">Inquire for Completion</a>
     </nav>
 
 
@@ -50,7 +50,7 @@
   <div class="login-container">
     <div class="login-form-container">
       <div class="login-image-container">
-        <img src="https://catalog.mapua.edu.ph/img/Home/Accreditation.png" alt="Mapua Institute of Technology" class="login-image">
+        <img src="assets/login.png" alt="Mapua Institute of Technology" class="login-image">
       </div>
       <div class="login-form">
         <form id="loginForm" [formGroup]="accountCheck" (ngSubmit)="checkUser()">
@@ -64,10 +64,9 @@
 
             <div class = "row">
                 <div class = "col">
-            <button type="submit">LOGIN</button></div>
-            <div class = "col">
-            <button type = "button" onclick="document.location='/signup'">SIGNUP</button>
-        </div>
+            <button type="submit" class="btn btn-danger ml-2" >LOGIN</button></div>
+       
+        
         </div>
         </form>
       </div>
@@ -76,6 +75,10 @@
 </div>
 </body>
         
+     <!-- Sign up link -->
+     <div class="signup-link">
+        <p>Don't have an account yet? <a href="/signup">Signup</a>.</p>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-info text-center text-lg-start fixed-bottom" style="background-color: #940C0C !important; color: white;">

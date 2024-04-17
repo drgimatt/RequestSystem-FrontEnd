@@ -69,7 +69,8 @@ h2 {
   
 
 .login-container {
-    width: 50%;
+    margin-top: 18px;
+    width: 65%;
     background-color: #ffffff;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -80,19 +81,18 @@ h2 {
   }
 
 
-.login-image-container {
-    flex: 1;
-    overflow: hidden;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-  }
+  .login-image-container {
+    width: 100%;
+    height: auto;
+}
 
   .login-image {
+  
     width: 100%;
     height: 100%;
     object-fit: cover;
     width: 600px; /* Adjust the width as needed */
-    margin-right: 20px; /* Add some spacing between the image and the form fields */
+    margin-right: 10px; /* Add some spacing between the image and the form fields */
     
   }
 
@@ -127,6 +127,7 @@ h2 {
     padding: 10px 20px;
     border-radius: 3px;
     cursor: pointer;
+    
   }
 
 .login-container h2 {
@@ -159,6 +160,7 @@ h2 {
     margin-left: 40%;
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    
 }
 
 .login-form input::placeholder {
@@ -167,4 +169,10 @@ h2 {
 
 h3 {
     font-weight: bold;
+}
+.signup-link {
+  position: fixed;
+  bottom: 200px;
+  left: 50%;
+  transform: translateX(-50%);
 }
