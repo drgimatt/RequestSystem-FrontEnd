@@ -53,10 +53,14 @@
         <img src="https://catalog.mapua.edu.ph/img/Home/Accreditation.png" alt="Mapua Institute of Technology" class="login-image">
       </div>
       <div class="login-form">
-        <form>
+        <form id="loginForm" [formGroup]="accountCheck" (ngSubmit)="checkUser()">
         <h3> Center for Student Advising </h3> <br>
-          <input type="text" id="username" name="username" placeholder="Username" required>
-          <input type="password" id="password" name="password" placeholder="Password" required>
+        <div class="form-group">
+            <input type="text" class="form-control" formControlName="username" id="username" name="username" placeholder="Enter username" required>
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" formControlName="password" id="password" name="password" placeholder="Enter password" required>
+        </div>
 
             <div class = "row">
                 <div class = "col">

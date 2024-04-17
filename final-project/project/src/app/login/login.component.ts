@@ -22,22 +22,32 @@ export class LoginComponent {
     });
   }
 
-  onSubmit(){
+  checkUser(){
+
     this.accountService.checkAccount(this.accountCheck.value.username, this.accountCheck.value.password).subscribe(
+        
       (account: Account) => {
         // Handle successful response
         this.account = account;
-        if (account && account.role) {
-          if (account.role.roleName === 'ADMIN') {
+        console.log('Username: ',this.account.username);
+        console.log('Password: ', this.account.password);
+        console.log('Account Type ID: ', this.account.role.myId);
+        console.log('Account Type Name: ', this.account.role.roleName);
+        if (this.account && this.account.role) {
+          if (this.account.role.roleName === "ADMIN") {
             // Redirect to admin dashboard
-            this.dataService.setDataPersistent('account', account);
+            this.dataService.setDataPersistent('account', this.account);
             //this.router.navigate(['/aboutus']);
-            this.errorMessage = "Supposedly this is working - ADMIN";
-          } else if (account.role.roleName === "USER") {
+            console.log("Supposedly this is working - ADMIN");
+          } else if (this.account.role.roleName === "USER") {
             // Redirect to user dashboard
-            this.dataService.setDataPersistent('account', account);
+            this.dataService.setDataPersistent('account', this.account);
             //this.router.navigate(['/index']);
-            this.errorMessage = "Supposedly this is working - USER";
+            //this.errorMessage = "Supposedly this is working - USER";
+            console.log("Supposedly this is working - USER");
+          } else if (this.account.role.roleName === "PROFESSOR") {
+            this.dataService.setDataPersistent('account', this.account);
+            console.log("Supposedly this is working - PROFESSOR");
           }
           else{
             this.errorMessage = "Role is not being checked " + account.role;
