@@ -41,7 +41,7 @@
                     <li><a href="/admin-dashboard-rejected">REJECTED</a></li>
                 </ul>
             </div>
-            <div class="h-100 d-inline-block w-75 p-3">
+            <div class="h-100 d-inline-block w-175 p-4">
                 <div style="overflow-x:auto;">
                     <table class="table table-striped">
                         <thead>
@@ -52,12 +52,22 @@
                                 <th scope="col">Nature of Advising</th>
                                 <th scope="col">Date Modified</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">View Request</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody *ngIf = "isDataLoaded">
                             <!-- table data -->
                             <!-- THE DATA BELOW ARE JUST HARD CODED -->
-                            <tr>
+                            <tr *ngFor="let request of requests">
+                                <td>{{request.student.firstName + " " +request.student.lastName}}</td>
+                                <td>{{request.student.studentID}}</td>
+                                <td>{{request.student.yearLevel+ " - " + request.student.program}}</td>
+                                <td>{{request.advisingType.name}}</td>
+                                <td>{{request.dateModified}}</td>
+                                <td>{{request.status.name}}</td>
+                                <!-- <td><button type = "button" onclick="document.location='/view-request/{{request.requestId}}'" class="btn btn-success">Click here</button></td> -->
+                            </tr>
+                        <!-- <tr>
                                 <td>John Ken C. Ocsan</td>
                                 <td>2021200459</td>
                                 <td>3-CS</td>
@@ -80,7 +90,7 @@
                                 <td>Career Advising</td>
                                 <td>22/04/2024</td>
                                 <td><button class="statusPending">Pending</button></td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </div>

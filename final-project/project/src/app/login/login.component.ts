@@ -37,7 +37,7 @@ export class LoginComponent {
           if (this.account.role.roleName === "ADMIN") {
             // Redirect to admin dashboard
             this.dataService.setDataPersistent('account', this.account);
-            //this.router.navigate(['/aboutus']);
+            this.router.navigate(['/admin-dashboard']);
             console.log("Supposedly this is working - ADMIN");
           } else if (this.account.role.roleName === "USER") {
             // Redirect to user dashboard
