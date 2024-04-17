@@ -26,6 +26,10 @@ ngOnInit(): void {
 
 }
 
+viewRequest(requestID: number){
+  this.router.navigate(['/view-request/',requestID]);
+}
+
 sortRequestsAlphabetically() {
   this.requests.sort((a, b) => {
     // Use the localeCompare method to compare reuqest names in a case-insensitive manner

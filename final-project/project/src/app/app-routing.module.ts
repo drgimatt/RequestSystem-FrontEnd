@@ -137,6 +137,10 @@ const routes: Routes = [
     component: UserViewDogInfoComponent 
   },
   { 
+    path: 'view-request/:id', 
+    component: StudentFormComponent 
+  },
+  { 
     path: 'aboutus', 
     component: AboutusComponent 
   },

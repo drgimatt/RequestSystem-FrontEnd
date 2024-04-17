@@ -57,7 +57,6 @@
                         </thead>
                         <tbody *ngIf = "isDataLoaded">
                             <!-- table data -->
-                            <!-- THE DATA BELOW ARE JUST HARD CODED -->
                             <tr *ngFor="let request of requests">
                                 <td>{{request.student.firstName + " " +request.student.lastName}}</td>
                                 <td>{{request.student.studentID}}</td>
@@ -65,8 +64,9 @@
                                 <td>{{request.advisingType.name}}</td>
                                 <td>{{request.dateModified}}</td>
                                 <td>{{request.status.name}}</td>
-                                <!-- <td><button type = "button" onclick="document.location='/view-request/{{request.requestId}}'" class="btn btn-success">Click here</button></td> -->
+                                <td><input type = "button" (click)=viewRequest(request.requestId) value = "Click here" class="btn btn-success"></td>
                             </tr>
+                            <!-- THE DATA BELOW ARE JUST HARD CODED -->
                         <!-- <tr>
                                 <td>John Ken C. Ocsan</td>
                                 <td>2021200459</td>
