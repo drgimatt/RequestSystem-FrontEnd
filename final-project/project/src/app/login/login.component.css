@@ -36,23 +36,6 @@ body {
     color: rgb(27, 25, 25);
 }
 
-.form {
-    display: flex;
-    justify-content: space-evenly;
-    padding-top: 3rem;
-}
-
-.sub-form {
-    display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 30vw;
-        height: 50vh;
-        border-radius: 12px;
-        box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.3);
-        background-color: white;
-       
-}
 
 h2 {
     margin: 1.5rem 0 2rem 0;
@@ -69,21 +52,30 @@ h2 {
   
 
 .login-container {
-    margin-top: 18px;
-    width: 65%;
+    margin-top: 20px;
+    width: 60%;
     background-color: #ffffff;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: flexbox;
+    justify-content: space-evenly;
+    overflow: auto;
   }
 
 .login-form-container {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: auto;
+    margin-left: 10;
   }
 
 
   .login-image-container {
-    width: 100%;
-    height: auto;
+    flex: 1;
+    overflow: hidden;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
   .login-image {
@@ -92,26 +84,17 @@ h2 {
     height: 100%;
     object-fit: cover;
     width: 600px; /* Adjust the width as needed */
-    margin-right: 10px; /* Add some spacing between the image and the form fields */
-    
+    margin-right: 20px; /* Add some spacing between the image and the form fields */
   }
 
   .login-form {
     flex: 1;
     padding: 40px;
+    display: flexbox;
+    justify-content: space-between;
+    width: 40%;
   }
-  
-  .login-form form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    max-width: 400px;
-  }
-  
-  .login-form label {
-    margin-bottom: 5px;
-  }
-  
+
   .login-form input {
     width: 100%;
     padding: 10px;
@@ -130,18 +113,6 @@ h2 {
     
   }
 
-.login-container h2 {
-    margin-top: 0;
-}
-
-.login-container form {
-    flex-grow: 1;
-}
-
-.login-container label {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
 
 .login-container input {
     width: 400px;
@@ -149,6 +120,7 @@ h2 {
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 3px;
+    margin-right: 20px;
 }
 
 .login-container button {
@@ -175,4 +147,10 @@ h3 {
   bottom: 200px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.form {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 3rem;
 }
