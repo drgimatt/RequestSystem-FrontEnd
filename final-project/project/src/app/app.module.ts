@@ -60,7 +60,7 @@ import { AddRoleComponent } from './add-role/add-role.component';
     AddEmployeeComponent,
     AddStatusComponent,
     AddAdvisingtypeComponent,
-    AddRoleComponent
+    AddRoleComponent,
   ],
   imports: [
     ReactiveFormsModule,

@@ -1,21 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EmployeeService } from '../service/employee.service';
 import { Router } from '@angular/router';
+import { Department } from '../model/department';
+import { Subjects } from '../model/subjects';
+import { DepartmentService } from '../service/department.service';
+import { SubjectsService } from '../service/subjects.service';
 
 @Component({
   selector: 'app-add-employee',
   templateUrl: './add-employee.component.html',
   styleUrls: ['./add-employee.component.css']
 })
-export class AddEmployeeComponent {
+export class AddEmployeeComponent implements OnInit{
 
 
   newEmployee: FormGroup;
   selectedFile : File;
   selectedFileName: string; 
+  departmentList: Department[] = [];
+  subjectsList: Subjects[] = [];
+  isDataLoaded: boolean = false;
 
-constructor(private employeeService: EmployeeService, private fb: FormBuilder, private router: Router){
+
+constructor(private departmentService: DepartmentService, private subjectService: SubjectsService,private employeeService: EmployeeService, private fb: FormBuilder, private router: Router){
   this.newEmployee = this.fb.group({
     employeeID: '',
     firstName: '',
@@ -30,6 +38,27 @@ constructor(private employeeService: EmployeeService, private fb: FormBuilder, p
   })
 
 }
+  ngOnInit(): void {
+    this.departmentService.getDepartments().subscribe((data: Department[]) => {
+      this.departmentList = data;
+      this.isDataLoaded = true;
+    },
+    (error) => {
+      this.isDataLoaded = false;
+    }
+  );
+
+  this.subjectService.getSubjects().subscribe((data: Subjects[]) => {
+    this.subjectsList = data;
+    this.isDataLoaded = true;
+  },
+  (error) => {
+    this.isDataLoaded = false;
+  }
+);
+
+  }
+
 onFileChanged(event){ 
   this.selectedFile = event.target.files[0];
   if (this.selectedFile) {

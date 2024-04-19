@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SubjectsService } from '../service/subjects.service';
+import { Department } from '../model/department';
+import { DepartmentService } from '../service/department.service';
 
 @Component({
   selector: 'app-add-subjects',
@@ -10,8 +12,10 @@ import { SubjectsService } from '../service/subjects.service';
 })
 export class AddSubjectsComponent {
   newSubject: FormGroup
+  departmentList: Department[] = [];
+  isDataLoaded: boolean = false;
 
-  constructor(private subjectService: SubjectsService, private fb: FormBuilder, private router: Router) {
+  constructor(private departmentService: DepartmentService,private subjectService: SubjectsService, private fb: FormBuilder, private router: Router) {
     this.newSubject = this.fb.group({
       courseCode: '',
       courseName: '',
@@ -20,7 +24,17 @@ export class AddSubjectsComponent {
 
   }
 
-
+  ngOnInit(): void {
+    this.departmentService.getDepartments().subscribe((data: Department[]) => {
+      this.departmentList = data;
+      this.isDataLoaded = true;
+    },
+    (error) => {
+      this.isDataLoaded = false;
+    }
+  );
+  
+  }
 
   navigateToHome() {
     this.router.navigate(['index']);

@@ -1,20 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { StudentService } from '../service/student.service';
 import { Router } from '@angular/router';
+import { DepartmentService } from '../service/department.service';
+import { Department } from '../model/department';
 
 @Component({
   selector: 'app-add-student',
   templateUrl: './add-student.component.html',
   styleUrls: ['./add-student.component.css']
 })
-export class AddStudentComponent {
+export class AddStudentComponent implements OnInit{
 
   newStudent: FormGroup;
   selectedFile : File;
   selectedFileName: string; 
+  departmentList: Department[] = [];
+  isDataLoaded: boolean = false;
 
-constructor(private studentService: StudentService, private fb: FormBuilder, private router: Router){
+constructor(private departmentService: DepartmentService, private studentService: StudentService, private fb: FormBuilder, private router: Router){
   this.newStudent = this.fb.group({
     studentID: '',
     firstName: '',
@@ -29,6 +33,19 @@ constructor(private studentService: StudentService, private fb: FormBuilder, pri
   })
 
 }
+  ngOnInit(): void {
+    this.departmentService.getDepartments().subscribe((data: Department[]) => {
+      this.departmentList = data;
+      this.isDataLoaded = true;
+    },
+    (error) => {
+      this.isDataLoaded = false;
+    }
+  );
+  
+  }
+
+
 onFileChanged(event){ 
   this.selectedFile = event.target.files[0];
   if (this.selectedFile) {
