@@ -32,6 +32,7 @@ import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { AddStatusComponent } from './add-status/add-status.component';
 import { AddAdvisingtypeComponent } from './add-advisingtype/add-advisingtype.component';
 import { AddRoleComponent } from './add-role/add-role.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,9 @@ import { AddRoleComponent } from './add-role/add-role.component';
     CommonModule,
     NgbModule
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
