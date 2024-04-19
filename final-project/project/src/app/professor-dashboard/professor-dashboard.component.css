@@ -30,6 +30,10 @@ header {
     color: #940C0C;
     border: 1px solid #940C0C;
 }
+main {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 body {
     min-height: 100vh;
     display: flex;
