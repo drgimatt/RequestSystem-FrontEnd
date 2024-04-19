@@ -7,8 +7,7 @@
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     font-style: normal;
-    /* uncomment when checking each element */
-    /* border: 1px solid yellow;  */
+    /* outline: solid 1px black; */
 }
 header {
     position: relative;
@@ -22,13 +21,18 @@ header {
 .signout {
     background-color: #940C0C;
     color: #FFFFFF;
-    padding: 5px 40px;
+    padding: 4px 40px;
     border-radius: 12px;
-    border: none;
+    border: 1px solid #940C0C;
 }
 .signout:active {
     background-color: #F7F7F7;
     color: #940C0C;
+    border: 1px solid #940C0C;
+}
+main {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 body {
     min-height: 100vh;
@@ -38,7 +42,7 @@ body {
 footer {
     position: relative;
     width: 100%;
-    padding: 20px 100px;
+    padding: 20px 0px;
     background: #940C0C;
     align-items: center;
     color: #FFFFFF;
@@ -50,7 +54,7 @@ footer {
     margin-right: auto;
 }
 
-
+/* main css */
 .listRequest {
     position: relative;
     width: 100%;
@@ -63,12 +67,52 @@ footer {
     font-weight: bold;
     font-size: 25px;
 }
+.statusContainer {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.form-group {
+    width: 200px;
+    margin-bottom: 10px;
+}
+.profStatus {
+    margin-left: 10px;
+}
 .searchbar {
-    padding: 0px 100px 0px 100px;
+    margin-right: 75px;
 }
 .searchbarContents {
-    width: 30%;
+    width: 500px;
     float: right;
+}
+@media (max-width: 767px) {
+    .searchbarContents {
+        width: 100%;
+        float: none;
+    }
+
+    .searchinput {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .searchButton {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .searchinput {
+        width: auto;
+        margin-bottom: 0;
+        margin-right: 10px;
+    }
+
+    .searchButton {
+        width: auto;
+    }
 }
 .searchButton {
     background-color: #FFFFFF;
@@ -84,20 +128,23 @@ footer {
 }
 .listContainer {
     height: 400px;
-    padding: 0px 100px 20px 100px;
     display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: center;
 }
 .listChoice {
     background: #940C0C;
     color: #FFFFFF;
+    width: 100px;
 }
 .choices {
     list-style: none;
-    margin-top: 40%;
+    margin-top: 100%;
 }
 .choices li {
     margin-top: 20px;
-    padding-right: 35px;
+    font-weight: bold;
 }
 .choices li a {
     text-decoration: none;
