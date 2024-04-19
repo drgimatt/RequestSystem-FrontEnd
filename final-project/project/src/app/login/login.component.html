@@ -21,7 +21,6 @@
         <a class="navbar-brand">
             <img src="/assets/logo.svg" height="50px" alt="Your Logo">
         </a>
-        
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -37,45 +36,51 @@
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
             </ul>
-        </div>
-       
-        <!-- <button class= "btn btn-outline-danger ml-2" type = "submit" onclick="document.location='/signup'">SIGNUP</button>-->
-        
+        </div> 
+        <!-- <button class= "btn btn-outline-danger ml-2" type = "submit" onclick="document.location='/signup'">SIGNUP</button>-->    
     </nav>
 
 
 <!-- Middle Part-->
-
-    <div class="login-section">
-  <div class="login-container">
-        <div class="login-form-container">
-            <div class="login-image-container">
-                <img src="assets/login.png" alt="Mapua Institute of Technology" class="login-image"> 
-            </div>
-            <div class="login-form">
-              <form id="loginForm" [formGroup]="accountCheck" (ngSubmit)="checkUser()">
-              <h3> Center for Student Advising </h3> <br>
-              <div class="form-group">
-                  <input type="text" class="form-control" formControlName="username" id="username" name="username" placeholder="Enter username" required>
+        <!----------------------- Main Container -------------------------->
+     <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <!----------------------- Login Container -------------------------->
+           <div class="row border rounded-5 p-3 bg-white shadow box-area">
+        <!--------------------------- Left Box ----------------------------->
+           <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #ffffff;">
+            <div class="featured-image mb-3">
+            <img src="assets/login.png" alt="Mapua Institute of Technology" class="img-fluid" style="width: 400px; border-radius: 30px; padding-top: 3%;">
+        </div>
+           </div> 
+        <!-------------------- ------ Right Box ---------------------------->
+            
+           <div class="col-md-6 right-box">
+              <div class="login-form">
+                <form id="loginForm" [formGroup]="accountCheck" (ngSubmit)="checkUser()">
+                    <div class="header-text mb-4">
+                         <h2>Center For Student Advising</h2>
+                         <p>We are happy to have you back.</p>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-lg bg-light fs-6" formControlName="username" id="username" name="username" placeholder="Enter username" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control form-control-lg bg-light fs-6" formControlName="password" id="password" name="password" placeholder="Enter password" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <button type="submit" class="btn btn-lg btn-danger w-100 fs-6">LOGIN</button>
+                    </div>
+                    <div class="row">
+                        <small>Don't have account yet? <a href="/signup">Sign Up</a></small>
+                    </div>
+                </form>
               </div>
-              <div class="form-group">
-                  <input type="password" class="form-control" formControlName="password" id="password" name="password" placeholder="Enter password" required>
-              </div>
-                  <div class = "row">
-                      <div class = "col">
-                  <button type="submit" class="btn btn-danger ml-2" >LOGIN</button></div>
-              </div>
-              </form>
-            </div> 
+           </div> 
           </div>
-  </div>
-</div>
-</body>
-        
-     <!-- Sign up link -->
-     <div class="signup-link">
-        <p>Don't have an account yet? <a href="/signup">Signup</a>.</p>
-    </div>
+        </div>
+
+        </body>
+
 
     <!-- Footer -->
     <footer class="bg-info text-center text-lg-start fixed-bottom" style="background-color: #940C0C !important; color: white;">
