@@ -22,7 +22,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" (click) = "navigateToHome()" >Home</a>
+                    <!--<a class="nav-link" (click) = "navigateToHome()" >Home</a> -->
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/aboutus">About</a>
@@ -37,6 +37,7 @@
         <a class="btn btn-danger ml-2" href="/inquire">Inquire for Completion</a>
     </nav>
     <div style = "padding: 30px">
+      
   <form *ngIf="studentForm" [formGroup]="studentForm" (ngSubmit)="onSubmit()">
   <div class="container">
     <div class="left-section">
@@ -63,10 +64,16 @@
       <div class="nature-advising">
         <h2>Nature of Advising</h2>
         <div class="form-group">
-          <select class="form-control" id="concern" formControlName="concern" required >
+          <select class="form-control" id="concern" formControlName="concern" required>
             <option *ngFor="let concern of concerns" [value]="concern">{{ concern }}</option>
+            <option value="Others">Others</option> <!-- Add the "Others" option -->
           </select>
         </div>
+        <div class="form-group">
+          <label for="otherDetails">Please provide specific details:</label>
+          <textarea class="form-control" id="otherDetails" formControlName="otherDetails" rows="2"></textarea>
+        </div>
+               
       </div>
       <div class="form-type">
         <h2>Form Type</h2>
