@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
 import { ProfessorDashboardComponent } from './professor-dashboard/professor-dashboard.component';
 import { ProfessorDashboardCompletedComponent } from './professor-dashboard-completed/professor-dashboard-completed.component';
 import { ProfessorDashboardRejectedComponent } from './professor-dashboard-rejected/professor-dashboard-rejected.component';
@@ -179,6 +180,10 @@ const routes: Routes = [
   {
     path: 'professor-dashboard-unresolved',
     component: ProfessorDashboardUnresolvedComponent
+  },
+  { 
+    path: 'student-dashboard', 
+    component: StudentDashboardComponent 
   },
   { path: 'signup', 
     component: SignupComponent }
