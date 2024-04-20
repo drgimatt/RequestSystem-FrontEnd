@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management Page</title>
+    <link rel="stylesheet" href="management.component.css">
+</head>
+<body>
+    <div id="sidebar">
+        <button onclick="loadContent('add-subjects')">Add Subjects</button>
+        <button onclick="loadContent('about')">About</button>
+        <button onclick="loadContent('services')">Services</button>
+        <button onclick="loadContent('contact')">Contact</button>
+    </div>
+    <div id="main-content">
+        <h1>Welcome</h1>
+        <p>This is the initial content. Click a sidebar button to change this content.</p>
+    </div>
+
+    <script>
+        function loadContent(page) {
+            fetch(`${page}.html`)
+                .then(response => {
+                    if (response.ok) return response.text();
+                    else throw new Error('Failed to load page: ' + page);
+                })
+                .then(html => document.getElementById('main-content').innerHTML = html)
+                .catch(error => console.error(error));
+        }
+    </script>
+    
+    <!-- Footer -->
+    <footer class="bg-info text-center text-lg-start fixed-bottom" style="background-color: #940C0C !important; color: white;">
+    <!-- Copyright -->
+    <div class="text-center p-3">
+        &copy; Mapúa University | Center of Student Advising
+    </div>
+    <!-- Copyright -->
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -32,6 +32,7 @@ import { ShowRequestComponent } from './show-request/show-request.component';
 import { MyRequestsComponent } from './my-requests/my-requests.component';
 import { ShowMyRequestComponent } from './show-my-request/show-my-request.component';
 import { AddDepartmentComponent } from './add-department/add-department.component';
+import {ManagementComponent } from './management/management.component';
 
 /* const routes: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full' }, 
@@ -186,7 +187,10 @@ const routes: Routes = [
     component: StudentDashboardComponent 
   },
   { path: 'signup', 
-    component: SignupComponent }
+    component: SignupComponent },
+  {
+    path: 'management',
+    component: ManagementComponent}
 ];
 
 
