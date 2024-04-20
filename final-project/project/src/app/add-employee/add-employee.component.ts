@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { EmployeeService } from '../service/employee.service';
 import { Router } from '@angular/router';
 import { Department } from '../model/department';
 import { Subjects } from '../model/subjects';
 import { DepartmentService } from '../service/department.service';
 import { SubjectsService } from '../service/subjects.service';
+
 
 @Component({
   selector: 'app-add-employee',
@@ -21,6 +22,7 @@ export class AddEmployeeComponent implements OnInit{
   departmentList: Department[] = [];
   subjectsList: Subjects[] = [];
   isDataLoaded: boolean = false;
+  subjects = new FormControl('');
 
 
 constructor(private departmentService: DepartmentService, private subjectService: SubjectsService,private employeeService: EmployeeService, private fb: FormBuilder, private router: Router){
@@ -93,7 +95,7 @@ onUpload(){
   employee.append('position', this.newEmployee.value.position);
   employee.append('department', this.newEmployee.value.department.toString());
   employee.append('gender', this.newEmployee.value.gender);
-  employee.append('subjects', this.newEmployee.value.subjects);
+  employee.append('subjects', this.subjects.getRawValue());
   employee.append('email', this.newEmployee.value.email);        
   this.employeeService.createEmployee(employee)
   .subscribe(
