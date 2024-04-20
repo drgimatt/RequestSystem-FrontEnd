@@ -20,6 +20,7 @@ import { ViewDogInfoComponent } from './view-dog-info/view-dog-info.component';
 import { StudentFormComponent } from './student-form/student-form.component';
 import { AddDogComponent } from './add-dog/add-dog.component';
 import { AddStudentComponent } from './add-student/add-student.component';
+import { AdminStudentFormComponent } from './admin-student-form/admin-student-form.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { AddStatusComponent } from './add-status/add-status.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
@@ -77,6 +78,10 @@ const routes: Routes = [
   { 
     path: 'add-advisingtype', 
     component: AddAdvisingtypeComponent
+  },
+  { 
+    path: 'admin-student-form', 
+    component: AdminStudentFormComponent
   },
   { 
     path: 'add-status', 
