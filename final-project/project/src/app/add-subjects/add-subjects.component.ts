@@ -23,7 +23,8 @@ export class AddSubjectsComponent {
     this.newSubject = this.fb.group({
       courseCode: '',
       courseName: '',
-      department: 0
+      department: 0,
+      employees: []
     });
 
   }
@@ -71,24 +72,25 @@ export class AddSubjectsComponent {
     const subjectData = new FormData();
     subjectData.append('courseCode', this.newSubject.value.courseCode);
     subjectData.append('name', this.newSubject.value.courseName);
-    subjectData.append('employees',this.employees.getRawValue().toString());
+    subjectData.append('employees',this.employees.getRawValue());
     subjectData.append('department', this.newSubject.value.department.toString());
+    console.log('SubjectDATA:', subjectData);
     this.subjectService.createSubject(subjectData)
     .subscribe(
       (response) => {
-        console.log('Subject added:', response);
-        console.log(this.newSubject.value.courseCode);
-        console.log(this.newSubject.value.courseName);
-        console.log(this.newSubject.value.department);
-        console.log('Employee:',this.employees.getRawValue());
+        console.log('Subject added (RESPONSE):', response);
+        console.log('Course code: ', this.newSubject.value.courseCode);
+        console.log('Course name: ', this.newSubject.value.courseName);
+        console.log('Department: ', this.newSubject.value.department);
+        console.log('Employee: ',this.employees.getRawValue());
         alert('This is working!');
       },
       (error) => {
         console.log(subjectData);
-        console.log(this.newSubject.value.courseCode);
-        console.log(this.newSubject.value.courseName);
-        console.log(this.newSubject.value.department);
-        console.log(this.employees.getRawValue());
+        console.log('Course code: ', this.newSubject.value.courseCode);
+        console.log('Course name: ', this.newSubject.value.courseName);
+        console.log('Department: ', this.newSubject.value.department);
+        console.log('Employee: ',this.employees.getRawValue());
         console.error('Error adding request:', error);
       }
     );

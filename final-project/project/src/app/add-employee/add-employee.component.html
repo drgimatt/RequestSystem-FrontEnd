@@ -86,20 +86,10 @@
                             </select>
                         </div>
 
-
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="text" formControlName="email" class="form-control" id="email" placeholder="Enter email" required>
                         </div>
-
-
-                        <mat-form-field appearance="fill">
-                            <mat-label>Subjects</mat-label>
-                            <mat-select [formControl]="subjects" multiple>
-                              <mat-option *ngFor="let subject of subjectsList" [value]="subject.myId">{{subject.courseCode}} - {{subject.name}}</mat-option>
-                            </mat-select>
-                          </mat-form-field>
-
 
                         <div class="form-group">
                             <label for="gender">Gender</label>

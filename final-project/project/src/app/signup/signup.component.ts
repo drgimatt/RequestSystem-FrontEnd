@@ -79,18 +79,21 @@ export class SignupComponent implements OnInit{
 
   checkUserIsPresent(): string {
 
-      for (let i = 0; i <= this.studentArray.length; i++){
+    if (this.studentArray.length !== 0)  {
+    for (let i = 0; i <= this.studentArray.length; i++){
         if (this.newAccount.value.userid === this.studentArray[i].studentID){
           this.newAccount.patchValue({ roleid: '1' });  
           return this.newAccount.value.userid
         }
       }
+    } else if (this.employeeArray.length !== 0) {
       for (let i = 0; i <= this.employeeArray.length; i++){
         if (this.newAccount.value.userid === this.employeeArray[i].employeeID){
           this.newAccount.patchValue({ roleid: '2' }); 
           return this.newAccount.value.userid
         }
       }
+    } 
       return null
 
   }

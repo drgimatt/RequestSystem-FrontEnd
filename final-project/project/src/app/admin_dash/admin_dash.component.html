@@ -61,8 +61,17 @@
                                 <th scope="col">Status</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody *ngIf="isDataLoaded">
                             <!-- table data -->
+                            <tr *ngFor="let request of requests">
+                                <td>{{request.student.firstName + " " +request.student.lastName}}</td>
+                                <td>{{request.student.studentID}}</td>
+                                <td>{{request.student.yearLevel+ " - " + request.student.program}}</td>
+                                <td>{{request.advisingType.name}}</td>
+                                <td>{{request.dateModified}}</td>
+                                <td>{{request.status.name}}</td>
+                                <!-- <td><button type = "button" onclick="document.location='/view-request/{{request.requestId}}'" class="btn btn-success">Click here</button></td> -->
+                            </tr>
                             <!-- THE DATA BELOW ARE JUST HARD CODED -->
                             <tr>
                                 <td>John Ken C. Ocsan</td>
