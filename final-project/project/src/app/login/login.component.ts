@@ -34,20 +34,15 @@ export class LoginComponent {
         console.log('Account Type ID: ', this.account.role.myId);
         console.log('Account Type Name: ', this.account.role.roleName);
         if (this.account && this.account.role) {
-          if (this.account.role.roleName === "ADMIN") {
-            // Redirect to admin dashboard
+          if (this.account.role.roleName === "ADMINISTRATION") {
             this.dataService.setDataPersistent('account', this.account);
             this.router.navigate(['/admin-dashboard']);
-            console.log("Supposedly this is working - ADMIN");
-          } else if (this.account.role.roleName === "USER") {
-            // Redirect to user dashboard
-            this.dataService.setDataPersistent('account', this.account);
-            //this.router.navigate(['/index']);
-            //this.errorMessage = "Supposedly this is working - USER";
-            console.log("Supposedly this is working - USER");
           } else if (this.account.role.roleName === "PROFESSOR") {
             this.dataService.setDataPersistent('account', this.account);
-            console.log("Supposedly this is working - PROFESSOR");
+            this.router.navigate(['/professor-dashboard']);
+          } else if (this.account.role.roleName === "STUDENT") {
+            this.dataService.setDataPersistent('account', this.account);
+            this.router.navigate(['/student-dashboard']);
           }
           else{
             this.errorMessage = "Role is not being checked " + account.role;

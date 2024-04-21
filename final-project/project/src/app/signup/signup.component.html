@@ -19,7 +19,7 @@
                         Sign Up Form
                     </div>
                     <div class="card-body">
-                        <form id="signupForm" [formGroup]="newAccount" (ngSubmit)="checkFields()">
+                        <form id="signupForm" [formGroup]="newAccount" (ngSubmit)="checkFields()" *ngIf="isDataLoaded">
                             <div class="form-group">
                                 <label for="id">Student / Employee ID</label>
                                  <input type="text" class="form-control" formControlName="userid" id="userid" name="userid" placeholder="Enter ID" required>

@@ -16,8 +16,10 @@ export class SignupComponent implements OnInit{
   studentArray: Student[];
   employeeArray: Array<Employee>;
   newAccount: FormGroup;
+  isDataLoaded: boolean = false;
+  isUserPresent: boolean = false;
 
-  constructor(private studentService: StudentService, private employeeService: EmployeeService,private accountService: AccountService, private fb: FormBuilder, private router: Router) {
+  constructor(private studentService: StudentService, private employeeService: EmployeeService, private accountService: AccountService, private fb: FormBuilder, private router: Router) {
     this.newAccount = this.fb.group({
       userid: '',
       username: '',
@@ -26,13 +28,21 @@ export class SignupComponent implements OnInit{
     });
   }
   ngOnInit(): void {
+    this.isDataLoaded = true;
     this.studentService.getStudents().subscribe(res => {
       this.studentArray = res;
+      if(res.length === 0) {
+        this.isDataLoaded = false;
+      }
     })    
 
     this.employeeService.getEmployees().subscribe(res => {
       this.employeeArray = res;
-    })
+      if(res.length === 0) {
+        this.isDataLoaded = false;
+      }
+    } 
+  )
   }
 
   getCurrentDate(): string {
@@ -46,22 +56,27 @@ export class SignupComponent implements OnInit{
 
   createAccount() {
     const accountData = new FormData();
+    this.checkUserIsPresent();
     accountData.append('username', this.newAccount.value.username);
     accountData.append('password', this.newAccount.value.password);
     accountData.append('dateCreated',this.getCurrentDate());
-    accountData.append('userID',this.checkUserIsPresent());
+    accountData.append('userID',this.newAccount.value.userid);
     accountData.append('role',this.newAccount.value.roleid);
-    this.accountService.createAccount(accountData)
-    .subscribe(
-      (response) => {
-        console.log('Account added:', response);
-        console.log('UserID: ',this.newAccount.value.userid);
-        alert('This is working!');
-      },
-      (error) => {
-        console.error('Error adding request:', error);
+    if (this.isUserPresent){    
+      this.accountService.createAccount(accountData)
+      .subscribe(
+        (response) => {
+          console.log('Account added:', response);
+          console.log('UserID: ',this.newAccount.value.userid);
+          alert('This is working!');
+        },
+        (error) => {
+          console.error('Error adding request:', error);
+        }
+      );}
+      else {
+        alert ('ID entered is invalid');
       }
-    );
   }
 
 
@@ -73,28 +88,34 @@ export class SignupComponent implements OnInit{
       alert('Passwords do not match. Please try again.');
     } else {
       this.createAccount();
-      this.router.navigate(['/login']);
+      //this.router.navigate(['/login']);
     }
   }
 
-  checkUserIsPresent(): string {
+  checkUserIsPresent(): void {
 
     if (this.studentArray.length !== 0)  {
-    for (let i = 0; i <= this.studentArray.length; i++){
-        if (this.newAccount.value.userid === this.studentArray[i].studentID){
-          this.newAccount.patchValue({ roleid: '1' });  
-          return this.newAccount.value.userid
-        }
-      }
-    } else if (this.employeeArray.length !== 0) {
-      for (let i = 0; i <= this.employeeArray.length; i++){
-        if (this.newAccount.value.userid === this.employeeArray[i].employeeID){
-          this.newAccount.patchValue({ roleid: '2' }); 
-          return this.newAccount.value.userid
-        }
-      }
+      if (!this.isUserPresent){    
+        for (let i = 0; i < this.studentArray.length; i++){
+          if (this.newAccount.value.userid === this.studentArray[i].studentID){
+            this.newAccount.patchValue({ roleid: '3' });
+            this.isUserPresent = true;
+            break;  
+          }
+      }}
+
     } 
-      return null
+    if (this.employeeArray.length !== 0) {
+      if(!this.isUserPresent){
+        for (let i = 0; i < this.employeeArray.length; i++){
+          if (this.newAccount.value.userid === this.employeeArray[i].employeeID){
+            this.newAccount.patchValue({ roleid: '2' }); 
+            this.isUserPresent = true;
+            break;
+        }
+      }
+    }
+    } 
 
   }
 
