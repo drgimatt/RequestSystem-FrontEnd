@@ -32,3 +32,20 @@ button {
 button:hover {
     background-color: #ccc;
 }
+
+a {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #ddd;
+    border: none;   
+    cursor: pointer;
+    text-decoration: none;
+    color: #000000;
+    text-align: center;
+}
+
+a:hover {
+    background-color: #ccc;
+}

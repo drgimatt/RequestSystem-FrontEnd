@@ -8,13 +8,23 @@
 </head>
 <body>
     <div id="sidebar">
-        <button onclick="loadContent('add-subjects')">Add Subjects</button>
+        <!-- links -->
+        <a href="/add-subject">Add Subjects</a>
+        <a href="#">Add Concerns</a>
+        <a href="/add-advisingtype">Add Advising Type</a>
+        <a href="/add-employee">Add Employee</a>
+        <a href="/add-role">Add Role</a>
+        <a href="/add-status">Add Status</a>
+        <a href="/add-student">Add student</a>
+
+        <!-- buttons -->
+        <!-- <button onclick="loadContent('add-subjects')">Add Subjects</button>
         <button onclick="loadContent('add-concerns')">Add Concerns</button>
         <button onclick="loadContent('add-advisingtype')">Add Advising Type</button>
         <button onclick="loadContent('add-employee')">Add Employee</button>
         <button onclick="loadContent('add-role')">Add Role</button>
         <button onclick="loadContent('add-status')">Add Status</button>
-        <button onclick="loadContent('add-student')">Add student</button>
+        <button onclick="loadContent('add-student')">Add student</button> -->
     </div>
     <div id="main-content">
         <h1>Welcome</h1>
@@ -30,6 +40,10 @@
                 })
                 .then(html => document.getElementById('main-content').innerHTML = html)
                 .catch(error => console.error(error));
+        }
+
+        function navigateToPage(page) {
+            window.location.href = page;
         }
     </script>
     
