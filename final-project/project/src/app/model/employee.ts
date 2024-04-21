@@ -14,4 +14,5 @@ export class Employee {
     email: string = '';
     gender: string = '';    
     subjects: Subjects[] = [];
+    dateAdded: Date = new Date();
 }

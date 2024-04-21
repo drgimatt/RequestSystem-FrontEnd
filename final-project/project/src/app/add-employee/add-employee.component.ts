@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from '../service/employee.service';
 import { Router } from '@angular/router';
 import { Department } from '../model/department';
@@ -23,6 +23,7 @@ export class AddEmployeeComponent implements OnInit{
   subjectsList: Subjects[] = [];
   isDataLoaded: boolean = false;
   subjects = new FormControl('');
+  showOtherTextbox: boolean = false;
 
 
 constructor(private departmentService: DepartmentService, private subjectService: SubjectsService,private employeeService: EmployeeService, private fb: FormBuilder, private router: Router){
@@ -35,7 +36,8 @@ constructor(private departmentService: DepartmentService, private subjectService
     department: 0,
     subjects: [],
     email: '',
-    gender: '',    
+    gender: '',
+    otherGender: '',    
     photo: null,
   })
 
@@ -79,9 +81,29 @@ checkFields(): boolean {
   return true;
 }
 
+onGenderChange(event: any) {
+  const selectedValue = event.target.value;
+  if (selectedValue === 'Other') {
+    this.showOtherTextbox = true;
+    this.newEmployee.get('otherGender')?.setValidators(Validators.required);
+  } else {
+    this.showOtherTextbox = false;
+    this.newEmployee.get('otherGender')?.clearValidators();
+    this.newEmployee.get('otherGender')?.setValue('');
+  }
+  this.newEmployee.get('otherGender')?.updateValueAndValidity();
+}
+
 navigateToHome() {
   this.router.navigate(['index']);
 
+}
+
+getCurrentDate(): string {
+  const currentDate = new Date();
+  // Format the date as needed, for example: YYYY-MM-DD
+  const formattedDate = currentDate.toISOString().slice(0, 10);
+  return formattedDate;
 }
 
 onUpload(){
@@ -93,8 +115,13 @@ onUpload(){
   employee.append('middleName', this.newEmployee.value.middleName);
   employee.append('lastName', this.newEmployee.value.lastName);
   employee.append('position', this.newEmployee.value.position);
+  employee.append('dateAdded', this.getCurrentDate())
   employee.append('department', this.newEmployee.value.department.toString());
-  employee.append('gender', this.newEmployee.value.gender);
+  if (this.showOtherTextbox === true){
+    employee.append('gender', this.newEmployee.value.otherGender);
+  } else {
+    employee.append('gender', this.newEmployee.value.gender);
+  }
   employee.append('subjects', this.subjects.getRawValue());
   employee.append('email', this.newEmployee.value.email);        
   this.employeeService.createEmployee(employee)

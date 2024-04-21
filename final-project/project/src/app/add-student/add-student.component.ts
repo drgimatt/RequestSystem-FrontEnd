@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudentService } from '../service/student.service';
 import { Router } from '@angular/router';
 import { DepartmentService } from '../service/department.service';
@@ -17,6 +17,7 @@ export class AddStudentComponent implements OnInit{
   selectedFileName: string; 
   departmentList: Department[] = [];
   isDataLoaded: boolean = false;
+  showOtherTextbox: boolean = false;
 
 constructor(private departmentService: DepartmentService, private studentService: StudentService, private fb: FormBuilder, private router: Router){
   this.newStudent = this.fb.group({
@@ -28,7 +29,8 @@ constructor(private departmentService: DepartmentService, private studentService
     department: 0,
     yearLevel: 0,
     email: '',
-    gender: '',    
+    gender: '',
+    otherGender: '',    
     photo: null,
   })
 
@@ -45,6 +47,26 @@ constructor(private departmentService: DepartmentService, private studentService
   
   }
 
+
+  onGenderChange(event: any) {
+    const selectedValue = event.target.value;
+    if (selectedValue === 'Other') {
+      this.showOtherTextbox = true;
+      this.newStudent.get('otherGender')?.setValidators(Validators.required);
+    } else {
+      this.showOtherTextbox = false;
+      this.newStudent.get('otherGender')?.clearValidators();
+      this.newStudent.get('otherGender')?.setValue('');
+    }
+    this.newStudent.get('otherGender')?.updateValueAndValidity();
+  }
+
+  getCurrentDate(): string {
+    const currentDate = new Date();
+    // Format the date as needed, for example: YYYY-MM-DD
+    const formattedDate = currentDate.toISOString().slice(0, 10);
+    return formattedDate;
+  }
 
 onFileChanged(event){ 
   this.selectedFile = event.target.files[0];
@@ -77,10 +99,15 @@ onUpload(){
   student.append('firstName', this.newStudent.value.firstName);
   student.append('middleName', this.newStudent.value.middleName);
   student.append('lastName', this.newStudent.value.lastName);
+  student.append('dateAdded', this.getCurrentDate());
   student.append('program', this.newStudent.value.program);
   student.append('department', this.newStudent.value.department.toString());
-  student.append('gender', this.newStudent.value.gender);
-  student.append('email', this.newStudent.value.email);        
+  student.append('email', this.newStudent.value.email);  
+  if (this.showOtherTextbox === true){
+    student.append('gender', this.newStudent.value.otherGender);
+  } else {
+    student.append('gender', this.newStudent.value.gender);
+  }      
   student.append('yearLevel', this.newStudent.value.yearLevel.toString());
   this.studentService.createStudent(student)
   .subscribe(
