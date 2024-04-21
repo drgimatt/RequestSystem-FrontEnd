@@ -24,6 +24,8 @@ export class SignupComponent implements OnInit{
       userid: '',
       username: '',
       password: '',
+      phoneNumber: '',
+      birthDate: new Date(),
       roleid: -1,
     });
   }
@@ -61,6 +63,8 @@ export class SignupComponent implements OnInit{
     accountData.append('password', this.newAccount.value.password);
     accountData.append('dateCreated',this.getCurrentDate());
     accountData.append('userID',this.newAccount.value.userid);
+    accountData.append('phoneNumber', this.newAccount.value.phoneNumber);
+    accountData.append('birthDate',this.newAccount.value.birthDate.toString());
     accountData.append('role',this.newAccount.value.roleid);
     if (this.isUserPresent){    
       this.accountService.createAccount(accountData)
@@ -91,6 +95,7 @@ export class SignupComponent implements OnInit{
       //this.router.navigate(['/login']);
     }
   }
+  
 
   checkUserIsPresent(): void {
 

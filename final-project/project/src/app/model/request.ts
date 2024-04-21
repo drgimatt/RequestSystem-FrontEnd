@@ -1,5 +1,6 @@
 import { AdvisingType } from "./advisingtype";
 import { Employee } from "./employee";
+import { Formtype } from "./formtype";
 import { Priority } from "./priority";
 import { Status } from "./status";
 import { Student } from "./student";
@@ -15,8 +16,10 @@ export class Request {
     dateResolved: Date = new Date();
     advisingType: AdvisingType = new AdvisingType();
     subject: Subjects = new Subjects();
-    description: String;
-    actionTaken: String;
+    description: String = "";
+    actionTaken: String = "";
+    phoneNumber: String = "";
+    formType: Formtype = new Formtype();
     priority: Priority = new Priority();
     status: Status = new Status();
 }

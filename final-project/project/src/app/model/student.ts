@@ -12,4 +12,5 @@ export class Student {
     email: string = '';
     gender: string = '';    
     photo: File;
+    dateAdded: Date = new Date();
 }
