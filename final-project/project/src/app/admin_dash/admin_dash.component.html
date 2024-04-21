@@ -70,7 +70,7 @@
                                 <td>{{request.advisingType.name}}</td>
                                 <td>{{request.dateModified}}</td>
                                 <!-- <td>{{request.status.name}}</td> -->
-                                <td><button [ngClass]="{'statusComplete' : request.status.name === 'COMPLETED','statusRejected' : request.status.name === 'REJECTED','statusPending' : request.status.name === 'PENDING'}">{{request.status.name}}</button></td>
+                                <td><button (click)="viewRequest(request.requestId)" [ngClass]="{'statusComplete' : request.status.name === 'COMPLETED','statusRejected' : request.status.name === 'REJECTED','statusPending' : request.status.name === 'PENDING'}">{{request.status.name}}</button></td>
                                 <!-- <td><button type = "button" onclick="document.location='/view-request/{{request.requestId}}'" class="btn btn-success">Click here</button></td> -->
                             </tr>
                             <!-- THE DATA BELOW ARE JUST HARD CODED -->
