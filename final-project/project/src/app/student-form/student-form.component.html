@@ -67,13 +67,17 @@
         </div>
         <h2>Nature of Advising</h2>
         <div class="form-group">
-          <select class="form-control" id="advisingType" formControlName="advisingType" required>
+          <select class="form-control" id="advisingType" formControlName="advisingType" required (change)="onAdvisingTypeChange($event)">
             <option *ngFor="let concern of advisingTypeArray" [value]="concern.id">{{ concern.name }}</option>
             <option value="Others">Others</option> <!-- Add the "Others" option -->
           </select>
         </div>
+        <div class="form-group" *ngIf="showOtherTextBoxAdvisingType">
+          <label for="otherAdvisingType">Other Advising Type</label>
+          <input type="text" formControlName="otherAdvisingType" class="form-control" id="otherAdvisingType" placeholder="Enter other advising type">
+      </div>
         <div class="form-group">
-          <label for="otherDetails">Please provide specific details:</label>
+          <label for="description">Please provide specific details:</label>
           <textarea class="form-control" id="description" formControlName="description" rows="2"></textarea>
         </div>
                
@@ -81,17 +85,22 @@
       <div class="form-type">
         <h2>Form Type</h2>
         <div class="form-group">
-          <select class="form-control" id="formType" formControlName="formType" required>
-            <option *ngFor="let concern of formTypeArray" [value]="concern.id">{{ concern.name }}</option>
+          <select class="form-control" id="formType" formControlName="formType" required (change)="onFormTypeChange($event)">
+            <option *ngFor="let formType of formTypeArray" [value]="formType.id">{{ formType.name }}</option>
             <option value="Others">Others</option> <!-- Add the "Others" option -->
           </select>
         </div>
+        <div class="form-group" *ngIf="showOtherTextBoxFormType">
+          <label for="otherGender">Other Gender</label>
+          <input type="text" formControlName="otherGender" class="form-control" id="otherGender" placeholder="Enter other gender">
+      </div>
       </div>
     </div>
   </div>
 
   <div class="text-center mt-3">
-    <button type="submit" class="btn btn-primary">SUBMIT</button>
+    <button type="submit" style= "margin: 5px;" class="btn btn-primary">SUBMIT</button>
+    <button type="button" onclick="document.location='/student-dashboard'" style= "margin: 5px;" class ="btn btn-primary">CANCEL</button>
   </div>
 </form>  
 </div>

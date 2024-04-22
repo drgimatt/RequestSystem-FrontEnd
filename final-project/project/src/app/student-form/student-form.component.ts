@@ -62,7 +62,9 @@ export class StudentFormComponent implements OnInit {
   priorityArray: Priority[];
   statusArray: Status[];
   isDataLoaded: boolean = false;
-  
+  showOtherTextBoxFormType: boolean = false;
+  showOtherTextBoxAdvisingType: boolean = false;
+
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router, 
               private requestService: RequestService, private advisingTypeService: AdvisingtypeService,
               private subjectsService: SubjectsService, private formTypeService: FormtypeService,
@@ -130,6 +132,32 @@ export class StudentFormComponent implements OnInit {
       priority: '',
       status: '',
     });
+  }
+
+  onFormTypeChange(event: any) {
+    const selectedValue = event.target.value;
+    if (selectedValue === 'Others') {
+      this.showOtherTextBoxFormType = true;
+      this.studentForm.get('otherFormType')?.setValidators(Validators.required);
+    } else {
+      this.showOtherTextBoxFormType = false;
+      this.studentForm.get('otherFormType')?.clearValidators();
+      this.studentForm.get('otherFormType')?.setValue('');
+    }
+    this.studentForm.get('otherFormType')?.updateValueAndValidity();
+  }
+
+  onAdvisingTypeChange(event: any) {
+    const selectedValue = event.target.value;
+    if (selectedValue === 'Others') {
+      this.showOtherTextBoxAdvisingType = true;
+      this.studentForm.get('otherAdvisingType')?.setValidators(Validators.required);
+    } else {
+      this.showOtherTextBoxAdvisingType = false;
+      this.studentForm.get('otherAdvisingType')?.clearValidators();
+      this.studentForm.get('otherAdvisingType')?.setValue('');
+    }
+    this.studentForm.get('otherAdvisingType')?.updateValueAndValidity();
   }
   
   getCurrentDate(): string {
