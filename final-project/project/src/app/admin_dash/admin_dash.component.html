@@ -12,7 +12,8 @@
     <header>
         <img src="/assets/logo.svg" height="50px" alt="Your Logo">
         <nav>
-            <button class="signout" type="button" value="Sign Out">Sign Out</button>
+            <button style="margin:5px"class="signout" type="button" onclick = "document.location='/management'">Manage Options</button>
+            <button style="margin:5px"class="signout" type="button" (click) = "onSignOut()">Sign Out</button>
         </nav>
     </header>
     <!-- section below is the page title -->
@@ -50,9 +51,9 @@
                             <option>Unresolved</option>
                         </select>
                     </div>
-                    <div class="managementButton">
+                    <!-- <div class="managementButton">
                         <a href="/management">Manage Options</a>
-                    </div>
+                    </div> -->
                 </div>
                 <div style="overflow-x:auto; overflow-y: auto; height: 325px;">
                     <table class="table table-striped">

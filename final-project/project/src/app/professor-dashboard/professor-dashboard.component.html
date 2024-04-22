@@ -15,7 +15,7 @@
             <img src="/assets/logo.svg" height="50px" alt="Your Logo">
         </a>
         <nav>
-            <button class="signout" type="button" value="Sign Out">Sign Out</button>
+            <button style="margin:5px"class="signout" type="button" (click) = "onSignOut()">Sign Out</button>
         </nav>
     </header>
     <!-- section below is the page title -->
@@ -74,8 +74,18 @@
                                 <th scope="col">Status</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody *ngIf="isDataLoaded">
                             <!-- table data -->
+                            <tr *ngFor="let request of requests">
+                                <td>{{request.student.firstName + " " +request.student.lastName}}</td>
+                                <td>{{request.student.studentID}}</td>
+                                <td>{{request.student.yearLevel+ " - " + request.student.program}}</td>
+                                <td>{{request.advisingType.name}}</td>
+                                <td>{{request.dateModified}}</td>
+                                <!-- <td>{{request.status.name}}</td> -->
+                                <td><button (click)="viewRequest(request.requestId)" [ngClass]="{'statusComplete' : request.status.name === 'COMPLETED','statusRejected' : request.status.name === 'REJECTED','statusPending' : request.status.name === 'PENDING'}">{{request.status.name}}</button></td>
+                                <!-- <td><button type = "button" onclick="document.location='/view-request/{{request.requestId}}'" class="btn btn-success">Click here</button></td> -->
+                            </tr>
                             <!-- THE DATA BELOW ARE JUST HARD CODED -->
                             <tr>
                                 <td>John Ken C. Ocsan</td>

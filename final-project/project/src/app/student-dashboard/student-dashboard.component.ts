@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { RequestService } from '../service/request.service';
 import { Student } from '../model/student';
-import { StudentService } from '../service/student.service';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -16,7 +15,6 @@ export class StudentDashboardComponent implements OnInit{
   requests: Request[] = [];
   isDataLoaded: boolean = false;
   account: Account;
-  studentArray: Student[];
   user: Student;
 
   constructor(private requestService: RequestService, private router: Router, private dataService: DataService) {}
@@ -24,18 +22,18 @@ export class StudentDashboardComponent implements OnInit{
 
   ngOnInit(): void {
     this.user = this.dataService.getDataPersistent('model');
+    this.account = this.dataService.getDataPersistent('account');
     this.requestService.getRequests().subscribe((data: Request[]) => {
         this.requests = data;
         this.isDataLoaded = true;
       });
-  
+    //this.accountCheck();
   }
 
   onSignOut() {
     this.dataService.removeDataPersistent('model');
     this.dataService.removeDataPersistent('account');
     this.router.navigate(['/index']);
-  
   }
 
   viewRequest(requestID: number){
@@ -52,8 +50,7 @@ export class StudentDashboardComponent implements OnInit{
 
 
   accountCheck(){
-    this.account = this.dataService.getDataPersistent('account');
-    if (this.account == null || this.account.role.roleName === "ADMIN"){ 
+    if (this.account == null || this.user == null || this.account.role.roleName === "ADMINISTRATION" || this.account.role.roleName === "PROFESSOR"){ 
       this.router.navigate(['index']);
     }
   }

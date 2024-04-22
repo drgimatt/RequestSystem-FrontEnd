@@ -4,6 +4,7 @@ import { Account } from '../model/account';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { RequestService } from '../service/request.service';
+import { Employee } from '../model/employee';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -14,15 +15,25 @@ export class AdminDashboardComponent implements OnInit{
   requests: Request[] = [];
   isDataLoaded: boolean = false;
   account: Account;
+  user: Employee;
 
   constructor(private requestService: RequestService, private router: Router, private dataService: DataService) {}
 
 
 ngOnInit(): void {
+  this.user = this.dataService.getDataPersistent('model');
+  this.account = this.dataService.getDataPersistent('account');
   this.requestService.getRequests().subscribe((data: Request[]) => {
       this.requests = data;
       this.isDataLoaded = true;
     });
+    //this.accountCheck();
+}
+
+onSignOut() {
+  this.dataService.removeDataPersistent('model');
+  this.dataService.removeDataPersistent('account');
+  this.router.navigate(['/index']);
 
 }
 
@@ -40,11 +51,9 @@ sortRequestsAlphabetically() {
 
 
 accountCheck(){
-  this.account = this.dataService.getDataPersistent('account');
-  if (this.account == null || this.account.role.roleName === "ADMIN"){ 
+  if (this.account == null || this.user == null || this.account.role.roleName === "STUDENT" || this.account.role.roleName === "PROFESSOR"){ 
     this.router.navigate(['index']);
   }
 }
-
 
 }
