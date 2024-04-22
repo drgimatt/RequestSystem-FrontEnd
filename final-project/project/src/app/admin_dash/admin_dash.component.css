@@ -163,6 +163,29 @@ footer {
 thead, tr {
     text-align: center;
 }
+.managementButton a {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #FFFFFF;
+    border: none;   
+    cursor: pointer;
+    text-decoration: none;
+    color: #940C0C;
+    text-align: center;
+    border-radius: 20px;
+    border: solid 1px #940C0C;
+    transition: 0.1s linear;
+}
+.managementButton a:hover {
+    background-color: #940C0C;
+    color: #FFFFFF;
+}
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
 /* table button status */
 .statusComplete {
     padding: 0px 5px 0px 5px;
