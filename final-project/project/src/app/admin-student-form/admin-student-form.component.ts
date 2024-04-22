@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin-student-form.component.css']
 })
 export class AdminStudentFormComponent {
-  options: string[] = ['Thesis/Design Subject concerns', 'Requirements in Courses Enrolled', 'Mentoring/Clarification on the Topic of the Subjects Enrolled']; // Example options, replace with your data
+  options: string[] = ['Thesis/Design Subject concerns', 'Requirements in Courses Enrolled'];
   newOption: string = '';
 
   constructor() { }
@@ -26,7 +26,7 @@ export class AdminStudentFormComponent {
   deleteOption(option: string) {
     const index = this.options.indexOf(option);
     if (index !== -1) {
-      this.options.splice(index, 1); // Remove the option from the array
+      this.options.splice(index, 1); 
     }
   }
 }
