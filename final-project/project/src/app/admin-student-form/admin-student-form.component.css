@@ -48,14 +48,27 @@ body {
   align-items: center;
 }
 
-footer {
-  background-color: #940C0C;
+.bg-info {
+  background-color: #940C0C !important;
   color: white;
-  padding: 10px; 
+}
+
+.text-center {
   text-align: center;
+}
+
+.text-lg-start {
+  text-align: left;
+}
+
+.fixed-bottom {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
+}
+
+.footer-content {
+  padding: 60px;
   font-weight: 300;
 }
