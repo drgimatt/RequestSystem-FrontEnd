@@ -21,20 +21,20 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <!--<a class="nav-link" (click) = "navigateToHome()" >Home</a> -->
+                <!-- <li class="nav-item active">
+                    <a class="nav-link" (click) = "navigateToHome()" >Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/aboutus">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">Contact</a>
-                </li>
+                </li> -->
             </ul>
         </div>
        
-        <a class="btn btn-outline-danger ml-2" href="/login">Login</a>
-        <a class="btn btn-danger ml-2" href="/inquire">Inquire for Completion</a>
+        <!-- <a class="btn btn-outline-danger ml-2" href="/login">Login</a>
+        <a class="btn btn-danger ml-2" href="/inquire">Inquire for Completion</a> -->
     </nav>
     <div style = "padding: 30px">
       
@@ -44,69 +44,47 @@
       <h2>Student Information</h2>
       
         <div class="form-group">
-          <input type="number" class="form-control" id="studentNumber" formControlName="studentNumber" placeholder="Student Number" required>
+          <input type="number" class="form-control" id="studentNumber" value = "{{user.studentID}}" placeholder="{{user.studentID}}" readonly required>
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" id="studentName" formControlName="studentName" placeholder="Student's Name" readonly required>
+          <input type="text" class="form-control" id="studentName" value = "{{user.firstName + ' ' + user.lastName}}" placeholder="{{user.firstName + ' ' + user.lastName}}" readonly required>
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" id="programYear" formControlName="programYear" placeholder="Program/Year" readonly required>
+          <input type="text" class="form-control" id="programYear" value = "{{user.yearLevel+ ' - ' + user.program}}" placeholder="{{user.yearLevel+ ' - ' + user.program}}" readonly required>
         </div>
         <div class="form-group">
-          <input type="email" class="form-control" id="emailAddress" formControlName="emailAddress" placeholder="Email Address" readonly required>
+          <input type="email" class="form-control" id="emailAddress" value = "{{user.email}}" placeholder="{{user.email}}" readonly required>
         </div>
         <div class="form-group">
-          <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" placeholder="Phone Number" readonly required>
+          <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" value = "{{account.phoneNumber}}" placeholder="{{account.phoneNumber}}" readonly required>
         </div>
 
     </div>
     <div class="right-section">
       <div class="nature-advising">
+        <div class="form-group">
+          <input type="text" class="form-control" id="title" formControlName="title" placeholder="Title" required>
+        </div>
         <h2>Nature of Advising</h2>
         <div class="form-group">
-          <select class="form-control" id="concern" formControlName="concern" required>
-            <option *ngFor="let concern of concerns" [value]="concern">{{ concern }}</option>
+          <select class="form-control" id="advisingType" formControlName="advisingType" required>
+            <option *ngFor="let concern of advisingTypeArray" [value]="concern.id">{{ concern.name }}</option>
             <option value="Others">Others</option> <!-- Add the "Others" option -->
           </select>
         </div>
         <div class="form-group">
           <label for="otherDetails">Please provide specific details:</label>
-          <textarea class="form-control" id="otherDetails" formControlName="otherDetails" rows="2"></textarea>
+          <textarea class="form-control" id="description" formControlName="description" rows="2"></textarea>
         </div>
                
       </div>
       <div class="form-type">
         <h2>Form Type</h2>
         <div class="form-group">
-          <!-- Peer Advising -->
-          <div class="radio-wrapper">
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="peerAdvising" formControlName="formType" name="formType" value="Peer Advising at W501-Intramuros/R203-Makati" required>
-              <label class="form-check-label" for="peerAdvising">Peer Advising at W501-Intramuros/R203-Makati</label>
-            </div>
-          </div>
-          <!-- Career Advising -->
-          <div class="radio-wrapper">
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="careerAdvising" formControlName="formType" name="formType" value="Career Advising at Center for Career Services" required>
-              <label class="form-check-label" for="careerAdvising">Career Advising at Center for Career Services</label>
-            </div>
-          </div>
-          <!-- Counseling -->
-          <div class="radio-wrapper">
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="counseling" formControlName="formType" name="formType" value="Counseling of Personal Concerns at Center for Guidance and Counseling" required>
-              <label class="form-check-label" for="counseling">Counseling of Personal Concerns at Center for Guidance and Counseling</label>
-            </div>
-          </div>
-          <!-- Other Office -->
-          <div class="radio-wrapper">
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="otherOffice" formControlName="formType" name="formType" value="Other Office" required>
-              <label class="form-check-label" for="otherOffice">Other Office:</label>
-              <textarea class="form-control" id="otherOfficeInput" formControlName="otherOfficeInput" rows="3"></textarea>
-            </div>
-          </div>
+          <select class="form-control" id="formType" formControlName="formType" required>
+            <option *ngFor="let concern of formTypeArray" [value]="concern.id">{{ concern.name }}</option>
+            <option value="Others">Others</option> <!-- Add the "Others" option -->
+          </select>
         </div>
       </div>
     </div>
@@ -123,9 +101,4 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>  
-<footer>
-    <div class="text-center p-3">
-        &copy; Mapúa University | Center of Student Advising
-    </div>
-  </footer>
 </html>

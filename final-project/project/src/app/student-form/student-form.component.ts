@@ -1,5 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Student } from '../model/student';
+import { DataService } from '../data.service';
+import { Account } from '../model/account';
+import { AdvisingtypeService } from '../service/advisingtype.service';
+import { Router } from '@angular/router';
+import { RequestService } from '../service/request.service';
+import { SubjectsService } from '../service/subjects.service';
+import { FormtypeService } from '../service/formtype.service';
+import { PriorityService } from '../service/priority.service';
+import { StatusService } from '../service/status.service';
+import { AdvisingType } from '../model/advisingtype';
+import { Subjects } from '../model/subjects';
+import { Formtype } from '../model/formtype';
+import { Priority } from '../model/priority';
+import { Status } from '../model/status';
 
 interface Request {
   requestId: number;
@@ -39,54 +54,119 @@ export class StudentFormComponent implements OnInit {
     'Concerns regarding Personal/Family, etc.'
   ];
 
-  constructor(private fb: FormBuilder) {}
+  user: Student;
+  account: Account;
+  advisingTypeArray: AdvisingType[];
+  subjectsArray: Subjects[];
+  formTypeArray: Formtype[];
+  priorityArray: Priority[];
+  statusArray: Status[];
+  isDataLoaded: boolean = false;
+  
+  constructor(private fb: FormBuilder, private dataService: DataService, private router: Router, 
+              private requestService: RequestService, private advisingTypeService: AdvisingtypeService,
+              private subjectsService: SubjectsService, private formTypeService: FormtypeService,
+              private priorityService: PriorityService, private statusService: StatusService) {}
 
   ngOnInit() {
+    this.advisingTypeService.getTypes().subscribe((data: AdvisingType[]) => {
+      this.advisingTypeArray = data;
+    },
+    (error) => {
+      this.isDataLoaded = false;
+    }
+  );
+    this.formTypeService.getFormTypes().subscribe((data: Formtype[]) => {
+      this.formTypeArray = data;
+    },
+    (error) => {
+      this.isDataLoaded = false;
+    }
+  );
+    this.priorityService.getPriorities().subscribe((data: Priority[]) => {
+      this.priorityArray = data;
+    },
+    (error) => {
+      this.isDataLoaded = false;
+    }
+  );
+    this.statusService.getStatuses().subscribe((data: Status[]) => {
+      this.statusArray = data;
+    },
+    (error) => {
+      this.isDataLoaded = false;
+    }
+  );      
+    this.user = this.dataService.getDataPersistent('model');
+    this.account = this.dataService.getDataPersistent('account');
     this.initializeForm();
   }
 
   initializeForm() {
+    // this.studentForm = this.fb.group({
+    //   studentNumber: ['', Validators.required],
+    //   studentName: ['', Validators.required],
+    //   programYear: ['', Validators.required],
+    //   emailAddress: ['', [Validators.required, Validators.email]],
+    //   phoneNumber: ['', Validators.required],
+    //   concern: ['', Validators.required],
+    //   formType: ['', Validators.required],
+    //   otherOffice: [''],
+    //   otherDetails: [''] 
+    // });
     this.studentForm = this.fb.group({
-      studentNumber: ['', Validators.required],
-      studentName: ['', Validators.required],
-      programYear: ['', Validators.required],
-      emailAddress: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', Validators.required],
-      concern: ['', Validators.required],
-      formType: ['', Validators.required],
-      otherOffice: [''],
-      otherDetails: [''] 
+      student: '',
+      title: '',
+      employees: '',
+      dateCreated: this.getCurrentDate(),
+      dateModified: this.getCurrentDate(),
+      dateResolved: '',
+      advisingType: '',
+      subject: '',
+      description: '',
+      actionTaken: '',
+      phoneNumber: this.account.phoneNumber.toString(),
+      formType: '',
+      priority: '',
+      status: '',
     });
   }
   
-  
+  getCurrentDate(): string {
+    const currentDate = new Date();
+    // Format the date as "YYYY-MM-DD HH:mm:ss"
+    const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
+    return formattedDate;
+  }
 
   onSubmit() {
-    if (this.studentForm.valid) {
-      const request: Request = {
-        requestId: 0, 
-        student: {
-          studentNumber: this.studentForm.value.studentNumber,
-          studentName: this.studentForm.value.studentName,
-          programYear: this.studentForm.value.programYear,
-          emailAddress: this.studentForm.value.emailAddress,
-          phoneNumber: this.studentForm.value.phoneNumber,
-        },
-        title: '', 
-        dateCreated: new Date(),
-        dateModified: new Date(),
-        dateResolved: new Date(),
-        advisingType: this.studentForm.value.formType, // Assuming formType corresponds to advisingType
-        subject: '', 
-        description: this.studentForm.value.otherOffice || '',
-        actionTaken: '',
-        priority: '', 
-        status: '' 
-      };
-      console.log("Form submitted!", request);
-    } else {
-      console.log("Form is invalid!");
-      // Handle invalid form
-    }
+    const request = new FormData();
+    request.append('student',this.user.myId.toString());
+    //request.append('employees', null);
+    request.append('title', this.studentForm.value.title);
+    request.append('dateCreated',this.getCurrentDate());
+    request.append('dateModified',this.getCurrentDate());
+    //request.append('dateResolved',null);
+    request.append('advisingType',this.studentForm.value.advisingType.toString());
+    request.append('subject', this.studentForm.value.subject.toString());
+    request.append('description',this.studentForm.value.description);
+    request.append('actionTaken',this.studentForm.value.actiontaken);
+    request.append('phoneNumber',this.account.phoneNumber.toString());
+    request.append('formType',this.studentForm.value.formType.toString());
+    //request.append('priority',"");
+    request.append('status',"2");
+    this.requestService.createRequest(request)
+    .subscribe(
+      (response) => {
+        console.log('Request added:', response);
+        console.log(request);
+        alert('This is working!');
+      },
+      (error) => {
+        console.log(request);
+        console.error('Error adding request:', error);
+      }
+    ); 
+    //this.router.navigate(['/student-dashboard']);
   }
 }

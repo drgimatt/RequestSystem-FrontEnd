@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AccountService } from '../service/account.service';
 import { Router } from '@angular/router';
 import { Account } from '../model/account';
 import { DataService } from '../data.service';
+import { Student } from '../model/student';
+import { Employee } from '../model/employee';
+import { EmployeeService } from '../service/employee.service';
+import { StudentService } from '../service/student.service';
 
 @Component({
   selector: 'app-login',
@@ -11,14 +15,24 @@ import { DataService } from '../data.service';
   styleUrls: ['./login.component.css'],
  
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   accountCheck: FormGroup;
   account : Account;
   errorMessage: string; 
-  constructor(private accountService: AccountService, private fb: FormBuilder, private router: Router, private dataService: DataService) {
+  studentArray: Student[];
+  employeeArray: Employee[];
+  constructor(private employeeService: EmployeeService, private studentService: StudentService, private accountService: AccountService, private fb: FormBuilder, private router: Router, private dataService: DataService) {
     this.accountCheck = this.fb.group({
       username: '',
       password: '',
+    });
+  }
+  ngOnInit(): void {
+    this.studentService.getStudents().subscribe((data: Student[]) => {
+      this.studentArray = data;
+    });
+    this.employeeService.getEmployees().subscribe((data: Employee[]) => {
+      this.employeeArray = data;
     });
   }
 
@@ -34,14 +48,15 @@ export class LoginComponent {
         console.log('Account Type ID: ', this.account.role.myId);
         console.log('Account Type Name: ', this.account.role.roleName);
         if (this.account && this.account.role) {
+          this.dataService.setDataPersistent('account', this.account);
           if (this.account.role.roleName === "ADMINISTRATION") {
-            this.dataService.setDataPersistent('account', this.account);
+            this.getPersonModel("EMPLOYEE");
             this.router.navigate(['/admin-dashboard']);
           } else if (this.account.role.roleName === "PROFESSOR") {
-            this.dataService.setDataPersistent('account', this.account);
+            this.getPersonModel("EMPLOYEE");
             this.router.navigate(['/professor-dashboard']);
           } else if (this.account.role.roleName === "STUDENT") {
-            this.dataService.setDataPersistent('account', this.account);
+            this.getPersonModel("STUDENT");
             this.router.navigate(['/student-dashboard']);
           }
           else{
@@ -62,4 +77,22 @@ export class LoginComponent {
 
     }
 
+    getPersonModel(Type: string){
+      if(Type === "STUDENT"){  
+            for (let i = 0; i < this.studentArray.length; i++){
+              if (this.account.userID === this.studentArray[i].studentID){
+                this.dataService.setDataPersistent('model', this.studentArray[i]);
+                break;  
+              }
+          }
+      } if(Type === "EMPLOYEE"){  
+        for (let i = 0; i < this.employeeArray.length; i++){
+          if (this.account.userID === this.employeeArray[i].employeeID){
+            this.dataService.setDataPersistent('model', this.employeeArray[i]);
+            break;  
+          }
+      }
+      
+    }
+  }
 }

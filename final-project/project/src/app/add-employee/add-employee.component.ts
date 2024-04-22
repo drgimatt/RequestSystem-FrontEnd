@@ -101,8 +101,8 @@ navigateToHome() {
 
 getCurrentDate(): string {
   const currentDate = new Date();
-  // Format the date as needed, for example: YYYY-MM-DD
-  const formattedDate = currentDate.toISOString().slice(0, 10);
+  // Format the date as "YYYY-MM-DD HH:mm:ss"
+  const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
   return formattedDate;
 }
 

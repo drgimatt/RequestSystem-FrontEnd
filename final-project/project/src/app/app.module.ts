@@ -19,6 +19,7 @@ import { StudentFormComponent } from './student-form/student-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SignupComponent } from './signup/signup.component';
 import { RequestFormComponent } from './request-form/request-form.component';
+import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
 import { CommonModule } from '@angular/common';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { UserViewDogInfoComponent } from './user-view-dog-info/user-view-dog-info.component';
@@ -38,6 +39,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 @NgModule({
   declarations: [
     AppComponent,
+    StudentDashboardComponent,
     AdminDashboardComponent,
     DashboardComponent,
     IndexComponent,
@@ -72,7 +74,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     FormsModule,
     CommonModule,
     NgbModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   providers: [
     provideAnimationsAsync()

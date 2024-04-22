@@ -49,12 +49,10 @@ export class SignupComponent implements OnInit{
 
   getCurrentDate(): string {
     const currentDate = new Date();
-    // Format the date as needed, for example: YYYY-MM-DD
-    const formattedDate = currentDate.toISOString().slice(0, 10);
+    // Format the date as "YYYY-MM-DD HH:mm:ss"
+    const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
     return formattedDate;
   }
-
-
 
   createAccount() {
     const accountData = new FormData();
@@ -98,7 +96,7 @@ export class SignupComponent implements OnInit{
   
 
   checkUserIsPresent(): void {
-
+    this.isUserPresent = false;
     if (this.studentArray.length !== 0)  {
       if (!this.isUserPresent){    
         for (let i = 0; i < this.studentArray.length; i++){
@@ -114,12 +112,17 @@ export class SignupComponent implements OnInit{
       if(!this.isUserPresent){
         for (let i = 0; i < this.employeeArray.length; i++){
           if (this.newAccount.value.userid === this.employeeArray[i].employeeID){
-            this.newAccount.patchValue({ roleid: '2' }); 
+            if (this.employeeArray[i].position === "Professor"){
+              this.newAccount.patchValue({ roleid: '2' }); 
+            }
+            else{
+              this.newAccount.patchValue({ roleid: '1' }); 
+            }
             this.isUserPresent = true;
             break;
+          }
         }
       }
-    }
     } 
 
   }
