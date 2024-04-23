@@ -22,7 +22,6 @@ export class AddAdvisingtypeComponent {
 
   navigateToHome() {
     this.router.navigate(['index']);
-
   }
 
   checkFields(): boolean {

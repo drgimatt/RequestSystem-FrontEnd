@@ -77,6 +77,10 @@ export class LoginComponent implements OnInit{
 
     }
 
+    navigateToHome() {
+      this.router.navigate(['index']);
+    }
+
     getPersonModel(Type: string){
       if(Type === "STUDENT"){  
             for (let i = 0; i < this.studentArray.length; i++){

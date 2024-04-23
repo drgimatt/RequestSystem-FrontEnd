@@ -4,7 +4,7 @@ import { Student } from '../model/student';
 import { DataService } from '../data.service';
 import { Account } from '../model/account';
 import { AdvisingtypeService } from '../service/advisingtype.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RequestService } from '../service/request.service';
 import { SubjectsService } from '../service/subjects.service';
 import { FormtypeService } from '../service/formtype.service';
@@ -15,27 +15,8 @@ import { Subjects } from '../model/subjects';
 import { Formtype } from '../model/formtype';
 import { Priority } from '../model/priority';
 import { Status } from '../model/status';
+import { Request } from '../model/request';
 
-interface Request {
-  requestId: number;
-  student: {
-    studentNumber: string;
-    studentName: string;
-    programYear: string;
-    emailAddress: string;
-    phoneNumber: string;
-  };
-  title: string;
-  dateCreated: Date;
-  dateModified: Date;
-  dateResolved: Date;
-  advisingType: string; 
-  subject: string; 
-  description: string;
-  actionTaken: string;
-  priority: string; 
-  status: string; 
-}
 
 @Component({
   selector: 'app-student-form',
@@ -61,6 +42,8 @@ export class StudentFormComponent implements OnInit {
   formTypeArray: Formtype[];
   priorityArray: Priority[];
   statusArray: Status[];
+  request: Request;
+  forSubmitting: boolean = true;
   isDataLoaded: boolean = false;
   showOtherTextBoxFormType: boolean = false;
   showOtherTextBoxAdvisingType: boolean = false;
@@ -68,9 +51,40 @@ export class StudentFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router, 
               private requestService: RequestService, private advisingTypeService: AdvisingtypeService,
               private subjectsService: SubjectsService, private formTypeService: FormtypeService,
-              private priorityService: PriorityService, private statusService: StatusService) {}
+              private priorityService: PriorityService, private statusService: StatusService, private route: ActivatedRoute) {
+                this.studentForm = this.fb.group({
+                  student: '',
+                  title: '',
+                  employees: '',
+                  dateCreated: this.getCurrentDate(),
+                  dateModified: this.getCurrentDate(),
+                  dateResolved: '',
+                  advisingType: '',
+                  subject: '',
+                  description: '',
+                  actionTaken: '',
+                  phoneNumber: '',
+                  formType: '',
+                  priority: '',
+                  status: '',
+                });
+              }
 
   ngOnInit() {
+    this.route.params.forEach((params: Params) => {
+      if (params['id'] !== undefined) {
+        this.forSubmitting = false;
+        this.studentForm.get('');
+        const id = params['id'];
+        this.requestService.getRequest(id).subscribe(data => {
+          this.request = data; 
+          this.initializeForm();
+        });
+      } else {
+        this.forSubmitting = true;
+      }
+    });  
+
     this.advisingTypeService.getTypes().subscribe((data: AdvisingType[]) => {
       this.advisingTypeArray = data;
     },
@@ -101,36 +115,26 @@ export class StudentFormComponent implements OnInit {
   );      
     this.user = this.dataService.getDataPersistent('model');
     this.account = this.dataService.getDataPersistent('account');
-    this.initializeForm();
+    //this.initializeForm();
   }
 
   initializeForm() {
-    // this.studentForm = this.fb.group({
-    //   studentNumber: ['', Validators.required],
-    //   studentName: ['', Validators.required],
-    //   programYear: ['', Validators.required],
-    //   emailAddress: ['', [Validators.required, Validators.email]],
-    //   phoneNumber: ['', Validators.required],
-    //   concern: ['', Validators.required],
-    //   formType: ['', Validators.required],
-    //   otherOffice: [''],
-    //   otherDetails: [''] 
-    // });
     this.studentForm = this.fb.group({
-      student: '',
-      title: '',
-      employees: '',
-      dateCreated: this.getCurrentDate(),
-      dateModified: this.getCurrentDate(),
-      dateResolved: '',
-      advisingType: '',
-      subject: '',
-      description: '',
-      actionTaken: '',
-      phoneNumber: this.account.phoneNumber.toString(),
-      formType: '',
-      priority: '',
-      status: '',
+      student: this.request.student,
+      title: this.request.title,
+      employees: this.request.employees,
+      dateCreated: this.request.dateCreated,
+      dateModified: this.request.dateModified,
+      dateResolved: this.request.dateResolved,
+      advisingType: this.request.advisingType.id,
+      subject: this.request.subject,
+      description: this.request.description,
+      actionTaken: this.request.actionTaken,
+      phoneNumber: this.request.phoneNumber,
+      formType: this.request.formType.id,
+      priority: this.request.priority,
+      status: this.request.status,
+      otherGender: this.request.formType.name
     });
   }
 
