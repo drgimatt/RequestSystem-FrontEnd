@@ -49,3 +49,19 @@ a {
 a:hover {
     background-color: #ccc;
 }
+
+.banner-image {
+    width: 100%; 
+    height: auto; /* Maintain aspect ratio */
+
+}
+.justify-text {
+    text-align: justify;
+}
+
+.navbar-nav .nav-item.active .nav-link {
+    color: #940C0C !important;
+    font-weight: bold;
+}
+
+

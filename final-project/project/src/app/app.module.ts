@@ -35,6 +35,7 @@ import { AddStatusComponent } from './add-status/add-status.component';
 import { AddAdvisingtypeComponent } from './add-advisingtype/add-advisingtype.component';
 import { AddRoleComponent } from './add-role/add-role.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { ModifyStudentFormComponent } from './modify-student-form/modify-student-form.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     AddStatusComponent,
     AddAdvisingtypeComponent,
     AddRoleComponent,
+    ModifyStudentFormComponent,
   ],
   imports: [
     ReactiveFormsModule,

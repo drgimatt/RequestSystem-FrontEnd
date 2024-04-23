@@ -34,6 +34,8 @@ import { MyRequestsComponent } from './my-requests/my-requests.component';
 import { ShowMyRequestComponent } from './show-my-request/show-my-request.component';
 import { AddDepartmentComponent } from './add-department/add-department.component';
 import {ManagementComponent } from './management/management.component';
+import { ModifyStudentFormComponent } from './modify-student-form/modify-student-form.component';
+
 
 /* const routes: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full' }, 
@@ -195,7 +197,10 @@ const routes: Routes = [
     component: SignupComponent },
   {
     path: 'management',
-    component: ManagementComponent}
+    component: ManagementComponent},
+  {
+    path: 'modify-student-form',
+    component: ModifyStudentFormComponent}
 ];
 
 
