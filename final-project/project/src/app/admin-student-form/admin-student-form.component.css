@@ -5,6 +5,17 @@ body {
   padding-top: 70px; /* Adjust top padding to accommodate fixed navbar */
 }
 
+.containerPop{
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  position: fixed;
+}
+.moodra{
+  flex-grow: 1;
+  overflow: hidden;
+}
+
 .container {
   max-width: 800px;
   margin: auto; /* Center the container horizontally */

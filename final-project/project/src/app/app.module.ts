@@ -3,6 +3,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ManagementComponent } from './management/management.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminDashboardComponent } from './admin_dash/admin_dash.component';
 import { ProfessorDashboardComponent } from './professor-dashboard/professor-dashboard.component';
@@ -36,6 +37,9 @@ import { AddAdvisingtypeComponent } from './add-advisingtype/add-advisingtype.co
 import { AddRoleComponent } from './add-role/add-role.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ModifyStudentFormComponent } from './modify-student-form/modify-student-form.component';
+import { Router, RouterModule } from '@angular/router';
+
+
 
 @NgModule({
   declarations: [
@@ -47,6 +51,7 @@ import { ModifyStudentFormComponent } from './modify-student-form/modify-student
     LoginComponent,
     ProfessorDashboardComponent,
     ContactComponent,
+    ManagementComponent,
     ViewDogInfoComponent,
     AddDogComponent,
     AboutusComponent,
@@ -70,6 +75,7 @@ import { ModifyStudentFormComponent } from './modify-student-form/modify-student
   ],
   imports: [
     ReactiveFormsModule,
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -78,6 +84,7 @@ import { ModifyStudentFormComponent } from './modify-student-form/modify-student
     NgbModule,
     MatSelectModule,
   ],
+  exports:[RouterModule],
   providers: [
     provideAnimationsAsync()
   ],
