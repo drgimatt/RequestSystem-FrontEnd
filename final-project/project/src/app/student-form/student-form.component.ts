@@ -43,7 +43,7 @@ interface Request {
   styleUrls: ['./student-form.component.css']
 })
 export class StudentFormComponent implements OnInit {
-  studentForm!: FormGroup;
+  studentForm: FormGroup;
   concerns = [
     'Thesis/Design Subject concerns',
     'Requirements in Courses Enrolled',
