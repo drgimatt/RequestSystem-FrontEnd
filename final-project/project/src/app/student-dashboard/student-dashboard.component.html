@@ -73,7 +73,7 @@
                                 <td>{{request.student.firstName + " " +request.student.lastName}}</td>
                                 <td>{{request.student.studentID}}</td>
                                 <td>{{request.student.yearLevel+ " - " + request.student.program}}</td>
-                                <td>{{request.advisingType.name}}</td>
+                                <td>{{ request.otherAdvisingType ? (request.advisingType.name + " - " + request.otherAdvisingType) : request.advisingType.name }}</td>
                                 <td>{{request.dateModified}}</td>
                                 <!-- <td>{{request.status.name}}</td> -->
                                 <td><button (click)="viewRequest(request.requestId)" [ngClass]="{'statusComplete' : request.status.name === 'COMPLETED','statusRejected' : request.status.name === 'REJECTED','statusPending' : request.status.name === 'PENDING'}">{{request.status.name}}</button></td>

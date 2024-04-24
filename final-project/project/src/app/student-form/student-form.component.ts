@@ -60,11 +60,13 @@ export class StudentFormComponent implements OnInit {
                   dateModified: this.getCurrentDate(),
                   dateResolved: '',
                   advisingType: '',
+                  otherAdvisingType: '',
                   subject: '',
                   description: '',
                   actionTaken: '',
                   phoneNumber: '',
                   formType: '',
+                  otherFormType: '',
                   priority: '',
                   status: '',
                 });
@@ -127,12 +129,14 @@ export class StudentFormComponent implements OnInit {
       dateModified: this.request.dateModified,
       dateResolved: this.request.dateResolved,
       advisingType: this.request.advisingType.id,
+      otherAdvisingType: this.request.otherAdvisingType,
       subject: this.request.subject,
       description: this.request.description,
       actionTaken: this.request.actionTaken,
       phoneNumber: this.request.phoneNumber,
       formType: this.request.formType.id,
-      priority: this.request.priority,
+      otherFormType: this.request.otherFormType,
+      priority: this.request.priority.id,
       status: this.request.status,
       otherGender: this.request.formType.name
     });
@@ -140,7 +144,7 @@ export class StudentFormComponent implements OnInit {
 
   onFormTypeChange(event: any) {
     const selectedValue = event.target.value;
-    if (selectedValue === 'Others') {
+    if (selectedValue === '4') {
       this.showOtherTextBoxFormType = true;
       this.studentForm.get('otherFormType')?.setValidators(Validators.required);
     } else {
@@ -153,7 +157,7 @@ export class StudentFormComponent implements OnInit {
 
   onAdvisingTypeChange(event: any) {
     const selectedValue = event.target.value;
-    if (selectedValue === 'Others') {
+    if (selectedValue === '8') {
       this.showOtherTextBoxAdvisingType = true;
       this.studentForm.get('otherAdvisingType')?.setValidators(Validators.required);
     } else {
@@ -171,21 +175,38 @@ export class StudentFormComponent implements OnInit {
     return formattedDate;
   }
 
+  private getDateStamp(): string {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = this.padZero(date.getMonth() + 1);
+    const day = this.padZero(date.getDate());
+    const hours = this.padZero(date.getHours());
+    const minutes = this.padZero(date.getMinutes());
+    const seconds = this.padZero(date.getSeconds());
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+  private padZero(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
+  }
+
   onSubmit() {
     const request = new FormData();
     request.append('student',this.user.myId.toString());
     //request.append('employees', null);
     request.append('title', this.studentForm.value.title);
-    request.append('dateCreated',this.getCurrentDate());
-    request.append('dateModified',this.getCurrentDate());
+    request.append('dateCreated',this.getDateStamp());
+    request.append('dateModified',this.getDateStamp());
     //request.append('dateResolved',null);
     request.append('advisingType',this.studentForm.value.advisingType.toString());
     request.append('subject', this.studentForm.value.subject.toString());
     request.append('description',this.studentForm.value.description);
     request.append('actionTaken',this.studentForm.value.actiontaken);
+    request.append('otherFormType',this.studentForm.value.otherFormType);
+    request.append('otherAdvisingType',this.studentForm.value.otherAdvisingType);
     request.append('phoneNumber',this.account.phoneNumber.toString());
     request.append('formType',this.studentForm.value.formType.toString());
-    //request.append('priority',"");
+    request.append('priority',"1");
     request.append('status',"2");
     this.requestService.createRequest(request)
     .subscribe(

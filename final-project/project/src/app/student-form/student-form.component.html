@@ -68,8 +68,7 @@
         <h2>Nature of Advising</h2>
         <div class="form-group">
           <select class="form-control" id="advisingType" formControlName="advisingType" (change)="onAdvisingTypeChange($event)">
-            <option *ngFor="let concern of advisingTypeArray" [value]="concern.id">{{ concern.name }}</option>
-            <option value="Others">Others</option> <!-- Add the "Others" option -->
+            <option *ngFor="let advisingType of advisingTypeArray" [value]="advisingType.id">{{ advisingType.name }}</option>
           </select>
         </div>
         <div class="form-group" *ngIf="showOtherTextBoxAdvisingType">
@@ -87,7 +86,6 @@
         <div class="form-group">
           <select class="form-control" id="formType" formControlName="formType" (change)="onFormTypeChange($event)">
             <option *ngFor="let formType of formTypeArray" [value]="formType.id">{{ formType.name }}</option>
-            <option value="Others">Others</option> <!-- Add the "Others" option -->
           </select>
         </div>
         <div class="form-group" *ngIf="showOtherTextBoxFormType">
