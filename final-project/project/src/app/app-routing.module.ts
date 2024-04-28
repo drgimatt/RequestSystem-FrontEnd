@@ -35,6 +35,7 @@ import { ShowMyRequestComponent } from './show-my-request/show-my-request.compon
 import { AddDepartmentComponent } from './add-department/add-department.component';
 import { ManagementComponent } from './management/management.component';
 import { ModifyStudentFormComponent } from './modify-student-form/modify-student-form.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 /* const routes: Routes = [
@@ -198,6 +199,9 @@ const routes: Routes = [
   {
     path: 'management',
     component: ManagementComponent},
+  {
+    path: 'notification',
+    component: NotificationComponent},
   {
     path: 'modify-student-form',
     component: ModifyStudentFormComponent}
