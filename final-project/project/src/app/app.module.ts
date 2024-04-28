@@ -38,6 +38,7 @@ import { AddRoleComponent } from './add-role/add-role.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ModifyStudentFormComponent } from './modify-student-form/modify-student-form.component';
 import { Router, RouterModule } from '@angular/router';
+import { NotificationComponent } from './notification/notification.component';
 
 
 
@@ -71,6 +72,7 @@ import { Router, RouterModule } from '@angular/router';
     AddStatusComponent,
     AddAdvisingtypeComponent,
     AddRoleComponent,
+    NotificationComponent,
     ModifyStudentFormComponent,
   ],
   imports: [
