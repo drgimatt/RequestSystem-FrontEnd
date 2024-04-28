@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    /* outline: solid 1px black; */
+}
+header {
+    position: relative;
+    width: 100%;
+    padding: 20px 100px;
+    background:#F7F7F7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.signout {
+    background-color: #940C0C;
+    color: #FFFFFF;
+    padding: 4px 40px;
+    border-radius: 12px;
+    border: 1px solid #940C0C;
+}
+.signout:active {
+    background-color: #F7F7F7;
+    color: #940C0C;
+    border: 1px solid #940C0C;
+}
+main {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+footer {
+    position: relative;
+    width: 100%;
+    padding: 20px 0px;
+    background: #940C0C;
+    align-items: center;
+    color: #FFFFFF;
+    margin-top: auto;
+}
+.footer {
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body{
+    background-color: #fcfcfc;
+  }
+  
+  .row{
+    margin:auto;
+    padding: 50px;
+    width: 80%;
+    display: flex;
+    flex-flow: column;
+    box-shadow: 0px 5px 5px rgba(10, 0, 0, 0.1);
+    margin-top: 4%;
+    border: 1px solid #ffffff;
+    
+    .card{
+      width: 100%;
+      margin-bottom: 5px;
+      display: block;
+      transition: opacity 0.3s;
+    }
+  }
+  
+  
+  .card-body{
+    padding: 0.5rem;
+    table{
+      width: 100%;
+      tr{
+        display:flex;
+        td{
+          a.btn{
+            font-size: 0.8rem;
+            padding: 3px;
+          }
+        }
+        td:nth-child(2){
+          text-align:right;
+          justify-content: space-around;
+        }
+      }
+    }
+    
+  }
+  
+  .card-title:before{
+    display:inline-block;
+    font-family: 'Font Awesome\ 5 Free';
+    font-weight:900;
+    font-size: 1.1rem;
+    text-align: center;
+    border: 2px solid grey;
+    border-radius: 100px;
+    width: 30px;
+    height: 30px;
+    padding-bottom: 3px;
+    margin-right: 10px;
+  }
+  
+  .notification-good {
+    .card-body {
+      .card-title:before {
+        color: #90CAF9;
+        border-color: #90CAF9;
+        content: "\F18A";
+      }
+    }
+  }
+  
+  .notification-warning {
+    .card-body {
+      .card-title:before {
+        color: #FFE082;
+        border-color: #FFE082;
+        content: "\f071";
+      }
+    }
+  }
+  
+  .notification-danger {
+    .card-body {
+      .card-title:before {
+        color: #FFAB91;
+        border-color: #FFAB91;
+        content: "\f00d";
+      }
+    }
+  }
+  
+  .notification-reminder {
+    .card-body {
+      .card-title:before {
+        color: #CE93D8;
+        border-color: #CE93D8;
+        content: "\f017";
+      }
+    }
+  }
+  
+  .card.display-none{
+    display: none;
+    transition: opacity 2s;
+  }
+  
+  
+  
