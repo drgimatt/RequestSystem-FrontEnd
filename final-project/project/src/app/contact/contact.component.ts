@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { Account } from '../model/account';
+import emailjs from '@emailjs/browser';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-contact',
@@ -10,7 +12,12 @@ import { Account } from '../model/account';
 })
 export class ContactComponent {
 
-constructor(private router: Router, private dataService: DataService) { }
+form: FormGroup = this.fb.group({
+  from_email: '',
+  message: ''
+});
+
+constructor(private router: Router, private dataService: DataService, private fb: FormBuilder) { }
 
 account : Account;
 
@@ -25,4 +32,12 @@ account : Account;
     }
   }
 
-}
+  async send() {
+    emailjs.init('Lz3yioYNsDIfU1nZC');
+    let response = await emailjs.send("service_70ac89a","template_vvtyqof",{
+    message: this.form.value.message,
+    from_email: this.form.value.from_email,
+    });
+  }
+
+} 

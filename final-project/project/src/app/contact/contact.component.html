@@ -70,10 +70,10 @@
             <!-- Email Inquiry -->
             <div class="col-md-6">
                 <div class="inquiry-area">
-                    <form id="inquiryForm" action="contact.php" method="post">
+                    <form [formGroup] ="form" id="inquiryForm" action="javascript:void(0)" (submit)="send()">
                         <h3 style="color: #940C0C"><strong>Ask us anything!</strong></h3>
-                        <input type="email" name="email" placeholder="Your email">
-                        <textarea name="inquiry" placeholder="Write your inquiry here"></textarea>
+                        <input formControlName="from_email" type="email" name="email" placeholder="Your email">
+                        <textarea formControlName="message" name="inquiry" placeholder="Write your inquiry here"></textarea>
                         <button type="submit" class="btn btn-danger mt-3 custom-button">Submit</button>
                     </form>
                 </div>
