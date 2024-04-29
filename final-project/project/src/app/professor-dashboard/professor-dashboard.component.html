@@ -69,7 +69,7 @@
                                 <th scope="col">Student Name</th>
                                 <th scope="col">Student Number</th>
                                 <th scope="col">Year & Course</th>
-                                <th scope="col">Subject</th>
+                                <th scope="col">Title</th>
                                 <th scope="col">Nature of Advising</th>
                                 <th scope="col">Date Modified</th>
                                 <th scope="col">Status</th>
@@ -81,7 +81,7 @@
                                 <td>{{request.student.firstName + " " +request.student.lastName}}</td>
                                 <td>{{request.student.studentID}}</td>
                                 <td>{{request.student.yearLevel+ " - " + request.student.program}}</td>
-                                <td>{{request.subject.courseCode+ " - " + request.subject.name}}</td>
+                                <td>{{request.title}}</td>
                                 <td>{{request.advisingType.name}}</td>
                                 <td>{{request.dateModified}}</td>
                                 <!-- <td>{{request.status.name}}</td> -->
