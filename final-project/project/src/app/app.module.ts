@@ -39,6 +39,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { ModifyStudentFormComponent } from './modify-student-form/modify-student-form.component';
 import { Router, RouterModule } from '@angular/router';
 import { NotificationComponent } from './notification/notification.component';
+import { AdminStudentFormComponent } from './admin-student-form/admin-student-form.component';
 
 
 
@@ -74,6 +75,7 @@ import { NotificationComponent } from './notification/notification.component';
     AddRoleComponent,
     NotificationComponent,
     ModifyStudentFormComponent,
+    AdminStudentFormComponent,
   ],
   imports: [
     ReactiveFormsModule,

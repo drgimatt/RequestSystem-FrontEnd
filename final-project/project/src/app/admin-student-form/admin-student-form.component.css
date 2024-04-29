@@ -17,13 +17,10 @@ body {
 }
 
 .container {
-  max-width: 800px;
-  margin: auto; /* Center the container horizontally */
-  padding: 30px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    position: fixed;
 }
 
 .form-group {
