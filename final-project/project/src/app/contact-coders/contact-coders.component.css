@@ -1,0 +1,47 @@
+.navbar-nav .nav-item.active .nav-link {
+    color: #940C0C !important;
+    font-weight: bold;
+}
+
+
+body {
+    background-image: url('/assets/contact.jpg'); 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.contact-box {
+    background: rgba(255, 255, 255, 0.8); 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.fill-column-img {
+    max-width: 30%;
+    height: auto;
+}
+
+.navbar-brand img {
+    max-height: 50px;
+}
+
+.team-member-card {
+    margin-bottom: 20px;
+}
+
+.team-member-card .card-img-top {
+    max-height: 200px;
+}
+
+.team-member-card .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.team-member-card .card-text {
+    font-size: 1rem;
+}

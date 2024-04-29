@@ -36,7 +36,7 @@ import { AddDepartmentComponent } from './add-department/add-department.componen
 import { ManagementComponent } from './management/management.component';
 import { ModifyStudentFormComponent } from './modify-student-form/modify-student-form.component';
 import { NotificationComponent } from './notification/notification.component';
-
+import { ContactCodersComponent } from './contact-coders/contact-coders.component';
 
 /* const routes: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full' }, 
@@ -204,7 +204,10 @@ const routes: Routes = [
     component: NotificationComponent},
   {
     path: 'modify-student-form',
-    component: ModifyStudentFormComponent}
+    component: ModifyStudentFormComponent},
+  {
+    path: 'contact-coders',
+    component: ContactCodersComponent}
 ];
 
 
