@@ -23,15 +23,15 @@
         <span class="boldText">List of Course / Program Advising Requests</span>
         <div class="statusContainer">
             <!-- Professor's Name -->
-            <span>Prof. Bautista</span>
+            <span>Prof. {{user.lastName}}</span>
             <!-- Professor Status -->
-            <div class="profStatus">
+            <!-- <div class="profStatus">
                 <select class="form-select form-select-sm" aria-label="Default select example">
                     <option selected disabled>Status</option>
                     <option value="1">Active</option>
                     <option value="2">Inactive</option>
                 </select>
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- search bar -->
@@ -52,14 +52,14 @@
     <main>
         <div class="listContainer">
             <div class="h-100 d-inline-block w-75 p-3">
-                <div class="form-group">
-                    <select class="form-control" id="tableView" formControlName="tableView" >
+                <div class="form-group" [formGroup] = "filterTable">
+                    <select class="form-control" id="tableView" formControlName="tableView" (change)="applyFilter($event)">
                         <!-- hardcoded -->
-                        <option disabled selected>Select Table View</option>
-                        <option>All</option>
-                        <option>Completed</option>
-                        <option>Rejected</option>
-                        <option>Unresolved</option>
+                        <option [selected] = "true" value = "ALL">All</option>
+                        <option value = "PENDING">Unresolved</option>
+                        <option value = "COMPLETED">Completed</option>
+                        <option value = "REJECTED">Rejected</option>
+                        
                     </select>
                 </div>
                 <div style="overflow-x:auto; overflow-y: auto; height: 325px;">
@@ -69,6 +69,7 @@
                                 <th scope="col">Student Name</th>
                                 <th scope="col">Student Number</th>
                                 <th scope="col">Year & Course</th>
+                                <th scope="col">Subject</th>
                                 <th scope="col">Nature of Advising</th>
                                 <th scope="col">Date Modified</th>
                                 <th scope="col">Status</th>
@@ -80,109 +81,14 @@
                                 <td>{{request.student.firstName + " " +request.student.lastName}}</td>
                                 <td>{{request.student.studentID}}</td>
                                 <td>{{request.student.yearLevel+ " - " + request.student.program}}</td>
+                                <td>{{request.subject.courseCode+ " - " + request.subject.name}}</td>
                                 <td>{{request.advisingType.name}}</td>
                                 <td>{{request.dateModified}}</td>
                                 <!-- <td>{{request.status.name}}</td> -->
                                 <td><button (click)="viewRequest(request.requestId)" [ngClass]="{'statusComplete' : request.status.name === 'COMPLETED','statusRejected' : request.status.name === 'REJECTED','statusPending' : request.status.name === 'PENDING'}">{{request.status.name}}</button></td>
                                 <!-- <td><button type = "button" onclick="document.location='/view-request/{{request.requestId}}'" class="btn btn-success">Click here</button></td> -->
                             </tr>
-                            <!-- THE DATA BELOW ARE JUST HARD CODED -->
-                            <tr>
-                                <td>John Ken C. Ocsan</td>
-                                <td>2021200459</td>
-                                <td>3-CS</td>
-                                <td>Peer Advising</td>
-                                <td>22/04/2024</td>
-                                <td><button class="statusComplete">Completed</button></td>
-                            </tr>
-                            <tr>
-                                <td>Harvey B. Hernandez</td>
-                                <td>2021120563</td>
-                                <td>3-IT</td>
-                                <td>Peer Advising</td>
-                                <td>22/04/2024</td>
-                                <td><button class="statusReject">Rejected</button></td>
-                            </tr>
-                            <tr>
-                                <td>Veronica M. Dungao</td>
-                                <td>2021100252</td>
-                                <td>3-IS</td>
-                                <td>Career Advising</td>
-                                <td>22/04/2024</td>
-                                <td><button class="statusPending">Pending</button></td>
-                            </tr>
-                            <tr>
-                                <td>John Ken C. Ocsan</td>
-                                <td>2021200459</td>
-                                <td>3-CS</td>
-                                <td>Peer Advising</td>
-                                <td>22/04/2024</td>
-                                <td><button class="statusComplete">Completed</button></td>
-                            </tr>
-                            <tr>
-                                <td>Harvey B. Hernandez</td>
-                                <td>2021120563</td>
-                                <td>3-IT</td>
-                                <td>Peer Advising</td>
-                                <td>22/04/2024</td>
-                                <td><button class="statusReject">Rejected</button></td>
-                            </tr>
-                            <tr>
-                                <td>Veronica M. Dungao</td>
-                                <td>2021100252</td>
-                                <td>3-IS</td>
-                                <td>Career Advising</td>
-                                <td>22/04/2024</td>
-                                <td><button class="statusPending">Pending</button></td>
-                            </tr>
-                            <tr>
-                                <td>John Ken C. Ocsan</td>
-                                <td>2021200459</td>
-                                <td>3-CS</td>
-                                <td>Peer Advising</td>
-                                <td>22/04/2024</td>
-                                <td><button class="statusComplete">Completed</button></td>
-                            </tr>
-                            <tr>
-                                <td>Harvey B. Hernandez</td>
-                                <td>2021120563</td>
-                                <td>3-IT</td>
-                                <td>Peer Advising</td>
-                                <td>22/04/2024</td>
-                                <td><button class="statusReject">Rejected</button></td>
-                            </tr>
-                            <tr>
-                                <td>Veronica M. Dungao</td>
-                                <td>2021100252</td>
-                                <td>3-IS</td>
-                                <td>Career Advising</td>
-                                <td>22/04/2024</td>
-                                <td><button class="statusPending">Pending</button></td>
-                            </tr>
-                            <tr>
-                                <td>John Ken C. Ocsan</td>
-                                <td>2021200459</td>
-                                <td>3-CS</td>
-                                <td>Peer Advising</td>
-                                <td>22/04/2024</td>
-                                <td><button class="statusComplete">Completed</button></td>
-                            </tr>
-                            <tr>
-                                <td>Harvey B. Hernandez</td>
-                                <td>2021120563</td>
-                                <td>3-IT</td>
-                                <td>Peer Advising</td>
-                                <td>22/04/2024</td>
-                                <td><button class="statusReject">Rejected</button></td>
-                            </tr>
-                            <tr>
-                                <td>Veronica M. Dungao</td>
-                                <td>2021100252</td>
-                                <td>3-IS</td>
-                                <td>Career Advising</td>
-                                <td>22/04/2024</td>
-                                <td><button class="statusPending">Pending</button></td>
-                            </tr>
+
                         </tbody>
                     </table>
                 </div>

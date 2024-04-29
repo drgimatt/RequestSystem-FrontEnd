@@ -38,6 +38,13 @@ body {
   border: 1px solid #ccc;
 }
 
+.form-control-table {
+  padding: 12px; /* Smaller padding for inputs */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 150px;
+}
+
 .btn-primary {
   background-color: #940C0C;
   color: #fff;

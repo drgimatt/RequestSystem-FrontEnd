@@ -57,8 +57,17 @@
         <div class="form-group">
           <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" value = "{{account.phoneNumber}}" placeholder="{{account.phoneNumber}}" readonly required>
         </div>
-
+        <!-- status  -->
+        <select class="form-control-table" id="tableView" formControlName="tableView" >
+          <!-- hardcoded -->
+          <option disabled selected>Select Status</option>
+          <option>Pending</option>
+          <option>Cancelled</option>
+          <option>Resolved</option>
+      </select>
     </div>
+
+    
     <div class="right-section">
       <div class="nature-advising">
         <div class="form-group">
@@ -97,10 +106,10 @@
 
   <!-- Modify the margins accordingly, thanks! -->
   <div class="text-center mt-3">
-    <button type="button" class="btn btn-primary mr-2 mt-3">Edit</button>
-    <button type="button" class="btn btn-danger mt-3">Delete</button>
+    <button type="button" style="margin-top: 5px;" class="btn btn-primary mr-2 mt-3">Edit</button>
+    <button type="button" style="margin-top: 5px;" class="btn btn-primary mt-3">Delete</button>
     <button type="submit" style="margin-top: 5px;" class="btn btn-primary" *ngIf="forSubmitting">SUBMIT</button>
-    <button type="button" onclick="document.location='/student-dashboard'" style="margin-top: 5px;" class="btn btn-primary">CANCEL</button>
+    <button type="button" onclick="document.location='/student-dashboard'" style="margin-top: 5px; margin-left: 5px;" class="btn btn-primary mr-2 mt-3">CANCEL</button>
 </div>
 </form>  
 </div>
