@@ -57,8 +57,17 @@
         <div class="form-group">
           <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" value = "{{account.phoneNumber}}" placeholder="{{account.phoneNumber}}" readonly required>
         </div>
-
+        <!-- status  -->
+        <select class="form-control-table" id="tableView" formControlName="tableView" >
+          <!-- hardcoded -->
+          <option disabled selected>Select Status</option>
+          <option>Pending</option>
+          <option>Cancelled</option>
+          <option>Resolved</option>
+      </select>
     </div>
+
+    
     <div class="right-section">
       <div class="nature-advising">
         <div class="form-group">
