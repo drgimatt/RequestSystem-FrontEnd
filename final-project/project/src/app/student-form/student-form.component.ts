@@ -140,6 +140,8 @@ export class StudentFormComponent implements OnInit {
       status: this.request.status,
       otherGender: this.request.formType.name
     });
+    this.studentForm.get('advisingType').disable()
+    this.studentForm.get('formType').disable()
   }
 
   onFormTypeChange(event: any) {
@@ -213,13 +215,15 @@ export class StudentFormComponent implements OnInit {
       (response) => {
         console.log('Request added:', response);
         console.log(request);
-        alert('This is working!');
+        alert('Request has been submitted successfully!');
+        this.router.navigate(['/student-dashboard']);
       },
       (error) => {
         console.log(request);
+        alert('Request submission has failed. Please try again.');
         console.error('Error adding request:', error);
       }
     ); 
-    //this.router.navigate(['/student-dashboard']);
+    
   }
 }

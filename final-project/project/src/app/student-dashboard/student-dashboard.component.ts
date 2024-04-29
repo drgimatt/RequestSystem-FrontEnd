@@ -33,12 +33,20 @@ export class StudentDashboardComponent implements OnInit{
   ngOnInit(): void {
     this.user = this.dataService.getDataPersistent('model');
     this.account = this.dataService.getDataPersistent('account');
+    this.accountCheck();
+    this.prepareRelevantRequests()
+  }
+
+  prepareRelevantRequests(){
     this.requestService.getRequests().subscribe((data: Request[]) => {
-        this.requests = data;
-        this.filteredRequests = data;
+      this.requests = data.filter(request =>
+        request.student.studentID === this.account.userID
+      );
+      this.filteredRequests = data.filter(request =>
+        request.student.studentID === this.account.userID
+      );
         this.isDataLoaded = true;
-      });
-    //this.accountCheck();
+    });
   }
 
   onSignOut() {
