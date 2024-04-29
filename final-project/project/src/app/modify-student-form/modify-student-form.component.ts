@@ -4,7 +4,7 @@ import { Student } from '../model/student';
 import { DataService } from '../data.service';
 import { Account } from '../model/account';
 import { AdvisingtypeService } from '../service/advisingtype.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RequestService } from '../service/request.service';
 import { SubjectsService } from '../service/subjects.service';
 import { FormtypeService } from '../service/formtype.service';
@@ -15,14 +15,17 @@ import { Subjects } from '../model/subjects';
 import { Formtype } from '../model/formtype';
 import { Priority } from '../model/priority';
 import { Status } from '../model/status';
+import { Request } from '../model/request';
+
+
 
 @Component({
   selector: 'app-modify-student-form',
   templateUrl: './modify-student-form.component.html',
   styleUrls: ['./modify-student-form.component.css']
 })
-export class ModifyStudentFormComponent {
-  studentForm!: FormGroup;
+export class ModifyStudentFormComponent implements OnInit {
+  studentForm: FormGroup;
   concerns = [
     'Thesis/Design Subject concerns',
     'Requirements in Courses Enrolled',
@@ -40,6 +43,8 @@ export class ModifyStudentFormComponent {
   formTypeArray: Formtype[];
   priorityArray: Priority[];
   statusArray: Status[];
+  request: Request;
+  forSubmitting: boolean = true;
   isDataLoaded: boolean = false;
   showOtherTextBoxFormType: boolean = false;
   showOtherTextBoxAdvisingType: boolean = false;
@@ -47,9 +52,42 @@ export class ModifyStudentFormComponent {
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router, 
               private requestService: RequestService, private advisingTypeService: AdvisingtypeService,
               private subjectsService: SubjectsService, private formTypeService: FormtypeService,
-              private priorityService: PriorityService, private statusService: StatusService) {}
+              private priorityService: PriorityService, private statusService: StatusService, private route: ActivatedRoute) {
+                this.studentForm = this.fb.group({
+                  student: '',
+                  title: '',
+                  employees: '',
+                  dateCreated: this.getCurrentDate(),
+                  dateModified: this.getCurrentDate(),
+                  dateResolved: '',
+                  advisingType: '',
+                  otherAdvisingType: '',
+                  subject: '',
+                  description: '',
+                  actionTaken: '',
+                  phoneNumber: '',
+                  formType: '',
+                  otherFormType: '',
+                  priority: '',
+                  status: '',
+                });
+              }
 
   ngOnInit() {
+    this.route.params.forEach((params: Params) => {
+      if (params['id'] !== undefined) {
+        this.forSubmitting = false;
+        this.studentForm.get('');
+        const id = params['id'];
+        this.requestService.getRequest(id).subscribe(data => {
+          this.request = data; 
+          this.initializeForm();
+        });
+      } else {
+        this.forSubmitting = true;
+      }
+    });  
+
     this.advisingTypeService.getTypes().subscribe((data: AdvisingType[]) => {
       this.advisingTypeArray = data;
     },
@@ -80,42 +118,34 @@ export class ModifyStudentFormComponent {
   );      
     this.user = this.dataService.getDataPersistent('model');
     this.account = this.dataService.getDataPersistent('account');
-    this.initializeForm();
+    //this.initializeForm();
   }
 
   initializeForm() {
-    // this.studentForm = this.fb.group({
-    //   studentNumber: ['', Validators.required],
-    //   studentName: ['', Validators.required],
-    //   programYear: ['', Validators.required],
-    //   emailAddress: ['', [Validators.required, Validators.email]],
-    //   phoneNumber: ['', Validators.required],
-    //   concern: ['', Validators.required],
-    //   formType: ['', Validators.required],
-    //   otherOffice: [''],
-    //   otherDetails: [''] 
-    // });
     this.studentForm = this.fb.group({
-      student: '',
-      title: '',
-      employees: '',
-      dateCreated: this.getCurrentDate(),
-      dateModified: this.getCurrentDate(),
-      dateResolved: '',
-      advisingType: '',
-      subject: '',
-      description: '',
-      actionTaken: '',
-      phoneNumber: this.account.phoneNumber.toString(),
-      formType: '',
-      priority: '',
-      status: '',
+      student: this.request.student,
+      title: this.request.title,
+      employees: this.request.employees,
+      dateCreated: this.request.dateCreated,
+      dateModified: this.request.dateModified,
+      dateResolved: this.request.dateResolved,
+      advisingType: this.request.advisingType.id,
+      otherAdvisingType: this.request.otherAdvisingType,
+      subject: this.request.subject,
+      description: this.request.description,
+      actionTaken: this.request.actionTaken,
+      phoneNumber: this.request.phoneNumber,
+      formType: this.request.formType.id,
+      otherFormType: this.request.otherFormType,
+      priority: this.request.priority.id,
+      status: this.request.status,
+      otherGender: this.request.formType.name
     });
   }
 
   onFormTypeChange(event: any) {
     const selectedValue = event.target.value;
-    if (selectedValue === 'Others') {
+    if (selectedValue === '4') {
       this.showOtherTextBoxFormType = true;
       this.studentForm.get('otherFormType')?.setValidators(Validators.required);
     } else {
@@ -128,7 +158,7 @@ export class ModifyStudentFormComponent {
 
   onAdvisingTypeChange(event: any) {
     const selectedValue = event.target.value;
-    if (selectedValue === 'Others') {
+    if (selectedValue === '8') {
       this.showOtherTextBoxAdvisingType = true;
       this.studentForm.get('otherAdvisingType')?.setValidators(Validators.required);
     } else {
@@ -146,21 +176,38 @@ export class ModifyStudentFormComponent {
     return formattedDate;
   }
 
+  private getDateStamp(): string {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = this.padZero(date.getMonth() + 1);
+    const day = this.padZero(date.getDate());
+    const hours = this.padZero(date.getHours());
+    const minutes = this.padZero(date.getMinutes());
+    const seconds = this.padZero(date.getSeconds());
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+  private padZero(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
+  }
+
   onSubmit() {
     const request = new FormData();
     request.append('student',this.user.myId.toString());
     //request.append('employees', null);
     request.append('title', this.studentForm.value.title);
-    request.append('dateCreated',this.getCurrentDate());
-    request.append('dateModified',this.getCurrentDate());
+    request.append('dateCreated',this.getDateStamp());
+    request.append('dateModified',this.getDateStamp());
     //request.append('dateResolved',null);
     request.append('advisingType',this.studentForm.value.advisingType.toString());
     request.append('subject', this.studentForm.value.subject.toString());
     request.append('description',this.studentForm.value.description);
     request.append('actionTaken',this.studentForm.value.actiontaken);
+    request.append('otherFormType',this.studentForm.value.otherFormType);
+    request.append('otherAdvisingType',this.studentForm.value.otherAdvisingType);
     request.append('phoneNumber',this.account.phoneNumber.toString());
     request.append('formType',this.studentForm.value.formType.toString());
-    //request.append('priority',"");
+    request.append('priority',"1");
     request.append('status',"2");
     this.requestService.createRequest(request)
     .subscribe(
