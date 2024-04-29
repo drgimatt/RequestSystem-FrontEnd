@@ -32,3 +32,14 @@ body {
     font-weight: bold;
     text-align: center;
 }
+.moodra{
+    flex-grow: 1;
+    overflow: hidden;
+  }
+  
+.container {
+      display: flex;
+      justify-content: space-between;
+      overflow: hidden;
+      position: fixed;
+}

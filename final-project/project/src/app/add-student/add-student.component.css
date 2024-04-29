@@ -8,21 +8,10 @@ body {
     text-align: justify;
 }
 
-.navbar-nav .nav-item.active .nav-link {
-    color: #940C0C !important;
-    font-weight: bold;
-}
-.about-heading {
-    margin-bottom: 5px; 
-    font-size: 70px;
-}
 .CSA-intro{
     font-style: italic;
 }
-.meet-heading{
-    font-size: 50px;
-    color:#940C0C;
-}
+
 .banner-image {
     max-width: 100%; /* Adjust as needed */
     max-height: 100%; /* Adjust as needed */
@@ -32,6 +21,16 @@ body {
     font-weight: bold;
     text-align: center;
 }
-footer {
-    margin-top: 50px;
-}
+
+.moodra{
+    overflow: hidden;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 900px; /* Set maximum height for the container */
+  }
+  
+.container {
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    position: fixed;
+  }
