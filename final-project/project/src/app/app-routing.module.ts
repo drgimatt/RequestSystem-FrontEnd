@@ -167,6 +167,10 @@ const routes: Routes = [
     component: ShowRequestComponent 
   },
   { 
+    path: 'modify-request/:id', 
+    component: ModifyStudentFormComponent
+  },  
+  { 
     path: 'my-requests', 
     component: MyRequestsComponent 
   },
