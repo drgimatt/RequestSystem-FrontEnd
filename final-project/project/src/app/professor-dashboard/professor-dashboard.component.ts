@@ -39,13 +39,15 @@ export class ProfessorDashboardComponent {
 
   prepareRelevantRequests(){
     this.requestService.getRequests().subscribe((data: Request[]) => {
-      this.requests = data.filter(request =>
-        request.subject.employees.some(employee => employee.employeeID === this.account.userID)
-      );
-      this.filteredRequests = data.filter(request =>
-        request.subject.employees.some(employee => employee.employeeID === this.account.userID)
-      );
-        this.isDataLoaded = true;
+      // this.requests = data.filter(request =>
+      //   request.subject.employees.some(employee => employee.employeeID.match(this.user.employeeID))
+      // );
+      // this.filteredRequests = data.filter(request =>
+      //   request.subject.employees.some(employee => employee.employeeID.match(this.user.employeeID))
+      // );
+      this.requests = data;
+      this.filteredRequests = data;
+      this.isDataLoaded = true;
     });
   }
 

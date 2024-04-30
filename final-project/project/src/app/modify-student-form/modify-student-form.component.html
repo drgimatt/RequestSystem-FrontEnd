@@ -43,16 +43,16 @@
       <h2>Student Information</h2>
       
         <div class="form-group">
-          <input type="number" class="form-control" id="studentNumber" value = "{{user.studentID}}" placeholder="{{user.studentID}}" readonly required>
+          <input type="number" class="form-control" id="studentNumber" value = "{{Student.studentID}}" placeholder="{{Student.studentID}}" readonly required>
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" id="studentName" value = "{{user.firstName + ' ' + user.lastName}}" placeholder="{{user.firstName + ' ' + user.lastName}}" readonly required>
+          <input type="text" class="form-control" id="studentName" value = "{{Student.firstName + ' ' + Student.lastName}}" placeholder="{{Student.firstName + ' ' + Student.lastName}}" readonly required>
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" id="programYear" value = "{{user.yearLevel+ ' - ' + user.program}}" placeholder="{{user.yearLevel+ ' - ' + user.program}}" readonly required>
+          <input type="text" class="form-control" id="programYear" value = "{{Student.yearLevel+ ' - ' + Student.program}}" placeholder="{{Student.yearLevel+ ' - ' + Student.program}}" readonly required>
         </div>
         <div class="form-group">
-          <input type="email" class="form-control" id="emailAddress" value = "{{user.email}}" placeholder="{{user.email}}" readonly required>
+          <input type="email" class="form-control" id="emailAddress" value = "{{Student.email}}" placeholder="{{Student.email}}" readonly required>
         </div>
         <div class="form-group">
           <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" value = "{{account.phoneNumber}}" placeholder="{{account.phoneNumber}}" readonly required>
@@ -108,8 +108,7 @@
   <div class="text-center mt-3">
     <button type="button" style="margin-top: 5px;" class="btn btn-primary mr-2 mt-3">Edit</button>
     <button type="button" style="margin-top: 5px;" class="btn btn-primary mt-3">Delete</button>
-    <button type="submit" style="margin-top: 5px;" class="btn btn-primary" *ngIf="forSubmitting">SUBMIT</button>
-    <button type="button" onclick="document.location='/student-dashboard'" style="margin-top: 5px; margin-left: 5px;" class="btn btn-primary mr-2 mt-3">CANCEL</button>
+    <button type="button" (click) = "onCancel" style="margin-top: 5px; margin-left: 5px;" class="btn btn-primary mr-2 mt-3">CANCEL</button>
 </div>
 </form>  
 </div>

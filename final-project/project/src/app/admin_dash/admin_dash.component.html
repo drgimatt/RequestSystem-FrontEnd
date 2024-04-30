@@ -12,7 +12,7 @@
     <header>
         <img src="/assets/logo.svg" height="50px" alt="Your Logo">
         <nav>
-            <a class="btn btn-outline-danger" href="/management">Management Page</a>
+            <a class="btn btn-outline-danger" href="/add-subject">Management Page</a>
             <span style="margin: 0 5px;"></span>
             <a class="btn btn-outline-danger" href="/contact-coders">Contact Coders</a>
             <span style="margin: 0 3px;"></span>
@@ -80,7 +80,7 @@
                                 <td>{{request.student.studentID}}</td>
                                 <td>{{request.student.yearLevel+ " - " + request.student.program}}</td>
                                 <td>{{request.title}}</td>
-                                <td>{{request.advisingType.name}}</td>
+                                <td>{{ request.otherAdvisingType ? (request.advisingType.name + " - " + request.otherAdvisingType) : request.advisingType.name }}</td>
                                 <td>{{request.dateModified}}</td>
                                 <!-- <td>{{request.status.name}}</td> -->
                                 <td><button (click)="viewRequest(request.requestId)" [ngClass]="{'statusComplete' : request.status.name === 'COMPLETED','statusRejected' : request.status.name === 'REJECTED','statusPending' : request.status.name === 'PENDING'}">{{request.status.name}}</button></td>

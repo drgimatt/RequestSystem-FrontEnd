@@ -16,6 +16,7 @@ import { Formtype } from '../model/formtype';
 import { Priority } from '../model/priority';
 import { Status } from '../model/status';
 import { Request } from '../model/request';
+import { Employee } from '../model/employee';
 
 
 
@@ -26,17 +27,8 @@ import { Request } from '../model/request';
 })
 export class ModifyStudentFormComponent implements OnInit {
   studentForm: FormGroup;
-  concerns = [
-    'Thesis/Design Subject concerns',
-    'Requirements in Courses Enrolled',
-    'Mentoring/Clarification on the Topic of the Subjects Enrolled',
-    'Concerns about Electives/Tracks in the Curriculum',
-    'Concerns on Internship/OJT Matters',
-    'Concerns regarding Placement/Employment Opportunities',
-    'Concerns regarding Personal/Family, etc.'
-  ];
-
-  user: Student;
+  Student: Student;
+  Employee: Employee;
   account: Account;
   advisingTypeArray: AdvisingType[];
   subjectsArray: Subjects[];
@@ -44,7 +36,6 @@ export class ModifyStudentFormComponent implements OnInit {
   priorityArray: Priority[];
   statusArray: Status[];
   request: Request;
-  forSubmitting: boolean = true;
   isDataLoaded: boolean = false;
   showOtherTextBoxFormType: boolean = false;
   showOtherTextBoxAdvisingType: boolean = false;
@@ -75,17 +66,13 @@ export class ModifyStudentFormComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
-      if (params['id'] !== undefined) {
-        this.forSubmitting = false;
         this.studentForm.get('');
         const id = params['id'];
         this.requestService.getRequest(id).subscribe(data => {
           this.request = data; 
           this.initializeForm();
         });
-      } else {
-        this.forSubmitting = true;
-      }
+      
     });  
 
     this.advisingTypeService.getTypes().subscribe((data: AdvisingType[]) => {
@@ -116,12 +103,13 @@ export class ModifyStudentFormComponent implements OnInit {
       this.isDataLoaded = false;
     }
   );      
-    this.user = this.dataService.getDataPersistent('model');
+    this.Employee = this.dataService.getDataPersistent('model');
     this.account = this.dataService.getDataPersistent('account');
     //this.initializeForm();
   }
 
   initializeForm() {
+    this.Student = this.request.student;
     this.studentForm = this.fb.group({
       student: this.request.student,
       title: this.request.title,
@@ -141,6 +129,8 @@ export class ModifyStudentFormComponent implements OnInit {
       status: this.request.status,
       otherGender: this.request.formType.name
     });
+    this.studentForm.get('advisingType').disable()
+    this.studentForm.get('formType').disable()
   }
 
   onFormTypeChange(event: any) {
@@ -168,6 +158,21 @@ export class ModifyStudentFormComponent implements OnInit {
     }
     this.studentForm.get('otherAdvisingType')?.updateValueAndValidity();
   }
+
+  accountCheck(){
+    if (this.account == null || this.Employee == null || this.account.role.roleName === "STUDENT"){ 
+      this.router.navigate(['index']);
+    }
+  }
+
+  onCancel(){
+    if (this.account.role.roleName === "ADMINISTRATION"){ 
+      this.router.navigate(['admin-dashboard']);
+    }
+    else if (this.account.role.roleName === "PROFESSOR"){ 
+      this.router.navigate(['professor-dashboard']);
+    }
+  }
   
   getCurrentDate(): string {
     const currentDate = new Date();
@@ -193,7 +198,7 @@ export class ModifyStudentFormComponent implements OnInit {
 
   onSubmit() {
     const request = new FormData();
-    request.append('student',this.user.myId.toString());
+    request.append('student',this.Student.myId.toString());
     //request.append('employees', null);
     request.append('title', this.studentForm.value.title);
     request.append('dateCreated',this.getDateStamp());
@@ -214,13 +219,15 @@ export class ModifyStudentFormComponent implements OnInit {
       (response) => {
         console.log('Request added:', response);
         console.log(request);
-        alert('This is working!');
+        alert('Request has been submitted successfully!');
+        this.router.navigate(['/student-dashboard']);
       },
       (error) => {
         console.log(request);
+        alert('Request submission has failed. Please try again.');
         console.error('Error adding request:', error);
       }
     ); 
-    //this.router.navigate(['/student-dashboard']);
+    
   }
 }

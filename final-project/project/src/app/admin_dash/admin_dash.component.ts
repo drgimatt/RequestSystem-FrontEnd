@@ -52,7 +52,7 @@ export class AdminDashboardComponent implements OnInit{
   }
 
   viewRequest(requestID: number){
-    this.router.navigate(['/modify-request/',requestID]);
+    this.router.navigate(['/view-request/',requestID]);
   }
 
   clearSearch() {

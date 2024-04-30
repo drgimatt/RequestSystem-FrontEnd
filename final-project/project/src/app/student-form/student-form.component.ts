@@ -16,6 +16,7 @@ import { Formtype } from '../model/formtype';
 import { Priority } from '../model/priority';
 import { Status } from '../model/status';
 import { Request } from '../model/request';
+import { Employee } from '../model/employee';
 
 
 @Component({
@@ -35,7 +36,8 @@ export class StudentFormComponent implements OnInit {
     'Concerns regarding Personal/Family, etc.'
   ];
 
-  user: Student;
+  student: Student;
+  employee: Employee;
   account: Account;
   advisingTypeArray: AdvisingType[];
   subjectsArray: Subjects[];
@@ -46,6 +48,7 @@ export class StudentFormComponent implements OnInit {
   forSubmitting: boolean = true;
   isDataLoaded: boolean = false;
   showOtherTextBoxFormType: boolean = false;
+  showSubjectsBox: boolean = false;
   showOtherTextBoxAdvisingType: boolean = false;
 
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router, 
@@ -61,7 +64,7 @@ export class StudentFormComponent implements OnInit {
                   dateResolved: '',
                   advisingType: '',
                   otherAdvisingType: '',
-                  subject: '',
+                  subjects: '',
                   description: '',
                   actionTaken: '',
                   phoneNumber: '',
@@ -79,10 +82,12 @@ export class StudentFormComponent implements OnInit {
         this.studentForm.get('');
         const id = params['id'];
         this.requestService.getRequest(id).subscribe(data => {
-          this.request = data; 
+          this.request = data;
+          this.student = this.request.student 
           this.initializeForm();
         });
       } else {
+        this.student = this.dataService.getDataPersistent('model');
         this.forSubmitting = true;
       }
     });  
@@ -108,6 +113,13 @@ export class StudentFormComponent implements OnInit {
       this.isDataLoaded = false;
     }
   );
+  this.subjectsService.getSubjects().subscribe((data: Subjects[]) => {
+    this.subjectsArray = data;
+  },
+  (error) => {
+    this.isDataLoaded = false;
+  }
+);
     this.statusService.getStatuses().subscribe((data: Status[]) => {
       this.statusArray = data;
     },
@@ -115,9 +127,8 @@ export class StudentFormComponent implements OnInit {
       this.isDataLoaded = false;
     }
   );      
-    this.user = this.dataService.getDataPersistent('model');
+
     this.account = this.dataService.getDataPersistent('account');
-    //this.initializeForm();
   }
 
   initializeForm() {
@@ -130,7 +141,7 @@ export class StudentFormComponent implements OnInit {
       dateResolved: this.request.dateResolved,
       advisingType: this.request.advisingType.id,
       otherAdvisingType: this.request.otherAdvisingType,
-      subject: this.request.subject,
+      subjects: this.request.subject,
       description: this.request.description,
       actionTaken: this.request.actionTaken,
       phoneNumber: this.request.phoneNumber,
@@ -143,6 +154,7 @@ export class StudentFormComponent implements OnInit {
     this.studentForm.get('advisingType').disable()
     this.studentForm.get('formType').disable()
   }
+
 
   onFormTypeChange(event: any) {
     const selectedValue = event.target.value;
@@ -162,12 +174,20 @@ export class StudentFormComponent implements OnInit {
     if (selectedValue === '8') {
       this.showOtherTextBoxAdvisingType = true;
       this.studentForm.get('otherAdvisingType')?.setValidators(Validators.required);
-    } else {
+    } else if (selectedValue === '2' || selectedValue === '3') {
+      this.showSubjectsBox = true;
+      this.studentForm.get('subjects')?.setValidators(Validators.required);
+    }
+    else {
       this.showOtherTextBoxAdvisingType = false;
+      this.showSubjectsBox = false;
+      this.studentForm.get('subjects')?.clearValidators();
+      this.studentForm.get('subjects')?.setValue('');
       this.studentForm.get('otherAdvisingType')?.clearValidators();
       this.studentForm.get('otherAdvisingType')?.setValue('');
     }
     this.studentForm.get('otherAdvisingType')?.updateValueAndValidity();
+    this.studentForm.get('subjects')?.updateValueAndValidity();
   }
   
   getCurrentDate(): string {
@@ -175,6 +195,16 @@ export class StudentFormComponent implements OnInit {
     // Format the date as "YYYY-MM-DD HH:mm:ss"
     const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
     return formattedDate;
+  }
+
+  onCancel(){
+    if (this.account.role.roleName === "STUDENT"){
+      this.router.navigate(['/student-dashboard']);
+    } else if (this.account.role.roleName === "ADMINISTRATION"){
+      this.router.navigate(['/admin-dashboard']);
+    } else {
+      this.router.navigate(['/index']);
+    }
   }
 
   private getDateStamp(): string {
@@ -194,14 +224,14 @@ export class StudentFormComponent implements OnInit {
 
   onSubmit() {
     const request = new FormData();
-    request.append('student',this.user.myId.toString());
-    //request.append('employees', null);
+    request.append('student',this.student.myId.toString());
+    //request.append('employees', this.studentForm.value.subjects.);
     request.append('title', this.studentForm.value.title);
     request.append('dateCreated',this.getDateStamp());
     request.append('dateModified',this.getDateStamp());
     //request.append('dateResolved',null);
     request.append('advisingType',this.studentForm.value.advisingType.toString());
-    request.append('subject', this.studentForm.value.subject.toString());
+    request.append('subject', this.studentForm.value.subjects.toString());
     request.append('description',this.studentForm.value.description);
     request.append('actionTaken',this.studentForm.value.actiontaken);
     request.append('otherFormType',this.studentForm.value.otherFormType);
@@ -216,7 +246,7 @@ export class StudentFormComponent implements OnInit {
         console.log('Request added:', response);
         console.log(request);
         alert('Request has been submitted successfully!');
-        this.router.navigate(['/student-dashboard']);
+        this.onCancel();
       },
       (error) => {
         console.log(request);

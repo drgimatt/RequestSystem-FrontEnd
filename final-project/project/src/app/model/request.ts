@@ -24,4 +24,5 @@ export class Request {
     otherFormType: String = "";
     priority: Priority = new Priority();
     status: Status = new Status();
+    isDeleted: Boolean = false;
 }
