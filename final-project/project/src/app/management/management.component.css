@@ -13,9 +13,14 @@ body {
     box-shadow: 2px 0 5px rgba(0,0,0,0.1);
     height: calc(100vh - 100px); /* Adjust the height as needed */
     overflow-y: auto; /* Enable vertical scrolling */
+    flex: 1;
 
 }
-
+#container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
 #main-content {
     flex-grow: 1;
     padding: 20px;
