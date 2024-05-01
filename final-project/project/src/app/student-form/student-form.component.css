@@ -12,7 +12,7 @@ body {
 }
 
 .container {
-  max-width: 1120px; /* Use max-width instead of width */
+  max-width: 850px; /* Use max-width instead of width */
   margin: 50px auto;
   display: flex;
   justify-content: space-between;
@@ -33,7 +33,7 @@ body {
 }
 
 .form-control {
-  padding: 25px; /* Smaller padding for inputs */
+  padding: 7px; /* Smaller padding for inputs */
   border-radius: 5px;
   border: 1px solid #ccc;
 }

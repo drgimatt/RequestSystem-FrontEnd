@@ -45,7 +45,7 @@ body {
 .moodra{
     overflow: hidden;
     overflow-y: auto; /* Enable vertical scrolling */
-    max-height: 900px; /* Set maximum height for the container */
+    max-height: 600px; /* Set maximum height for the container */
   }
   
   .container {
