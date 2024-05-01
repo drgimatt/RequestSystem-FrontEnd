@@ -37,6 +37,9 @@ import { ManagementComponent } from './management/management.component';
 import { ModifyStudentFormComponent } from './modify-student-form/modify-student-form.component';
 import { NotificationComponent } from './notification/notification.component';
 import { ContactCodersComponent } from './contact-coders/contact-coders.component';
+import { EmployeePageComponent } from './employee-page/employee-page.component';
+import { ConcernsPageComponent } from './concerns-page/concerns-page.component';
+import { SubjectsPageComponent } from './subjects-page/subjects-page.component';
 
 /* const routes: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full' }, 
@@ -211,7 +214,16 @@ const routes: Routes = [
     component: ModifyStudentFormComponent},
   {
     path: 'contact-coders',
-    component: ContactCodersComponent}
+    component: ContactCodersComponent},
+    {
+    path: 'employee-page',
+    component: EmployeePageComponent},
+    {
+      path: 'concerns-page',
+      component: ConcernsPageComponent},
+    {
+      path: 'subjects-page',
+      component: SubjectsPageComponent}  
 ];
 
 
