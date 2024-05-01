@@ -17,7 +17,7 @@
             rel="stylesheet">-->
     
         <!-- Custom styles for this template -->
-        <link href="management.component.css" rel="stylesheet">
+        <link href="concerns-page.component.css" rel="stylesheet">
     
     
     
@@ -57,7 +57,7 @@
                     Tables
                 </div>
     
-                <li class="nav-item active" id="studentNavItem">
+                <li class="nav-item" id="studentNavItem">
                     <a class="nav-link collapsed" href="/management" aria-expanded="true" aria-controls="collapseTwo" onclick="setActiveNavItem(this)">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Student</span>
@@ -69,7 +69,7 @@
                         <span>Employee</span>
                     </a>
                 </li>
-                <li class="nav-item" id="concernsNavItem">
+                <li class="nav-item active" id="concernsNavItem">
                     <a class="nav-link collapsed" href="/concerns-page" aria-expanded="true" aria-controls="collapseTwo" onclick="setActiveNavItem(this)">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Concerns</span>
@@ -135,13 +135,13 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Manage Student Page</h1>
+    <h1 class="h3 mb-2 text-gray-800">Manage Concerns Page</h1>
     <p class="mb-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
         when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
 
     <!-- Add Student Button -->
     <div class="text-right mb-3">
-        <a class="btn btn-outline-success" href="/add-student">Add Student</a>
+        <a class="btn btn-outline-success" href="/admin-student-form">Add Concerns</a>
     </div>
 
     <!-- DataTales Example -->
@@ -178,8 +178,6 @@
                         </div>
                     </div>
                 </div>
-                
-            
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
@@ -415,5 +413,4 @@
         </script>
     
     </body>
-
 </html>

@@ -33,7 +33,7 @@ body {
 
 /* Bootstrap Overrides */
 .btn-primary {
-  background-color: #940C0C;
+ 
   color: #fff;
   padding: 8px 20px; 
   border: none;
@@ -44,6 +44,3 @@ body {
   margin-bottom: 30px;
 }
 
-.btn-primary:hover {
-  background-color: #b44c4c;
-}

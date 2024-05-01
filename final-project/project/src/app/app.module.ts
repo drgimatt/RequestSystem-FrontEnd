@@ -40,6 +40,9 @@ import { ModifyStudentFormComponent } from './modify-student-form/modify-student
 import { Router, RouterModule } from '@angular/router';
 import { NotificationComponent } from './notification/notification.component';
 import { AdminStudentFormComponent } from './admin-student-form/admin-student-form.component';
+import { EmployeePageComponent } from './employee-page/employee-page.component';
+import { ConcernsPageComponent } from './concerns-page/concerns-page.component';
+import { SubjectsPageComponent } from './subjects-page/subjects-page.component';
 
 
 
@@ -76,6 +79,9 @@ import { AdminStudentFormComponent } from './admin-student-form/admin-student-fo
     NotificationComponent,
     ModifyStudentFormComponent,
     AdminStudentFormComponent,
+    EmployeePageComponent,
+    ConcernsPageComponent,
+    SubjectsPageComponent,
   ],
   imports: [
     ReactiveFormsModule,
