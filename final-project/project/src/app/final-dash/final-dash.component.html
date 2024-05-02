@@ -50,7 +50,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="dashboard.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>My Dashboard</span></a>
             </li>
 
             <!-- Divider -->
@@ -201,7 +201,8 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800 mb-3">Admin Dashboard</h1>
+                    <h1 class="h3 mb-2 text-gray-800 mb-3">My Dashboard</h1>
+
                     
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -217,7 +218,7 @@
                                                 <label for="dataTable_length">Show</label>
                                             </div>
                                             <div class="col-md-2">
-                                                <select name="dataTable_length" id="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control from-contol-sm mb-2">
+                                                <select name="dataTable_length" id="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm mb-2">
                                                     <option value="10">10</option>
                                                     <option value="25">25</option>
                                                     <option value="50">50</option>
@@ -225,18 +226,35 @@
                                                     <option value="500">500</option>
                                                 </select>
                                             </div>
+                                            <div class="col-md-1">
+                                                <label for="dataTable_length">Filter</label>
+                                            </div>
+                                            <div class="col-md-2" [formGroup] = "filterTable">
+                                                <select name="dataTable_length" id="tableView" aria-controls="dataTable" class="custom-select form-control mb-2" formControlName="tableView" (change)="applyFilter($event)" style="width: 150px;">
+                                                    <option [selected] = "true" value = "ALL">All</option>
+                                                    <option value = "PENDING">Pending</option>
+                                                    <option value = "COMPLETED">Completed</option>
+                                                    <option value = "REJECTED">Rejected</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6">
-                                        <div class="row align-items-center">
+                                        <div class="row align-items-center justify-content-between">
                                             <div class="col-md-6 text-right">
                                                 <label for="dataTable_filter" class="mr-2">Search:</label>
                                             </div>
-                                            <div class="col-md-6">
-                                                <input type="search" class="form-control mb-2">
+                                            <div class="col-md-6" >
+                                                <form class="form-inline">
+                                                    <div [formGroup] = "searchTable">
+                                                    <input id="searchInput" type="search" class="form-control mb-2 mr-sm-2" placeholder="Search" aria-label="Search" aria-describedby="search-addon" formControlName="searchView"/>
+                                                    </div> 
+                                                    <button type="button" class="btn btn-primary mb-2" (click)="applySearch()">Search</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
+                                    
                                 </div>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" *ngIf="isDataLoaded">
                                     

@@ -67,25 +67,31 @@ export class FinalDashComponent implements OnInit{
 }
 
   applySearch(){
-    const searchValue = this.searchTable.get('searchView').value.toLowerCase().trim();
+    const inputField = document.getElementById('searchInput') as HTMLInputElement;
+    const searchValue = inputField.value;
     this.filterTable.get('tableView').setValue('ALL')
     console.log("Value = ", searchValue)
     if (searchValue == "") {
       this.filteredRequests = this.requests;
     }
     else {
-    // Filter the requests based on search input value
-    this.filteredRequests = this.requests.filter(request =>
-        // Modify the condition based on the fields you want to search
-        request.student.firstName.toLowerCase().trim().includes(searchValue) ||
-        request.student.lastName.toLowerCase().trim().includes(searchValue) ||
-        request.subject.courseCode.toLowerCase().trim().includes(searchValue) ||
-        request.student.studentID.toString().trim().includes(searchValue) ||
-        request.advisingType.name.toLowerCase().trim().includes(searchValue) ||
-        request.status.name.toLowerCase().trim().includes(searchValue)
-        // Add more conditions if needed
-        // Example: request.advisingType.name.toLowerCase().includes(searchValue)
-    );}
+      // Filter the requests based on search input value
+      this.filteredRequests = this.requests.filter(request => {
+          // Modify the condition based on the fields you want to search
+          const student = request.student;
+          const subject = request.subject;
+          const advisingType = request.advisingType;
+          const status = request.status;
+          
+          // Ensure that all required properties are not null before accessing their properties
+          return (student && student.firstName.toLowerCase().includes(searchValue)) ||
+                 (student && student.lastName.toLowerCase().includes(searchValue)) ||
+                 (student && student.studentID.toString().includes(searchValue)) ||
+                 (subject && subject.courseCode.toLowerCase().includes(searchValue)) ||
+                 (advisingType && advisingType.name.toLowerCase().includes(searchValue)) ||
+                 (status && status.name.toLowerCase().includes(searchValue));
+      });
+  }
   }
 
   applyFilter(event: any) {
