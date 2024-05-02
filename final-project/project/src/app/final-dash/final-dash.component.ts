@@ -6,6 +6,7 @@ import { DataService } from '../data.service';
 import { RequestService } from '../service/request.service';
 import { Employee } from '../model/employee';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Student } from '../model/student';
 
 @Component({
   selector: 'app-final-dash',
@@ -17,9 +18,9 @@ export class FinalDashComponent implements OnInit{
   filteredRequests: Request[] = [];
   isDataLoaded: boolean = false;
   account: Account;
-  user: Employee;
   filterTable: FormGroup;
   searchTable: FormGroup;
+  user: any
 
   constructor(private requestService: RequestService, private router: Router, private dataService: DataService, private fb: FormBuilder) {
     this.filterTable = this.fb.group({
@@ -38,11 +39,26 @@ export class FinalDashComponent implements OnInit{
   }
 
   prepareRelevantRequests(){
-    this.requestService.getRequests().subscribe((data: Request[]) => {
+    if(this.account.role.roleName === 'ADMINISTRATION') {
+      this.requestService.getRequests().subscribe((data: Request[]) => {
       this.requests = data
-      this.filteredRequests = data
+      this.filteredRequests = this.requests
       this.isDataLoaded = true;
     });
+  } else if (this.account.role.roleName === 'PROFESSOR'){
+      this.requestService.getRequests().subscribe((data: Request[]) => {
+      this.requests = data.filter(request => request.subject.employees.find(employee => employee.employeeID === this.user.employeeID));
+      this.filteredRequests = this.requests
+      this.isDataLoaded = true;
+    });
+    }
+    else if (this.account.role.roleName === 'STUDENT'){
+      this.requestService.getRequests().subscribe((data: Request[]) => {
+        this.requests = data.filter(request => request.student.studentID === this.user.studentID);
+      this.filteredRequests = this.requests
+      this.isDataLoaded = true;});
+    }
+
   }
 
   onSignOut() {
@@ -121,7 +137,9 @@ export class FinalDashComponent implements OnInit{
 
 
   accountCheck(){
-    if (this.account == null || this.user == null || this.account.role.roleName === "PROFESSOR" || this.account.role.roleName === "STUDENT"){ 
+    if (this.account == null || this.user == null ){ 
+      this.dataService.removeDataPersistent('model');
+      this.dataService.removeDataPersistent('account');
       this.router.navigate(['index']);
     }
   }

@@ -20,7 +20,6 @@ export class StudentLoginComponent implements OnInit{
   account : Account;
   errorMessage: string; 
   studentArray: Student[];
-  employeeArray: Employee[];
   constructor(private employeeService: EmployeeService, private studentService: StudentService, private accountService: AccountService, private fb: FormBuilder, private router: Router, private dataService: DataService) {
     this.accountCheck = this.fb.group({
       username: '',
@@ -30,9 +29,6 @@ export class StudentLoginComponent implements OnInit{
   ngOnInit(): void {
     this.studentService.getStudents().subscribe((data: Student[]) => {
       this.studentArray = data;
-    });
-    this.employeeService.getEmployees().subscribe((data: Employee[]) => {
-      this.employeeArray = data;
     });
   }
 
@@ -49,15 +45,10 @@ export class StudentLoginComponent implements OnInit{
         console.log('Account Type Name: ', this.account.role.roleName);
         if (this.account && this.account.role) {
           this.dataService.setDataPersistent('account', this.account);
-          if (this.account.role.roleName === "ADMINISTRATION") {
-            this.getPersonModel("EMPLOYEE");
-            this.router.navigate(['/admin-dashboard']);
-          } else if (this.account.role.roleName === "PROFESSOR") {
-            this.getPersonModel("EMPLOYEE");
-            this.router.navigate(['/professor-dashboard']);
-          } else if (this.account.role.roleName === "STUDENT") {
+          this.dataService.setDataPersistent('userType',"STUDENT")
+          if (this.account.role.roleName === "STUDENT") {
             this.getPersonModel("STUDENT");
-            this.router.navigate(['/student-dashboard']);
+            this.router.navigate(['/dashboard']);
           }
           else{
             this.errorMessage = "Role is not being checked " + account.role;
@@ -89,14 +80,8 @@ export class StudentLoginComponent implements OnInit{
                 break;  
               }
           }
-      } if(Type === "EMPLOYEE"){  
-        for (let i = 0; i < this.employeeArray.length; i++){
-          if (this.account.userID === this.employeeArray[i].employeeID){
-            this.dataService.setDataPersistent('model', this.employeeArray[i]);
-            break;  
-          }
-      }
+      } 
       
     }
   }
-}
+

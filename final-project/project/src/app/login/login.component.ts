@@ -49,18 +49,14 @@ export class LoginComponent implements OnInit{
         console.log('Account Type Name: ', this.account.role.roleName);
         if (this.account && this.account.role) {
           this.dataService.setDataPersistent('account', this.account);
-          if (this.account.role.roleName === "ADMINISTRATION") {
-            this.getPersonModel("EMPLOYEE");
-            this.router.navigate(['/dashboard']);
-          } else if (this.account.role.roleName === "PROFESSOR") {
+          if (this.account.role.roleName === "ADMINISTRATION" || this.account.role.roleName === "PROFESSOR") {
             this.getPersonModel("EMPLOYEE");
             this.router.navigate(['/dashboard']);
           } else if (this.account.role.roleName === "STUDENT") {
-            this.getPersonModel("STUDENT");
-            this.router.navigate(['/dashboard']);
+            this.errorMessage = "Role is not being checked " + account.role;
           }
           else{
-            this.errorMessage = "Role is not being checked " + account.role;
+            
           }
         } else {
           // Handle the case when 'account' is null or 'role' is not defined

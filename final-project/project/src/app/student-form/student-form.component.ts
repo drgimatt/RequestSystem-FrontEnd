@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Student } from '../model/student';
 import { DataService } from '../data.service';
 import { Account } from '../model/account';
@@ -25,16 +25,9 @@ import { Employee } from '../model/employee';
   styleUrls: ['./student-form.component.css']
 })
 export class StudentFormComponent implements OnInit {
-  studentForm: FormGroup;
-  concerns = [
-    'Thesis/Design Subject concerns',
-    'Requirements in Courses Enrolled',
-    'Mentoring/Clarification on the Topic of the Subjects Enrolled',
-    'Concerns about Electives/Tracks in the Curriculum',
-    'Concerns on Internship/OJT Matters',
-    'Concerns regarding Placement/Employment Opportunities',
-    'Concerns regarding Personal/Family, etc.'
-  ];
+  studentForm: FormGroup
+
+
 
   student: Student;
   employee: Employee;
@@ -47,6 +40,7 @@ export class StudentFormComponent implements OnInit {
   request: Request;
   forSubmitting: boolean = true;
   isDataLoaded: boolean = false;
+  hasLoaded: boolean = false;
   showOtherTextBoxFormType: boolean = false;
   showSubjectsBox: boolean = false;
   showOtherTextBoxAdvisingType: boolean = false;
@@ -77,18 +71,22 @@ export class StudentFormComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
-      if (params['id'] !== undefined) {
-        this.forSubmitting = false;
-        this.studentForm.get('');
-        const id = params['id'];
-        this.requestService.getRequest(id).subscribe(data => {
-          this.request = data;
-          this.student = this.request.student 
-          this.initializeForm();
-        });
-      } else {
-        this.student = this.dataService.getDataPersistent('model');
-        this.forSubmitting = true;
+      if (!this.hasLoaded) {
+        this.hasLoaded = true; // Set the flag to true to indicate that the code block has been executed
+        
+        if (params['id'] !== undefined) {
+          this.forSubmitting = false;
+          this.studentForm.get('');
+          const id = params['id'];
+          this.requestService.getRequest(id).subscribe(data => {
+            this.request = data;
+            this.student = this.request.student;
+            this.initializeForm();
+          });
+        } else {
+          this.student = this.dataService.getDataPersistent('model');
+          this.forSubmitting = true;
+        }
       }
     });  
 
@@ -132,6 +130,7 @@ export class StudentFormComponent implements OnInit {
   }
 
   initializeForm() {
+    console.log('this is being called')
     this.studentForm = this.fb.group({
       student: this.request.student,
       title: this.request.title,
@@ -145,14 +144,14 @@ export class StudentFormComponent implements OnInit {
       description: this.request.description,
       actionTaken: this.request.actionTaken,
       phoneNumber: this.request.phoneNumber,
-      formType: this.request.formType.id,
-      otherFormType: this.request.otherFormType,
+      // formType: this.request.formType.id,
+      // otherFormType: this.request.otherFormType,
       priority: this.request.priority.id,
       status: this.request.status,
-      otherGender: this.request.formType.name
+      otherGender: this.request.student.gender
     });
     this.studentForm.get('advisingType').disable()
-    this.studentForm.get('formType').disable()
+    this.studentForm.get('otherAdvisingType').disable()
   }
 
 
