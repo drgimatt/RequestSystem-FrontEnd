@@ -33,7 +33,7 @@ export class FinalDashComponent implements OnInit{
   ngOnInit(): void {
     this.user = this.dataService.getDataPersistent('model');
     this.account = this.dataService.getDataPersistent('account');
-    // this.accountCheck();
+    this.accountCheck();
     this.prepareRelevantRequests()
   }
 
@@ -114,9 +114,9 @@ export class FinalDashComponent implements OnInit{
   }  
 
 
-  // accountCheck(){
-  //   if (this.account == null || this.user == null || this.account.role.roleName === "PROFESSOR" || this.account.role.roleName === "STUDENT"){ 
-  //     this.router.navigate(['index']);
-  //   }
-  // }
+  accountCheck(){
+    if (this.account == null || this.user == null || this.account.role.roleName === "PROFESSOR" || this.account.role.roleName === "STUDENT"){ 
+      this.router.navigate(['index']);
+    }
+  }
 }

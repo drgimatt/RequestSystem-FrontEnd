@@ -51,13 +51,13 @@ export class LoginComponent implements OnInit{
           this.dataService.setDataPersistent('account', this.account);
           if (this.account.role.roleName === "ADMINISTRATION") {
             this.getPersonModel("EMPLOYEE");
-            this.router.navigate(['/admin-dashboard']);
+            this.router.navigate(['/dashboard']);
           } else if (this.account.role.roleName === "PROFESSOR") {
             this.getPersonModel("EMPLOYEE");
-            this.router.navigate(['/professor-dashboard']);
+            this.router.navigate(['/dashboard']);
           } else if (this.account.role.roleName === "STUDENT") {
             this.getPersonModel("STUDENT");
-            this.router.navigate(['/student-dashboard']);
+            this.router.navigate(['/dashboard']);
           }
           else{
             this.errorMessage = "Role is not being checked " + account.role;

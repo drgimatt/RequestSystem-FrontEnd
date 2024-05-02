@@ -48,7 +48,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="dashboard.html">
+                <a class="nav-link" href="/dashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -61,32 +61,64 @@
                 Components
             </div>
 
-              <!-- Nav Item - Utilities Collapse Menu -->
-              <li class="nav-item" id="managementeNavItem">
-                <a class="nav-link collapsed" href="/management" aria-expanded="true" aria-controls="collapseTwo" onclick="setActiveNavItem(this)">
+            <!------------------------------------------------------------- ADMIN COMPONENTS ------------------------------------------------------------->
+            <div *ngIf="account.role.roleName === 'ADMINISTRATION'">
+                    <!-- Nav Item - Utilities Collapse Menu -->
+                <li class="nav-item" id="managementeNavItem">
+                    <a class="nav-link collapsed" href="/management" aria-expanded="true" aria-controls="collapseTwo" onclick="setActiveNavItem(this)">
+                        
+                        <span>Management Page</span>
+                    </a>
+                </li>
+                <li class="nav-item" id="contactCoderseNavItem">
+                    <a class="nav-link collapsed" href="/contact-coders" aria-expanded="true" aria-controls="collapseTwo" onclick="setActiveNavItem(this)">
                     
-                    <span>Management Page</span>
-                </a>
-            </li>
-            <li class="nav-item" id="contactCoderseNavItem">
-                <a class="nav-link collapsed" href="/contact-coders" aria-expanded="true" aria-controls="collapseTwo" onclick="setActiveNavItem(this)">
-                
-                    <span>Contact Coders</span>
-                </a>
-            </li>
-            <li class="nav-item" id="contactCoderseNavItem">
-                <a class="nav-link collapsed" href="/student-form" aria-expanded="true" aria-controls="collapseTwo" onclick="setActiveNavItem(this)">
-                    <span>Create a Request</span>
-                </a>
-            </li>
-            <li class="nav-item" id="contactCoderseNavItem">
-                <a class="nav-link collapsed" href="/student-form" aria-expanded="true" aria-controls="collapseTwo" onclick="setActiveNavItem(this)">
-                    <span>Sign Out</span>
-                </a>
-            </li>
+                        <span>Contact Coders</span>
+                    </a>
+                </li>
+                <li class="nav-item" id="contactCoderseNavItem">
+                    <a class="nav-link collapsed" href="/student-form" aria-expanded="true" aria-controls="collapseTwo" onclick="setActiveNavItem(this)">
+                        <span>Sign Out</span>
+                    </a>
+                </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+            </div>
+            <!---------------------------------------------------------- END OF ADMIN COMPONENTS ---------------------------------------------------------->
+
+            <!------------------------------------------------------------- PROFESSOR COMPONENTS ------------------------------------------------------------->
+            <div *ngIf="account.role.roleName === 'PROFESSOR'">
+                    <!-- Nav Item - Utilities Collapse Menu -->
+                <li class="nav-item" id="contactCoderseNavItem">
+                    <a class="nav-link collapsed" href="/student-form" aria-expanded="true" aria-controls="collapseTwo" onclick="setActiveNavItem(this)">
+                        <span>Sign Out</span>
+                    </a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+            </div>
+            <!---------------------------------------------------------- END OF PROFESSOR COMPONENTS ---------------------------------------------------------->
+
+            <!------------------------------------------------------------- STUDENT COMPONENTS ------------------------------------------------------------->
+            <div *ngIf="account.role.roleName === 'STUDENT'">
+                <!-- Nav Item - Utilities Collapse Menu -->
+                <li class="nav-item" id="contactCoderseNavItem">
+                    <a class="nav-link collapsed" href="/student-form" aria-expanded="true" aria-controls="collapseTwo" onclick="setActiveNavItem(this)">
+                        <span>Create a Request</span>
+                    </a>
+                </li>
+                <li class="nav-item" id="contactCoderseNavItem">
+                    <a class="nav-link collapsed" href="/student-form" aria-expanded="true" aria-controls="collapseTwo" onclick="setActiveNavItem(this)">
+                        <span>Sign Out</span>
+                    </a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+            </div>
+            <!---------------------------------------------------------- END OF STUDENT COMPONENTS ---------------------------------------------------------->
         </ul>
         <!-- End of Sidebar -->
 
@@ -201,7 +233,11 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800 mb-3">Admin Dashboard</h1>
+                    <h1 class="h3 mb-2 text-gray-800 mb-3">
+                        <span *ngIf="account.role.roleName === 'ADMINISTRATION'">Admin Dashboard</span>
+                        <span *ngIf="account.role.roleName === 'PROFESSOR'">Professor Dashboard</span>
+                        <span *ngIf="account.role.roleName === 'STUDENT'">Student Dashboard</span>
+                    </h1>
                     
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
