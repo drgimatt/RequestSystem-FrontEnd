@@ -26,6 +26,7 @@ import { EmployeePageComponent } from './employee-page/employee-page.component';
 import { ConcernsPageComponent } from './concerns-page/concerns-page.component';
 import { SubjectsPageComponent } from './subjects-page/subjects-page.component';
 import { FinalDashComponent } from './final-dash/final-dash.component';
+import { StudentLoginComponent } from './student-login/student-login.component';
 
 /* const routes: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full' }, 
@@ -135,6 +136,9 @@ const routes: Routes = [
   {
     path: 'concerns-page',
     component: ConcernsPageComponent},
+  {
+    path: 'student-login',
+    component: StudentLoginComponent},
   {
     path: 'subjects-page',
     component: SubjectsPageComponent},
