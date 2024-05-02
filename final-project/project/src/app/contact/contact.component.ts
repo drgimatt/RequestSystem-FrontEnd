@@ -34,10 +34,18 @@ account : Account;
 
   async send() {
     emailjs.init('Lz3yioYNsDIfU1nZC');
-    let response = await emailjs.send("service_70ac89a","template_vvtyqof",{
-    message: this.form.value.message,
-    from_email: this.form.value.from_email,
+    let response = await emailjs.send("service_70ac89a", "template_vvtyqof", {
+      message: this.form.value.message,
+      from_email: this.form.value.from_email
     });
-  }
 
-} 
+    if (response.status === 200) {
+      // Email sent successfully
+      alert('Your message has been sent successfully!');
+      this.form.get('message')?.setValue('');
+    } else {
+      // Email failed to send
+      alert('An error occurred while sending your message. Please try again later.');
+    }
+  }
+}

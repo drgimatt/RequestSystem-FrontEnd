@@ -70,7 +70,7 @@
             <!-- Email Inquiry -->
             <div class="col-md-6">
                 <div class="inquiry-area">
-                    <form [formGroup] ="form" id="inquiryForm" action="javascript:void(0)" (submit)="send()">
+                    <form [formGroup]="form" id="inquiryForm" (submit)="send()">
                         <h3 style="color: #940C0C"><strong>Ask us anything!</strong></h3>
                         <input formControlName="from_email" type="email" name="email" placeholder="Your email">
                         <textarea formControlName="message" name="inquiry" placeholder="Write your inquiry here"></textarea>
