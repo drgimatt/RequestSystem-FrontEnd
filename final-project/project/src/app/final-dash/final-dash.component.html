@@ -79,7 +79,11 @@
                     <span>Create a Request</span>
                 </a>
             </li>
-           
+            <li class="nav-item" id="contactCoderseNavItem">
+                <a class="nav-link collapsed" href="/student-form" aria-expanded="true" aria-controls="collapseTwo" onclick="setActiveNavItem(this)">
+                    <span>Sign Out</span>
+                </a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -183,7 +187,7 @@
 <!-- Nav Item - User Information -->
 <li class="nav-item dropdown no-arrow">
     <a class="nav-link" href="#" aria-expanded="false">
-        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.firstName + " " + user.lastName}}</span>
         
     </a>
 
@@ -218,6 +222,7 @@
                                                     <option value="25">25</option>
                                                     <option value="50">50</option>
                                                     <option value="100">100</option>
+                                                    <option value="500">500</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -233,7 +238,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" *ngIf="isDataLoaded">
                                     
                                     <thead>
                                         <tr>
@@ -248,6 +253,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <tr *ngFor="let request of filteredRequests">
+                                            <td>{{request.student.firstName + " " +request.student.lastName}}</td>
+                                            <td>{{request.student.studentID}}</td>
+                                            <td>{{request.student.yearLevel+ " - " + request.student.program}}</td>
+                                            <td>{{request.title}}</td>
+                                            <td>{{ request.otherAdvisingType ? (request.advisingType.name + " - " + request.otherAdvisingType) : request.advisingType.name }}</td>
+                                            <td>{{request.dateModified}}</td>
+                                            <!-- <td>{{request.status.name}}</td> -->
+                                            <td><button (click)="viewRequest(request.requestId)" [ngClass]="{'statusComplete' : request.status.name === 'COMPLETED','statusRejected' : request.status.name === 'REJECTED','statusPending' : request.status.name === 'PENDING'}">{{request.status.name}}</button></td>
+                                            <!-- <td><button type = "button" onclick="document.location='/view-request/{{request.requestId}}'" class="btn btn-success">Click here</button></td> -->
+                                        </tr>
                                         <tr>
                                             <td>Tiger Nixon</td>
                                             <td>System Architect</td>

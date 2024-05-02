@@ -200,10 +200,8 @@ export class StudentFormComponent implements OnInit {
   }
 
   onCancel(){
-    if (this.account.role.roleName === "STUDENT"){
-      this.router.navigate(['/student-dashboard']);
-    } else if (this.account.role.roleName === "ADMINISTRATION"){
-      this.router.navigate(['/admin-dashboard']);
+    if (this.account.role.roleName === "STUDENT" || this.account.role.roleName === "ADMINISTRATION"){
+      this.router.navigate(['/dashboard']);
     } else {
       this.router.navigate(['/index']);
     }

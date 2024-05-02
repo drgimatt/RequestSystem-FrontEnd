@@ -50,10 +50,6 @@ const routes: Routes = [
   { 
     path: 'index', 
     component: IndexComponent 
-  },
-  { 
-    path: 'admin-dashboard', 
-    component: AdminDashboardComponent
   },  
   { 
     path: 'add-advisingtype', 
@@ -93,7 +89,7 @@ const routes: Routes = [
   },       
   { 
     path: 'dashboard', 
-    component: DashboardComponent 
+    component: FinalDashComponent
   },
   { 
     path: 'login', 
@@ -119,14 +115,6 @@ const routes: Routes = [
     path: 'modify-request/:id', 
     component: ModifyStudentFormComponent
   },  
-  { 
-    path: 'professor-dashboard', 
-    component: ProfessorDashboardComponent 
-  },
-  { 
-    path: 'student-dashboard', 
-    component: StudentDashboardComponent 
-  },
   { path: 'signup', 
     component: SignupComponent },
   {
@@ -150,9 +138,6 @@ const routes: Routes = [
   {
     path: 'subjects-page',
     component: SubjectsPageComponent},
-    {
-      path: 'final-dashboard',
-      component: FinalDashComponent}  
 ];
 
 

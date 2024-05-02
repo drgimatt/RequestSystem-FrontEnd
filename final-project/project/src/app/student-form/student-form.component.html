@@ -45,25 +45,31 @@
         <h2>Student Information</h2>
         
         <div class="form-group">
+          <label for="description">Student ID:</label>
           <input type="number" class="form-control" id="studentNumber" value="{{ student.studentID }}" placeholder="{{ student.studentID }}" readonly required>
         </div>
         <div class="form-group">
+          <label for="description">Student Name:</label>
           <input type="text" class="form-control" id="studentName" value="{{ student.firstName + ' ' + student.lastName }}" placeholder="{{ student.firstName + ' ' + student.lastName }}" readonly required>
         </div>
         <div class="form-group">
+          <label for="description">Year and Program</label>
           <input type="text" class="form-control" id="programYear" value="{{ student.yearLevel + ' - ' + student.program }}" placeholder="{{ student.yearLevel + ' - ' + student.program }}" readonly required>
         </div>
         <div class="form-group">
+          <label for="description">Email:</label>
           <input type="email" class="form-control" id="emailAddress" value="{{ student.email }}" placeholder="{{ student.email }}" readonly required>
         </div>
         <div class="form-group">
+          <label for="description">Contact Number:</label>
           <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" value="{{ account.phoneNumber }}" placeholder="{{ account.phoneNumber }}" readonly required>
         </div>
       </div>
       <div class="col-md-6">
         <h2>Nature of Advising</h2>
         <div class="form-group">
-          <input type="text" class="form-control" id="title" formControlName="title" placeholder="Title" required [readonly]="!forSubmitting">
+          <label for="description">Title:</label>
+          <input type="text" class="form-control" id="title" formControlName="title" placeholder = "Enter Title:" required [readonly]="!forSubmitting">
         </div>
         <div class="form-group">
           <label>Advising Type</label>
@@ -85,7 +91,7 @@
         </div>
         <div class="form-group">
           <label for="description">Please provide specific details:</label>
-          <textarea class="form-control" id="description" formControlName="description" rows="2" [readonly]="!forSubmitting"></textarea>
+          <textarea class="form-control" id="description"  placeholder = "Enter Description:" formControlName="description" rows="2" [readonly]="!forSubmitting"></textarea>
         </div>
       </div>
     </div>
