@@ -10,8 +10,6 @@ import { ProfessorDashboardComponent } from './professor-dashboard/professor-das
 import { IndexComponent } from './index/index.component';
 import { LoginComponent } from './login/login.component';
 import { ContactComponent } from './contact/contact.component';
-import { ViewDogInfoComponent } from './view-dog-info/view-dog-info.component';
-import { AddDogComponent } from './add-dog/add-dog.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -19,15 +17,8 @@ import { FormsModule } from '@angular/forms';
 import { StudentFormComponent } from './student-form/student-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SignupComponent } from './signup/signup.component';
-import { RequestFormComponent } from './request-form/request-form.component';
 import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
 import { CommonModule } from '@angular/common';
-import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
-import { UserViewDogInfoComponent } from './user-view-dog-info/user-view-dog-info.component';
-import { AllRequestsNotifComponent } from './all-requests-notif/all-requests-notif.component';
-import { ShowRequestComponent } from './show-request/show-request.component';
-import { MyRequestsComponent } from './my-requests/my-requests.component';
-import { ShowMyRequestComponent } from './show-my-request/show-my-request.component';
 import { AddDepartmentComponent } from './add-department/add-department.component';
 import { AddStudentComponent } from './add-student/add-student.component';
 import { AddSubjectsComponent } from './add-subjects/add-subjects.component';
@@ -57,18 +48,9 @@ import { SubjectsPageComponent } from './subjects-page/subjects-page.component';
     ProfessorDashboardComponent,
     ContactComponent,
     ManagementComponent,
-    ViewDogInfoComponent,
-    AddDogComponent,
     AboutusComponent,
-    RequestFormComponent,
     SignupComponent,
     StudentFormComponent,
-    UserDashboardComponent,
-    UserViewDogInfoComponent,
-    AllRequestsNotifComponent,
-    ShowRequestComponent,
-    ShowMyRequestComponent,
-    MyRequestsComponent,
     AddDepartmentComponent,
     AddStudentComponent,
     AddSubjectsComponent,

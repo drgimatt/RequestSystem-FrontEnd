@@ -173,9 +173,11 @@ export class StudentFormComponent implements OnInit {
     const selectedValue = event.target.value;
     if (selectedValue === '8') {
       this.showOtherTextBoxAdvisingType = true;
+      this.showSubjectsBox = false;
       this.studentForm.get('otherAdvisingType')?.setValidators(Validators.required);
     } else if (selectedValue === '2' || selectedValue === '3') {
       this.showSubjectsBox = true;
+      this.showOtherTextBoxAdvisingType = false;
       this.studentForm.get('subjects')?.setValidators(Validators.required);
     }
     else {

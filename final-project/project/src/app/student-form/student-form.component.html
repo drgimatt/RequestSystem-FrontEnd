@@ -73,6 +73,7 @@
           </select>
         </div>        
         <div class="form-group" *ngIf="showSubjectsBox">
+          <label for="otherAdvisingType">Subjects:</label>
           <select class="form-control" id="subjects" formControlName="subjects" [disabled]="!forSubmitting">
             <option selected disabled>Select subject:</option>
             <option *ngFor="let subject of subjectsArray" [value]="subject.myId">{{ subject.courseCode + " - " + subject.name }}</option>
