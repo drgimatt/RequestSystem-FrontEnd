@@ -25,6 +25,7 @@ import { ContactCodersComponent } from './contact-coders/contact-coders.componen
 import { EmployeePageComponent } from './employee-page/employee-page.component';
 import { ConcernsPageComponent } from './concerns-page/concerns-page.component';
 import { SubjectsPageComponent } from './subjects-page/subjects-page.component';
+import { FinalDashComponent } from './final-dash/final-dash.component';
 
 /* const routes: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full' }, 
@@ -148,7 +149,10 @@ const routes: Routes = [
     component: ConcernsPageComponent},
   {
     path: 'subjects-page',
-    component: SubjectsPageComponent}  
+    component: SubjectsPageComponent},
+    {
+      path: 'final-dashboard',
+      component: FinalDashComponent}  
 ];
 
 

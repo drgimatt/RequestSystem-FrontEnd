@@ -34,6 +34,7 @@ import { AdminStudentFormComponent } from './admin-student-form/admin-student-fo
 import { EmployeePageComponent } from './employee-page/employee-page.component';
 import { ConcernsPageComponent } from './concerns-page/concerns-page.component';
 import { SubjectsPageComponent } from './subjects-page/subjects-page.component';
+import { FinalDashComponent } from './final-dash/final-dash.component';
 
 
 
@@ -64,6 +65,7 @@ import { SubjectsPageComponent } from './subjects-page/subjects-page.component';
     EmployeePageComponent,
     ConcernsPageComponent,
     SubjectsPageComponent,
+    FinalDashComponent,
   ],
   imports: [
     ReactiveFormsModule,
