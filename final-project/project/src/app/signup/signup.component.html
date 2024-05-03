@@ -15,38 +15,67 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header bg-info text-white">
                         Sign Up Form
                     </div>
                     <div class="card-body">
-                        <form id="signupForm" [formGroup]="newAccount" (ngSubmit)="checkFields()" *ngIf="isDataLoaded">
+                        <form [formGroup]="newAccount" (ngSubmit)="checkFields()">
                             <div class="form-group">
-                                <label for="id">Student / Employee ID</label>
-                                 <input type="text" class="form-control" formControlName="userid" id="userid" name="userid" placeholder="Enter ID" required>
+                                <label for="userid">Student/Employee ID:</label>
+                                <input type="text" id="userid" formControlName="userid" class="form-control" maxlength="10" required>
+                                <div *ngIf="newAccount.get('userid').invalid && (newAccount.get('userid').dirty || newAccount.get('userid').touched)" class="text-danger">
+                                    <div *ngIf="newAccount.get('userid').hasError('required')" class="text-danger">User ID is required.</div>
+                                </div>
                             </div>
+                            
                             <div class="form-group">
-                                <label for="phoneNumber">Phone Number</label>
-                                <input type="text" class="form-control" formControlName="phoneNumber" id="phoneNumber" name="phoneNumber" placeholder="Enter Phone Number" required>
+                                <label for="phoneNumber">Phone Number:</label>
+                                <input type="text" id="phoneNumber" formControlName="phoneNumber" class="form-control" required="" maxlength="11">
+                                <div *ngIf="newAccount.get('phoneNumber').invalid && (newAccount.get('phoneNumber').dirty || newAccount.get('phoneNumber').touched)" class="text-danger">
+                                    <div *ngIf="newAccount.get('phoneNumber').hasError('required')" class="text-danger">Phone Number is required.</div>
+                                    <div *ngIf="newAccount.get('phoneNumber').hasError('pattern')" class="text-danger">Phone Number must be 10 digits.</div>
+                                </div>
                             </div>
+                            
                             <div class="form-group">
-                                <label for="birthDate">Birth Date</label>
-                                <input type="date" formControlName="birthDate" class="form-control" id="birthDate" required>
+                                <label for="birthDate">Birth Date:</label>
+                                <input type="date" id="birthDate" formControlName="birthDate" class="form-control">
+                                <div *ngIf="newAccount.get('birthDate').invalid && (newAccount.get('birthDate').dirty || newAccount.get('birthDate').touched)" class="text-danger">
+                                    <div *ngIf="newAccount.get('birthDate').hasError('required')" class="text-danger">Birth Date is required.</div>
+                                </div>
                             </div>
+                            
                             <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" formControlName="username" id="username" name="username" placeholder="Enter username" required>
+                                <label for="username">Username:</label>
+                                <input type="text" id="username" formControlName="username" class="form-control">
+                                <div *ngIf="newAccount.get('username').invalid && (newAccount.get('username').dirty || newAccount.get('username').touched)" class="text-danger">
+                                    <div *ngIf="newAccount.get('username').hasError('required')" class="text-danger">Username is required.</div>
+                                </div>
                             </div>
+                            
                             <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" formControlName="password" id="password" name="password" placeholder="Enter password" required>
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" formControlName="password" class="form-control">
+                                <div *ngIf="newAccount.get('password').invalid && (newAccount.get('password').dirty || newAccount.get('password').touched)"
+                                     class="text-danger">
+                                    <div *ngIf="newAccount.get('password').hasError('required')" class="text-danger">Password is required.</div>
+                                    <div *ngIf="newAccount.get('password').hasError('minlength')" class="text-danger">Password must be at least 8 characters.</div>
+                                    <div *ngIf="newAccount.get('password').hasError('pattern')" class="text-danger">Password must contain at least one special characters</div>
+                                </div>
                             </div>
+                            
                             <div class="form-group">
-                                <label for="confirmPassword">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" required>
+                                <label for="confirmPassword">Confirm Password:</label>
+                                <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control">
+                                <div *ngIf="newAccount.get('confirmPassword').invalid && (newAccount.get('confirmPassword').dirty || newAccount.get('confirmPassword').touched)" class="text-danger">
+                                    <div *ngIf="newAccount.get('confirmPassword').hasError('required')" class="text-danger">Confirm Password is required.</div>
+                                    <div *ngIf="newAccount.get('confirmPassword').hasError('passwordMatch')" class="text-danger">Passwords do not match.</div>
+                                </div>
                             </div>                                                   
-                            <button type="submit" style="margin-right:5px" class="btn btn-danger">Sign Up</button>
-                            <button type ="button" onclick="document.location='/signup'" style="margin:5px" class="btn btn-danger">Reset</button> 
-                            <button type ="button" onclick="document.location='/login'" style="margin:5px" class="btn btn-danger">Return</button>  
+                          
+                            <button type="button" style="margin-right:5px" class="btn btn-danger" (click)="checkFields()">Sign Up</button>
+                            <button type="button" onclick="document.location='/signup'" style="margin:5px" class="btn btn-danger">Reset</button> 
+                            <button type="button" onclick="document.location='/login'" style="margin:5px" class="btn btn-danger">Return</button>  
                         </form>
                     </div>
                 </div>

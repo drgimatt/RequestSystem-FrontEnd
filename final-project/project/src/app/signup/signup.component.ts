@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../service/account.service';
 import { StudentService } from '../service/student.service';
@@ -12,39 +12,46 @@ import { Employee } from '../model/employee';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit{
+export class SignupComponent implements OnInit {
   studentArray: Student[];
-  employeeArray: Array<Employee>;
+  employeeArray: Employee[];
   newAccount: FormGroup;
   isDataLoaded: boolean = false;
   isUserPresent: boolean = false;
 
-  constructor(private studentService: StudentService, private employeeService: EmployeeService, private accountService: AccountService, private fb: FormBuilder, private router: Router) {
+  constructor(
+    private studentService: StudentService,
+    private employeeService: EmployeeService,
+    private accountService: AccountService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {
     this.newAccount = this.fb.group({
-      userid: '',
-      username: '',
-      password: '',
-      phoneNumber: '',
-      birthDate: new Date(),
-      roleid: -1,
+      userid: ['', [Validators.required, Validators.maxLength(10)]],
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/[!@#$%^&*(),.?":{}|<>]/)]],
+      phoneNumber: ['', [Validators.required, Validators.minLength(11), Validators.pattern('[0-9]+')]],
+      birthDate: [new Date(), Validators.required],
+      roleid: [-1, Validators.required],
+      confirmPassword: ['', Validators.required]
     });
   }
+
   ngOnInit(): void {
     this.isDataLoaded = true;
     this.studentService.getStudents().subscribe(res => {
       this.studentArray = res;
-      if(res.length === 0) {
+      if (res.length === 0) {
         this.isDataLoaded = false;
       }
-    })    
+    });
 
     this.employeeService.getEmployees().subscribe(res => {
       this.employeeArray = res;
-      if(res.length === 0) {
+      if (res.length === 0) {
         this.isDataLoaded = false;
       }
-    } 
-  )
+    });
   }
 
   getCurrentDate(): string {
@@ -54,89 +61,79 @@ export class SignupComponent implements OnInit{
     return formattedDate;
   }
 
-  createAccount() {
+  createAccount(): void {
     const accountData = new FormData();
     this.checkUserIsPresent();
     accountData.append('username', this.newAccount.value.username);
     accountData.append('password', this.newAccount.value.password);
-    accountData.append('dateCreated',this.getCurrentDate());
-    accountData.append('userID',this.newAccount.value.userid);
+    accountData.append('dateCreated', this.getCurrentDate());
+    accountData.append('userID', this.newAccount.value.userid);
     accountData.append('phoneNumber', this.newAccount.value.phoneNumber);
-    accountData.append('birthDate',this.newAccount.value.birthDate.toString());
-    accountData.append('role',this.newAccount.value.roleid);
-    if (this.isUserPresent){    
-      this.accountService.createAccount(accountData)
-      .subscribe(
+    accountData.append('birthDate', this.newAccount.value.birthDate.toString());
+    accountData.append('role', this.newAccount.value.roleid.toString());
+
+    if (this.isUserPresent) {
+      this.accountService.createAccount(accountData).subscribe(
         (response) => {
           console.log('Account added:', response);
-          console.log('UserID: ',this.newAccount.value.userid);
-          alert('This is working!');
+          console.log('UserID: ', this.newAccount.value.userid);
+          alert('Account created successfully!');
+          this.router.navigate(['/login']);
         },
         (error) => {
           console.error('Error adding request:', error);
+          alert('Error creating account. Please try again later.');
         }
-      );}
-      else {
-        alert ('ID entered is invalid');
-      }
+      );
+    } else {
+      alert('User ID is invalid.');
+    }
   }
 
-
   checkPasswordMatch(): void {
-    const password = (<HTMLInputElement>document.getElementById('password')).value;
-    const confirmPassword = (<HTMLInputElement>document.getElementById('confirmPassword')).value;
+    const password = this.newAccount.value.password;
+    const confirmPassword = this.newAccount.value.confirmPassword;
 
     if (password !== confirmPassword) {
       alert('Passwords do not match. Please try again.');
     } else {
       this.createAccount();
-      //this.router.navigate(['/login']);
     }
   }
-  
 
   checkUserIsPresent(): void {
     this.isUserPresent = false;
-    if (this.studentArray.length !== 0)  {
-      if (!this.isUserPresent){    
-        for (let i = 0; i < this.studentArray.length; i++){
-          if (this.newAccount.value.userid === this.studentArray[i].studentID){
-            this.newAccount.patchValue({ roleid: '3' });
-            this.isUserPresent = true;
-            break;  
-          }
-      }}
 
-    } 
-    if (this.employeeArray.length !== 0) {
-      if(!this.isUserPresent){
-        for (let i = 0; i < this.employeeArray.length; i++){
-          if (this.newAccount.value.userid === this.employeeArray[i].employeeID){
-            if (this.employeeArray[i].position === "Professor"){
-              this.newAccount.patchValue({ roleid: '2' }); 
-            }
-            else{
-              this.newAccount.patchValue({ roleid: '1' }); 
-            }
-            this.isUserPresent = true;
-            break;
-          }
+    if (this.studentArray && this.studentArray.length !== 0) {
+      for (let i = 0; i < this.studentArray.length; i++) {
+        if (this.newAccount.value.userid === this.studentArray[i].studentID) {
+          this.newAccount.patchValue({ roleid: '3' });
+          this.isUserPresent = true;
+          break;
         }
       }
-    } 
+    }
 
-  }
-
-
-  checkFields(): boolean {
-    for (const controlName in this.newAccount.controls) {
-      if (this.newAccount.get(controlName).hasError('required')) {
-        alert('Please fill-out all the required fields.');
-        return false;
+    if (this.employeeArray && this.employeeArray.length !== 0) {
+      for (let i = 0; i < this.employeeArray.length; i++) {
+        if (this.newAccount.value.userid === this.employeeArray[i].employeeID) {
+          if (this.employeeArray[i].position === 'Professor') {
+            this.newAccount.patchValue({ roleid: '2' });
+          } else {
+            this.newAccount.patchValue({ roleid: '1' });
+          }
+          this.isUserPresent = true;
+          break;
+        }
       }
     }
-    this.checkPasswordMatch();
-    return true;
   }
 
+  checkFields(): void {
+    if (this.newAccount.valid) {
+      this.checkPasswordMatch();
+    } else {
+      alert('Please fill out all required fields correctly.');
+    }
+  }
 }
