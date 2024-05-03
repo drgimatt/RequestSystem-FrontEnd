@@ -50,8 +50,10 @@ export class StudentLoginComponent implements OnInit{
             this.getPersonModel("STUDENT");
             this.router.navigate(['/dashboard']);
           }
-          else{
-            this.errorMessage = "Role is not being checked " + account.role;
+          else if (this.account.role.roleName === "ADMINISTRATION" || this.account.role.roleName === "PROFESSOR"){
+            this.errorMessage = "Cedentials used are for Admins or Pofessors. Please use the main login page.";
+            this.accountCheck.get('username')?.setValue('');
+            this.accountCheck.get('password')?.setValue('');
           }
         } else {
           // Handle the case when 'account' is null or 'role' is not defined

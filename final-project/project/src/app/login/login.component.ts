@@ -48,17 +48,19 @@ export class LoginComponent implements OnInit{
         // console.log('Password: ', this.account.password);
         // console.log('Account Type ID: ', this.account.role.myId);
         // console.log('Account Type Name: ', this.account.role.roleName);
-        console.log('Received account:', this.account);
-        console.log('Username:', this.account ? this.account.username : null);
-        console.log('Password:', this.account ? this.account.password : null);
-        console.log('Role:', this.account && this.account.role ? this.account.role : null);
+        // console.log('Received account:', this.account);
+        // console.log('Username:', this.account ? this.account.username : null);
+        // console.log('Password:', this.account ? this.account.password : null);
+        // console.log('Role:', this.account && this.account.role ? this.account.role : null);
         if (this.account && this.account.role) {
           this.dataService.setDataPersistent('account', this.account);
           if (this.account.role.roleName === "ADMINISTRATION" || this.account.role.roleName === "PROFESSOR") {
             this.getPersonModel("EMPLOYEE");
             this.router.navigate(['/dashboard']);
           } else if (this.account.role.roleName === "STUDENT") {
-            this.errorMessage = "Role is not being checked " + account.role;
+            this.errorMessage = "Credentials used are for students. Please use the student login page.";
+            this.accountCheck.get('username')?.setValue('');
+            this.accountCheck.get('password')?.setValue('');
           }
         } else {
           // Handle the case when 'account' is null or 'role' is not defined
