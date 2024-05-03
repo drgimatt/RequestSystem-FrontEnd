@@ -17,6 +17,7 @@ import { Priority } from '../model/priority';
 import { Status } from '../model/status';
 import { Request } from '../model/request';
 import { Employee } from '../model/employee';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -27,9 +28,6 @@ import { Employee } from '../model/employee';
 })
 export class ModifyStudentFormComponent implements OnInit {
   studentForm: FormGroup
-
-
-
   student: Student;
   employee: Employee;
   account: Account;
@@ -39,14 +37,13 @@ export class ModifyStudentFormComponent implements OnInit {
   priorityArray: Priority[];
   statusArray: Status[];
   request: Request;
-  forSubmitting: boolean = true;
   isDataLoaded: boolean = false;
   hasLoaded: boolean = false;
   showOtherTextBoxFormType: boolean = false;
   showSubjectsBox: boolean = false;
   showOtherTextBoxAdvisingType: boolean = false;
 
-  constructor(private fb: FormBuilder, private dataService: DataService, private router: Router, 
+  constructor(private fb: FormBuilder, private dataService: DataService, private router: Router, private datePipe: DatePipe,
               private requestService: RequestService, private advisingTypeService: AdvisingtypeService,
               private subjectsService: SubjectsService, private formTypeService: FormtypeService,
               private priorityService: PriorityService, private statusService: StatusService, private route: ActivatedRoute) {
@@ -54,8 +51,8 @@ export class ModifyStudentFormComponent implements OnInit {
                   student: '',
                   title: '',
                   employees: '',
-                  dateCreated: this.getCurrentDate(),
-                  dateModified: this.getCurrentDate(),
+                  dateCreated: '',
+                  dateModified: '',
                   dateResolved: '',
                   advisingType: '',
                   otherAdvisingType: '',
@@ -70,24 +67,20 @@ export class ModifyStudentFormComponent implements OnInit {
                 });
               }
 
+
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
       if (!this.hasLoaded) {
         this.hasLoaded = true; // Set the flag to true to indicate that the code block has been executed
         
         if (params['id'] !== undefined) {
-          this.forSubmitting = false;
           this.studentForm.get('');
           const id = params['id'];
           this.requestService.getRequest(id).subscribe(data => {
             this.request = data;
-            this.student = this.request.student;
             this.initializeForm();
           });
-        } else {
-          this.student = this.dataService.getDataPersistent('model');
-          this.forSubmitting = true;
-        }
+        } 
       }
     });  
 
@@ -98,13 +91,13 @@ export class ModifyStudentFormComponent implements OnInit {
       this.isDataLoaded = false;
     }
   );
-    this.formTypeService.getFormTypes().subscribe((data: Formtype[]) => {
-      this.formTypeArray = data;
-    },
-    (error) => {
-      this.isDataLoaded = false;
-    }
-  );
+  //   this.formTypeService.getFormTypes().subscribe((data: Formtype[]) => {
+  //     this.formTypeArray = data;
+  //   },
+  //   (error) => {
+  //     this.isDataLoaded = false;
+  //   }
+  // );
     this.priorityService.getPriorities().subscribe((data: Priority[]) => {
       this.priorityArray = data;
     },
@@ -112,13 +105,6 @@ export class ModifyStudentFormComponent implements OnInit {
       this.isDataLoaded = false;
     }
   );
-  this.subjectsService.getSubjects().subscribe((data: Subjects[]) => {
-    this.subjectsArray = data;
-  },
-  (error) => {
-    this.isDataLoaded = false;
-  }
-);
     this.statusService.getStatuses().subscribe((data: Status[]) => {
       this.statusArray = data;
     },
@@ -126,12 +112,20 @@ export class ModifyStudentFormComponent implements OnInit {
       this.isDataLoaded = false;
     }
   );      
-
+  this.subjectsService.getSubjects().subscribe((data: Subjects[]) => {
+    this.subjectsArray = data;
+  },
+  (error) => {
+    this.isDataLoaded = false;
+  }
+  );
+    this.employee = this.dataService.getDataPersistent('model');
     this.account = this.dataService.getDataPersistent('account');
   }
 
   initializeForm() {
     console.log('this is being called')
+    this.student = this.request.student;
     this.studentForm = this.fb.group({
       student: this.request.student,
       title: this.request.title,
@@ -141,18 +135,25 @@ export class ModifyStudentFormComponent implements OnInit {
       dateResolved: this.request.dateResolved,
       advisingType: this.request.advisingType.id,
       otherAdvisingType: this.request.otherAdvisingType,
-      subjects: this.request.subject,
+      subjects: this.request.subject?.myId,
       description: this.request.description,
       actionTaken: this.request.actionTaken,
       phoneNumber: this.request.phoneNumber,
       // formType: this.request.formType.id,
       // otherFormType: this.request.otherFormType,
       priority: this.request.priority.id,
-      status: this.request.status,
+      status: this.request.status.id,
       otherGender: this.request.student.gender
     });
-    this.studentForm.get('advisingType').disable()
-    this.studentForm.get('otherAdvisingType').disable()
+
+    if(this.studentForm.value.subjects.toString() !== null){
+      this.showSubjectsBox = true;
+    }
+    if (this.studentForm.value.otherAdvisingType !== ""){
+      this.showOtherTextBoxAdvisingType = true;
+    }
+      this.isDataLoaded = true;
+
   }
 
 
@@ -191,31 +192,49 @@ export class ModifyStudentFormComponent implements OnInit {
     this.studentForm.get('otherAdvisingType')?.updateValueAndValidity();
     this.studentForm.get('subjects')?.updateValueAndValidity();
   }
+
+  accountCheck(){
+    if (this.account == null || this.employee == null || this.account.role.roleName === "STUDENT" || this.account.role.roleName === "ADMINISTRATION"){ 
+      this.router.navigate(['dashboard']);
+    }
+  }
+
+  onCancel(){
+      this.router.navigate(['dashboard']);
+  }
   
   getCurrentDate(): string {
     const currentDate = new Date();
     // Format the date as "YYYY-MM-DD HH:mm:ss"
-    const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
+    const formattedDate = this.formatDate(currentDate);
     return formattedDate;
   }
 
-  onCancel(){
-    if (this.account.role.roleName === "STUDENT" || this.account.role.roleName === "ADMINISTRATION"){
-      this.router.navigate(['/dashboard']);
-    } else {
-      this.router.navigate(['/index']);
-    }
+  formatDate(date: Date): string {
+    // Use DatePipe to format the date
+    return this.datePipe.transform(date, 'yyyy-MM-dd HH:mm:ss')!;
   }
 
-  private getDateStamp(): string {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = this.padZero(date.getMonth() + 1);
-    const day = this.padZero(date.getDate());
-    const hours = this.padZero(date.getHours());
-    const minutes = this.padZero(date.getMinutes());
-    const seconds = this.padZero(date.getSeconds());
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+//   private getDateStamp(): string {
+//     const date = new Date();
+//     const year = date.getFullYear();
+//     const month = this.padZero(date.getMonth() + 1);
+//     const day = this.padZero(date.getDate());
+//     const hours = this.padZero(date.getHours());
+//     const minutes = this.padZero(date.getMinutes());
+//     const seconds = this.padZero(date.getSeconds());
+//     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+// }
+
+private getDateStamp() {
+  const date = new Date();
+  // const year = date.getFullYear();
+  // const month = this.padZero(date.getMonth() + 1);
+  // const day = this.padZero(date.getDate());
+  // const hours = this.padZero(date.getHours());
+  // const minutes = this.padZero(date.getMinutes());
+  // const seconds = this.padZero(date.getSeconds());
+  return this.formatDate(date);
 }
 
   private padZero(value: number): string {
@@ -224,29 +243,33 @@ export class ModifyStudentFormComponent implements OnInit {
 
   onSubmit() {
     const request = new FormData();
+    request.append('requestId',this.request.requestId.toString())
     request.append('student',this.student.myId.toString());
     //request.append('employees', this.studentForm.value.subjects.);
     request.append('title', this.studentForm.value.title);
-    request.append('dateCreated',this.getDateStamp());
+    request.append('dateCreated',this.formatDate(this.request.dateCreated));
     request.append('dateModified',this.getDateStamp());
-    //request.append('dateResolved',null);
+    
+    if (this.studentForm.value.status === 1){
+      request.append('dateResolved',this.getDateStamp());
+    }
     request.append('advisingType',this.studentForm.value.advisingType.toString());
     request.append('subject', this.studentForm.value.subjects.toString());
     request.append('description',this.studentForm.value.description);
-    request.append('actionTaken',this.studentForm.value.actiontaken);
+    request.append('actionTaken',this.studentForm.value.actionTaken);
     request.append('otherFormType',this.studentForm.value.otherFormType);
     request.append('otherAdvisingType',this.studentForm.value.otherAdvisingType);
     request.append('phoneNumber',this.account.phoneNumber.toString());
-    request.append('formType',this.studentForm.value.formType.toString());
-    request.append('priority',"1");
-    request.append('status',"2");
-    this.requestService.createRequest(request)
+    //request.append('formType',this.studentForm.value.formType.toString());
+    request.append('priority',this.studentForm.value.priority);
+    request.append('status',this.studentForm.value.status);
+    this.requestService.updateRequest(this.request.requestId, request)
     .subscribe(
       (response) => {
-        console.log('Request added:', response);
+        console.log('Request updated:', response);
         console.log(request);
-        alert('Request has been submitted successfully!');
-        this.onCancel();
+        alert('Request has been updated successfully!');
+        this.router.navigate(['/dashboard']);
       },
       (error) => {
         console.log(request);

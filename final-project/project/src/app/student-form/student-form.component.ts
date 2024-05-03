@@ -17,6 +17,7 @@ import { Priority } from '../model/priority';
 import { Status } from '../model/status';
 import { Request } from '../model/request';
 import { Employee } from '../model/employee';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -26,9 +27,6 @@ import { Employee } from '../model/employee';
 })
 export class StudentFormComponent implements OnInit {
   studentForm: FormGroup
-
-
-
   student: Student;
   employee: Employee;
   account: Account;
@@ -45,7 +43,7 @@ export class StudentFormComponent implements OnInit {
   showSubjectsBox: boolean = false;
   showOtherTextBoxAdvisingType: boolean = false;
 
-  constructor(private fb: FormBuilder, private dataService: DataService, private router: Router, 
+  constructor(private fb: FormBuilder, private dataService: DataService, private router: Router, private datePipe: DatePipe,
               private requestService: RequestService, private advisingTypeService: AdvisingtypeService,
               private subjectsService: SubjectsService, private formTypeService: FormtypeService,
               private priorityService: PriorityService, private statusService: StatusService, private route: ActivatedRoute) {
@@ -140,14 +138,14 @@ export class StudentFormComponent implements OnInit {
       dateResolved: this.request.dateResolved,
       advisingType: this.request.advisingType.id,
       otherAdvisingType: this.request.otherAdvisingType,
-      subjects: this.request.subject,
+      subjects: this.request.subject?.myId,
       description: this.request.description,
       actionTaken: this.request.actionTaken,
       phoneNumber: this.request.phoneNumber,
       // formType: this.request.formType.id,
       // otherFormType: this.request.otherFormType,
       priority: this.request.priority.id,
-      status: this.request.status,
+      status: this.request.status.id,
       otherGender: this.request.student.gender
     });
     this.studentForm.get('advisingType').disable()
@@ -194,8 +192,13 @@ export class StudentFormComponent implements OnInit {
   getCurrentDate(): string {
     const currentDate = new Date();
     // Format the date as "YYYY-MM-DD HH:mm:ss"
-    const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
+    const formattedDate = this.formatDate(currentDate);
     return formattedDate;
+  }
+
+  formatDate(date: Date): string {
+    // Use DatePipe to format the date
+    return this.datePipe.transform(date, 'yyyy-MM-dd HH:mm:ss')!;
   }
 
   onCancel(){
@@ -206,17 +209,27 @@ export class StudentFormComponent implements OnInit {
     }
   }
 
-  private getDateStamp(): string {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = this.padZero(date.getMonth() + 1);
-    const day = this.padZero(date.getDate());
-    const hours = this.padZero(date.getHours());
-    const minutes = this.padZero(date.getMinutes());
-    const seconds = this.padZero(date.getSeconds());
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-}
+//   private getDateStamp(): string {
+//     const date = new Date();
+//     const year = date.getFullYear();
+//     const month = this.padZero(date.getMonth() + 1);
+//     const day = this.padZero(date.getDate());
+//     const hours = this.padZero(date.getHours());
+//     const minutes = this.padZero(date.getMinutes());
+//     const seconds = this.padZero(date.getSeconds());
+//     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+// }
 
+private getDateStamp() {
+  const date = new Date();
+  // const year = date.getFullYear();
+  // const month = this.padZero(date.getMonth() + 1);
+  // const day = this.padZero(date.getDate());
+  // const hours = this.padZero(date.getHours());
+  // const minutes = this.padZero(date.getMinutes());
+  // const seconds = this.padZero(date.getSeconds());
+  return this.formatDate(date);
+}
   private padZero(value: number): string {
     return value < 10 ? `0${value}` : `${value}`;
   }
@@ -236,7 +249,7 @@ export class StudentFormComponent implements OnInit {
     request.append('otherFormType',this.studentForm.value.otherFormType);
     request.append('otherAdvisingType',this.studentForm.value.otherAdvisingType);
     request.append('phoneNumber',this.account.phoneNumber.toString());
-    request.append('formType',this.studentForm.value.formType.toString());
+    //request.append('formType',this.studentForm.value.formType.toString());
     request.append('priority',"1");
     request.append('status',"2");
     this.requestService.createRequest(request)
