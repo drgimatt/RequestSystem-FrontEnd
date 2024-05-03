@@ -46,7 +46,7 @@ body {
 }
 
 .btn-primary {
-  background-color: #940C0C;
+  
   color: #fff;
   padding: 4px 20px; /* Adjust padding for button */
   border: none;
@@ -58,7 +58,7 @@ body {
 }
 
 .btn-primary:hover {
-  background-color: #b44c4c;
+  background-color: #1e64ab;
 }
 
 .right-section {

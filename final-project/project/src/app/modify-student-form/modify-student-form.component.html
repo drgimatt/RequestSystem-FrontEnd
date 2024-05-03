@@ -37,78 +37,79 @@
     </nav>
     <div style = "padding: 30px">
       
-  <form *ngIf="studentForm" [formGroup]="studentForm" (ngSubmit)="onSubmit()">
-  <div class="container">
-    <div class="left-section">
-      <h2>Student Information</h2>
+      <form *ngIf="studentForm" [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <h2>Student Information</h2>
+              
+              <div class="form-group">
+                <label for="description">Student ID:</label>
+                <input type="number" class="form-control" id="studentNumber" value="{{ student.studentID }}" placeholder="{{ student.studentID }}" readonly required>
+              </div>
+              <div class="form-group">
+                <label for="description">Student Name:</label>
+                <input type="text" class="form-control" id="studentName" value="{{ student.firstName + ' ' + student.lastName }}" placeholder="{{ student.firstName + ' ' + student.lastName }}" readonly required>
+              </div>
+              <div class="form-group">
+                <label for="description">Year and Program</label>
+                <input type="text" class="form-control" id="programYear" value="{{ student.yearLevel + ' - ' + student.program }}" placeholder="{{ student.yearLevel + ' - ' + student.program }}" readonly required>
+              </div>
+              <div class="form-group">
+                <label for="description">Email:</label>
+                <input type="email" class="form-control" id="emailAddress" value="{{ student.email }}" placeholder="{{ student.email }}" readonly required>
+              </div>
+              <div class="form-group">
+                <label for="description">Contact Number:</label>
+                <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" value="{{ account.phoneNumber }}" placeholder="{{ account.phoneNumber }}" readonly required>
+              </div>
+             
+            </div>
+            <div class="col-md-6">
+              <h2>Nature of Advising</h2>
+              <div class="form-group">
+                <label for="description">Title:</label>
+                <input type="text" class="form-control" id="title" formControlName="title" placeholder = "Enter Title:" required [readonly]="!forSubmitting">
+              </div>
+              <div class="form-group">
+                <label>Advising Type</label>
+                <select class="form-control" id="advisingType" formControlName="advisingType" (change)="onAdvisingTypeChange($event)" [disabled]="!forSubmitting">
+                  <option selected disabled></option>
+                  <option *ngFor="let advisingType of advisingTypeArray" [value]="advisingType.id">{{ advisingType.name }}</option>
+                </select>
+              </div>        
+              <div class="form-group" *ngIf="showSubjectsBox">
+                <label for="otherAdvisingType">Subjects:</label>
+                <select class="form-control" id="subjects" formControlName="subjects" [disabled]="!forSubmitting">
+                  <option selected disabled>Select subject:</option>
+                  <option *ngFor="let subject of subjectsArray" [value]="subject.myId">{{ subject.courseCode + " - " + subject.name }}</option>
+                </select>
+              </div>
+              <div class="form-group" *ngIf="showOtherTextBoxAdvisingType">
+                <label for="otherAdvisingType">Other Advising Type</label>
+                <input type="text" formControlName="otherAdvisingType" class="form-control" id="otherAdvisingType" placeholder="Enter other advising type" [readonly]="!forSubmitting">
+              </div>
+              <div class="form-group">
+                <label for="description">Please provide specific details:</label>
+                <textarea class="form-control" id="description"  placeholder = "Enter Description:" formControlName="description" rows="2" [readonly]="!forSubmitting"></textarea>
+              </div>
+               <!-- status  -->
+               <select class="form-control-table" id="tableView" formControlName="tableView" >
+                <!-- hardcoded -->
+                <option disabled selected>Select Status</option>
+                <option>Pending</option>
+                <option>Cancelled</option>
+                <option>Resolved</option>
+              </select>
+            </div>
+          </div>
+        </div>
       
-        <div class="form-group">
-          <input type="number" class="form-control" id="studentNumber" value = "{{Student.studentID}}" placeholder="{{Student.studentID}}" readonly required>
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control" id="studentName" value = "{{Student.firstName + ' ' + Student.lastName}}" placeholder="{{Student.firstName + ' ' + Student.lastName}}" readonly required>
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control" id="programYear" value = "{{Student.yearLevel+ ' - ' + Student.program}}" placeholder="{{Student.yearLevel+ ' - ' + Student.program}}" readonly required>
-        </div>
-        <div class="form-group">
-          <input type="email" class="form-control" id="emailAddress" value = "{{Student.email}}" placeholder="{{Student.email}}" readonly required>
-        </div>
-        <div class="form-group">
-          <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" value = "{{account.phoneNumber}}" placeholder="{{account.phoneNumber}}" readonly required>
-        </div>
-        <!-- status  -->
-        <select class="form-control-table" id="tableView" formControlName="tableView" >
-          <!-- hardcoded -->
-          <option disabled selected>Select Status</option>
-          <option>Pending</option>
-          <option>Cancelled</option>
-          <option>Resolved</option>
-      </select>
-    </div>
-
-    
-    <div class="right-section">
-      <div class="nature-advising">
-        <div class="form-group">
-          <input type="text" class="form-control" id="title" formControlName="title" placeholder="Title" required>
-        </div>
-        <h2>Nature of Advising</h2>
-        <div class="form-group">
-          <select class="form-control" id="advisingType" formControlName="advisingType" (change)="onAdvisingTypeChange($event)">
-            <option *ngFor="let advisingType of advisingTypeArray" [value]="advisingType.id">{{ advisingType.name }}</option>
-          </select>
-        </div>
-        <div class="form-group" *ngIf="showOtherTextBoxAdvisingType">
-          <label for="otherAdvisingType">Other Advising Type</label>
-          <input type="text" formControlName="otherAdvisingType" class="form-control" id="otherAdvisingType" placeholder="Enter other advising type">
-      </div>
-        <div class="form-group">
-          <label for="description">Please provide specific details:</label>
-          <textarea class="form-control" id="description" formControlName="description" rows="2"></textarea>
-        </div>
-               
-      </div>
-      <div class="form-type">
-        <h2>Form Type</h2>
-        <div class="form-group">
-          <select class="form-control" id="formType" formControlName="formType" (change)="onFormTypeChange($event)">
-            <option *ngFor="let formType of formTypeArray" [value]="formType.id">{{ formType.name }}</option>
-          </select>
-        </div>
-        <div class="form-group" *ngIf="showOtherTextBoxFormType">
-          <label for="otherFormType">Other Type</label>
-          <input type="text" formControlName="otherFormType" class="form-control" id="otherFormType" placeholder="Enter other form type">
-      </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Modify the margins accordingly, thanks! -->
   <div class="text-center mt-3">
     <button type="button" style="margin-top: 5px;" class="btn btn-primary mr-2 mt-3">Edit</button>
     <button type="button" style="margin-top: 5px;" class="btn btn-primary mt-3">Delete</button>
-    <button type="button" (click) = "onCancel" style="margin-top: 5px; margin-left: 5px;" class="btn btn-primary mr-2 mt-3">CANCEL</button>
+    <button type="button" (click) = "onCancel" style="margin-top: 5px; margin-left: 5px;" class="btn btn-primary mr-2 mt-3">Cancel</button>
 </div>
 </form>  
 </div>
@@ -124,3 +125,5 @@
     </div>
   </footer>
 </html>
+
+
