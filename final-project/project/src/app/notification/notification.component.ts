@@ -14,6 +14,11 @@ export class NotificationComponent {
     this.router.navigate(['/admin-student-form']);
   }
 
+  return() {
+    this.router.navigate(['/dashboard']);
+  
+  }
+
   onSignOut() {
     this.dataService.removeDataPersistent('model');
     this.dataService.removeDataPersistent('account');
