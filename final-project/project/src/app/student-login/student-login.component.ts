@@ -39,10 +39,10 @@ export class StudentLoginComponent implements OnInit{
       (account: Account) => {
         // Handle successful response
         this.account = account;
-        console.log('Username: ',this.account.username);
-        console.log('Password: ', this.account.password);
-        console.log('Account Type ID: ', this.account.role.myId);
-        console.log('Account Type Name: ', this.account.role.roleName);
+        // console.log('Username: ',this.account.username);
+        // console.log('Password: ', this.account.password);
+        // console.log('Account Type ID: ', this.account.role.myId);
+        // console.log('Account Type Name: ', this.account.role.roleName);
         if (this.account && this.account.role) {
           this.dataService.setDataPersistent('account', this.account);
           this.dataService.setDataPersistent('userType',"STUDENT")
@@ -56,12 +56,16 @@ export class StudentLoginComponent implements OnInit{
         } else {
           // Handle the case when 'account' is null or 'role' is not defined
           this.errorMessage = 'Invalid credentials. Please try again.';
+          this.accountCheck.get('username')?.setValue('');
+          this.accountCheck.get('password')?.setValue('');
         }
       },
       (error) => {
         // Handle error and set the error message
         console.error('Error: ', error);
         this.errorMessage = 'Login failed. Please check your username and password.';
+        this.accountCheck.get('username')?.setValue('');
+        this.accountCheck.get('password')?.setValue('');
       }
     );
 

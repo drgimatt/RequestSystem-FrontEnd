@@ -73,6 +73,9 @@
                     <!-- <div class="row">
                         <small>Don't have account yet? <a href="/signup">Sign Up</a></small>
                     </div> -->
+                    <div *ngIf="errorMessage" class="error-message" style="color: #ff0000; font-size: 14px; margin-top: 10px; text-align: center;">
+                        {{ errorMessage }}
+                    </div>
                 </form>
               </div>
            </div> 
