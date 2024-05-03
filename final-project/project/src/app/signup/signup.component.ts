@@ -6,6 +6,7 @@ import { StudentService } from '../service/student.service';
 import { EmployeeService } from '../service/employee.service';
 import { Student } from '../model/student';
 import { Employee } from '../model/employee';
+import { Account } from '../model/account';
 
 @Component({
   selector: 'app-signup',
@@ -15,9 +16,11 @@ import { Employee } from '../model/employee';
 export class SignupComponent implements OnInit {
   studentArray: Student[];
   employeeArray: Employee[];
+  accountArray: Account[];
   newAccount: FormGroup;
   isDataLoaded: boolean = false;
   isUserPresent: boolean = false;
+  accountError: string = "";
 
   constructor(
     private studentService: StudentService,
@@ -52,6 +55,15 @@ export class SignupComponent implements OnInit {
         this.isDataLoaded = false;
       }
     });
+
+    this.accountService.getAccounts().subscribe(
+      (response) => {
+          this.accountArray = response
+      },
+      (error) => {
+          this.isDataLoaded = false;
+      }
+    );
   }
 
   getCurrentDate(): string {
@@ -59,6 +71,25 @@ export class SignupComponent implements OnInit {
     // Format the date as "YYYY-MM-DD HH:mm:ss"
     const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
     return formattedDate;
+  }
+
+
+  
+  doesAccountExists() {
+
+    for (let i = 0; i < this.accountArray.length; i++) {
+      if (this.newAccount.value.username === this.accountArray[i].username) {
+
+          this.accountError = "Username already exists!"
+          return true;
+
+      } else if (this.newAccount.value.userid === this.accountArray[i].userID){
+  
+          this.accountError = "Account number is already registered! Please login instead."
+          return true;
+      }
+    }
+    return false;
   }
 
   createAccount(): void {
@@ -73,18 +104,23 @@ export class SignupComponent implements OnInit {
     accountData.append('role', this.newAccount.value.roleid.toString());
 
     if (this.isUserPresent) {
-      this.accountService.createAccount(accountData).subscribe(
-        (response) => {
-          console.log('Account added:', response);
-          console.log('UserID: ', this.newAccount.value.userid);
-          alert('Account created successfully!');
-          this.router.navigate(['/login']);
-        },
-        (error) => {
-          console.error('Error adding request:', error);
-          alert('Error creating account. Please try again later.');
-        }
-      );
+      if (this.doesAccountExists() === false) {
+        this.accountService.createAccount(accountData).subscribe(
+          (response) => {
+            console.log('Account added:', response);
+            console.log('UserID: ', this.newAccount.value.userid);
+            alert('Account created successfully!');
+            this.router.navigate(['/login']);
+          },
+          (error) => {
+            console.error('Error adding request:', error);
+            alert('Error creating account. Please try again later.');
+          }
+        );
+      } else {
+          alert(this.accountError)
+      }
+
     } else {
       alert('User ID is invalid.');
     }

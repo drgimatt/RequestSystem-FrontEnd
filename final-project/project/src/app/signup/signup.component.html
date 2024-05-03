@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <form [formGroup]="newAccount" (ngSubmit)="checkFields()">
                             <div class="form-group">
-                                <label for="userid">Student/Employee ID:</label>
+                                <label for="userid">Student/Employee Number:</label>
                                 <input type="text" id="userid" formControlName="userid" class="form-control" maxlength="10" required>
                                 <div *ngIf="newAccount.get('userid').invalid && (newAccount.get('userid').dirty || newAccount.get('userid').touched)" class="text-danger">
                                     <div *ngIf="newAccount.get('userid').hasError('required')" class="text-danger">User ID is required.</div>
