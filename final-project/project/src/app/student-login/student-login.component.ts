@@ -51,7 +51,7 @@ export class StudentLoginComponent implements OnInit{
             this.router.navigate(['/dashboard']);
           }
           else if (this.account.role.roleName === "ADMINISTRATION" || this.account.role.roleName === "PROFESSOR"){
-            this.errorMessage = "Cedentials used are for Admins or Pofessors. Please use the main login page.";
+            this.errorMessage = "Credentials used are for Admins or Pofessors. Please use the main login page.";
             this.accountCheck.get('username')?.setValue('');
             this.accountCheck.get('password')?.setValue('');
           }
