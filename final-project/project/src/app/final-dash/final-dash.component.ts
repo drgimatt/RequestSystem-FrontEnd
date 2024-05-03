@@ -68,7 +68,13 @@ export class FinalDashComponent implements OnInit{
   }
 
   viewRequest(requestID: number){
-    this.router.navigate(['/view-request/',requestID]);
+
+    if (this.account.role.roleName === "PROFESSOR"){
+      this.router.navigate(['/modify-request/',requestID]);
+    } else {
+      this.router.navigate(['/view-request/',requestID]);
+    }
+    
   }
 
   clearSearch() {

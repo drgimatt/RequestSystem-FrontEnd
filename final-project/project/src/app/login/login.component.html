@@ -75,6 +75,9 @@
                         <small>Already a student? <a href="/student-login">Click here</a></small> 
                     </div>
                 </form>
+                <div *ngIf="errorMessage" class="error-message" style="color: #ff0000; font-size: 14px; margin-top: 10px; text-align: center;">
+                    {{ errorMessage }}
+                </div>
               </div>
            </div> 
           </div>

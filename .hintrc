@@ -11,14 +11,7 @@
     ],
     "no-inline-styles": "off",
     "typescript-config/strict": "off",
-    "compat-api/css": [
-      "default",
-      {
-        "ignore": [
-          "max-width: fit-content"
-        ]
-      }
-    ],
+    "compat-api/css": "off",
     "axe/forms": [
       "default",
       {

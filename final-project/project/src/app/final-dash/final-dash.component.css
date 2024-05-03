@@ -11664,3 +11664,34 @@
 
 .fa-inverse {
   color: #fff; }
+
+.statusComplete {
+    padding: 0px 5px 0px 5px;
+    border-radius: 12px;
+    background-color: #478A12;
+    color: #FFFFFF;
+}
+.statusReject {
+    padding: 0px 15px 0px 15px;
+    border-radius: 12px;
+    background-color: #940C0C;
+    color: #FFFFFF;
+}
+.statusPending {
+    padding: 0px 17px 0px 17px;
+    border-radius: 12px;
+    background-color: #FFDA56;
+    color: #000000;
+}
+.searchButton {
+  background-color: #FFFFFF;
+  color: #940C0C;
+  padding: 5px 10px;
+  border-radius: 12px;
+  border: solid 1px #940C0C;
+  transition: 0.3s linear;
+}
+.searchButton:hover {
+  background-color: #940C0C;
+  color: #FFFFFF;
+}

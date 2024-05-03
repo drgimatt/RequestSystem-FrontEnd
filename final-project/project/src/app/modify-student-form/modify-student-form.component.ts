@@ -26,9 +26,12 @@ import { Employee } from '../model/employee';
   styleUrls: ['./modify-student-form.component.css']
 })
 export class ModifyStudentFormComponent implements OnInit {
-  studentForm: FormGroup;
-  Student: Student;
-  Employee: Employee;
+  studentForm: FormGroup
+
+
+
+  student: Student;
+  employee: Employee;
   account: Account;
   advisingTypeArray: AdvisingType[];
   subjectsArray: Subjects[];
@@ -36,8 +39,11 @@ export class ModifyStudentFormComponent implements OnInit {
   priorityArray: Priority[];
   statusArray: Status[];
   request: Request;
+  forSubmitting: boolean = true;
   isDataLoaded: boolean = false;
+  hasLoaded: boolean = false;
   showOtherTextBoxFormType: boolean = false;
+  showSubjectsBox: boolean = false;
   showOtherTextBoxAdvisingType: boolean = false;
 
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router, 
@@ -53,7 +59,7 @@ export class ModifyStudentFormComponent implements OnInit {
                   dateResolved: '',
                   advisingType: '',
                   otherAdvisingType: '',
-                  subject: '',
+                  subjects: '',
                   description: '',
                   actionTaken: '',
                   phoneNumber: '',
@@ -66,13 +72,23 @@ export class ModifyStudentFormComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
-        this.studentForm.get('');
-        const id = params['id'];
-        this.requestService.getRequest(id).subscribe(data => {
-          this.request = data; 
-          this.initializeForm();
-        });
-      
+      if (!this.hasLoaded) {
+        this.hasLoaded = true; // Set the flag to true to indicate that the code block has been executed
+        
+        if (params['id'] !== undefined) {
+          this.forSubmitting = false;
+          this.studentForm.get('');
+          const id = params['id'];
+          this.requestService.getRequest(id).subscribe(data => {
+            this.request = data;
+            this.student = this.request.student;
+            this.initializeForm();
+          });
+        } else {
+          this.student = this.dataService.getDataPersistent('model');
+          this.forSubmitting = true;
+        }
+      }
     });  
 
     this.advisingTypeService.getTypes().subscribe((data: AdvisingType[]) => {
@@ -96,6 +112,13 @@ export class ModifyStudentFormComponent implements OnInit {
       this.isDataLoaded = false;
     }
   );
+  this.subjectsService.getSubjects().subscribe((data: Subjects[]) => {
+    this.subjectsArray = data;
+  },
+  (error) => {
+    this.isDataLoaded = false;
+  }
+);
     this.statusService.getStatuses().subscribe((data: Status[]) => {
       this.statusArray = data;
     },
@@ -103,13 +126,12 @@ export class ModifyStudentFormComponent implements OnInit {
       this.isDataLoaded = false;
     }
   );      
-    this.Employee = this.dataService.getDataPersistent('model');
+
     this.account = this.dataService.getDataPersistent('account');
-    //this.initializeForm();
   }
 
   initializeForm() {
-    this.Student = this.request.student;
+    console.log('this is being called')
     this.studentForm = this.fb.group({
       student: this.request.student,
       title: this.request.title,
@@ -119,19 +141,20 @@ export class ModifyStudentFormComponent implements OnInit {
       dateResolved: this.request.dateResolved,
       advisingType: this.request.advisingType.id,
       otherAdvisingType: this.request.otherAdvisingType,
-      subject: this.request.subject,
+      subjects: this.request.subject,
       description: this.request.description,
       actionTaken: this.request.actionTaken,
       phoneNumber: this.request.phoneNumber,
-      formType: this.request.formType.id,
-      otherFormType: this.request.otherFormType,
+      // formType: this.request.formType.id,
+      // otherFormType: this.request.otherFormType,
       priority: this.request.priority.id,
       status: this.request.status,
-      otherGender: this.request.formType.name
+      otherGender: this.request.student.gender
     });
     this.studentForm.get('advisingType').disable()
-    this.studentForm.get('formType').disable()
+    this.studentForm.get('otherAdvisingType').disable()
   }
+
 
   onFormTypeChange(event: any) {
     const selectedValue = event.target.value;
@@ -150,28 +173,23 @@ export class ModifyStudentFormComponent implements OnInit {
     const selectedValue = event.target.value;
     if (selectedValue === '8') {
       this.showOtherTextBoxAdvisingType = true;
+      this.showSubjectsBox = false;
       this.studentForm.get('otherAdvisingType')?.setValidators(Validators.required);
-    } else {
+    } else if (selectedValue === '2' || selectedValue === '3') {
+      this.showSubjectsBox = true;
       this.showOtherTextBoxAdvisingType = false;
+      this.studentForm.get('subjects')?.setValidators(Validators.required);
+    }
+    else {
+      this.showOtherTextBoxAdvisingType = false;
+      this.showSubjectsBox = false;
+      this.studentForm.get('subjects')?.clearValidators();
+      this.studentForm.get('subjects')?.setValue('');
       this.studentForm.get('otherAdvisingType')?.clearValidators();
       this.studentForm.get('otherAdvisingType')?.setValue('');
     }
     this.studentForm.get('otherAdvisingType')?.updateValueAndValidity();
-  }
-
-  accountCheck(){
-    if (this.account == null || this.Employee == null || this.account.role.roleName === "STUDENT"){ 
-      this.router.navigate(['index']);
-    }
-  }
-
-  onCancel(){
-    if (this.account.role.roleName === "ADMINISTRATION"){ 
-      this.router.navigate(['admin-dashboard']);
-    }
-    else if (this.account.role.roleName === "PROFESSOR"){ 
-      this.router.navigate(['professor-dashboard']);
-    }
+    this.studentForm.get('subjects')?.updateValueAndValidity();
   }
   
   getCurrentDate(): string {
@@ -179,6 +197,14 @@ export class ModifyStudentFormComponent implements OnInit {
     // Format the date as "YYYY-MM-DD HH:mm:ss"
     const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
     return formattedDate;
+  }
+
+  onCancel(){
+    if (this.account.role.roleName === "STUDENT" || this.account.role.roleName === "ADMINISTRATION"){
+      this.router.navigate(['/dashboard']);
+    } else {
+      this.router.navigate(['/index']);
+    }
   }
 
   private getDateStamp(): string {
@@ -198,14 +224,14 @@ export class ModifyStudentFormComponent implements OnInit {
 
   onSubmit() {
     const request = new FormData();
-    request.append('student',this.Student.myId.toString());
-    //request.append('employees', null);
+    request.append('student',this.student.myId.toString());
+    //request.append('employees', this.studentForm.value.subjects.);
     request.append('title', this.studentForm.value.title);
     request.append('dateCreated',this.getDateStamp());
     request.append('dateModified',this.getDateStamp());
     //request.append('dateResolved',null);
     request.append('advisingType',this.studentForm.value.advisingType.toString());
-    request.append('subject', this.studentForm.value.subject.toString());
+    request.append('subject', this.studentForm.value.subjects.toString());
     request.append('description',this.studentForm.value.description);
     request.append('actionTaken',this.studentForm.value.actiontaken);
     request.append('otherFormType',this.studentForm.value.otherFormType);
@@ -220,7 +246,7 @@ export class ModifyStudentFormComponent implements OnInit {
         console.log('Request added:', response);
         console.log(request);
         alert('Request has been submitted successfully!');
-        this.router.navigate(['/student-dashboard']);
+        this.onCancel();
       },
       (error) => {
         console.log(request);

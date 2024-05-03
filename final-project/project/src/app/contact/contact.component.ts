@@ -43,6 +43,7 @@ account : Account;
       // Email sent successfully
       alert('Your message has been sent successfully!');
       this.form.get('message')?.setValue('');
+      this.form.get('from_email')?.setValue('');
     } else {
       // Email failed to send
       alert('An error occurred while sending your message. Please try again later.');
