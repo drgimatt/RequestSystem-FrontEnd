@@ -46,8 +46,8 @@ export class FinalDashComponent implements OnInit{
       this.isDataLoaded = true;
     });
   } else if (this.account.role.roleName === 'PROFESSOR'){
-      this.requestService.getRequests().subscribe((data: Request[]) => {
-      this.requests = data.filter(request => request.subject.employees.find(employee => employee.employeeID === this.user.employeeID));
+      this.requestService.getProfessorRequest(this.user.employeeID).subscribe((data: Request[]) => {
+      this.requests = data
       this.filteredRequests = this.requests
       this.isDataLoaded = true;
     });

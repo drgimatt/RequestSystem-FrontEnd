@@ -22,6 +22,10 @@ export class RequestService {
         return this.http.get<Request>(this.requestsUrl + '/show-request/' + id.toString());
     }
 
+    public getProfessorRequest(id: String): Observable<Request[]>{
+        return this.http.get<Request[]>(this.requestsUrl + '/show-professor-requests/' + id);
+    }
+
     public createRequest(formData: FormData)  {
         return this.http.post<any>(this.requestsUrl + '/create-request/', formData);
     }
