@@ -332,14 +332,15 @@
                                                 </select>
                                             </div>
                                             <!-- for professor's only -->
-                                            <div class="col-md-1" *ngIf="account.role.roleName === 'PROFESSOR'">
+                                            <div class="col-md-1" *ngIf="account.role.roleName === 'PROFESSOR' || account.role.roleName === 'ADMINISTRATION' ">
                                                 <label for="dataTable_length">Status</label>
                                             </div>
-                                            <div class="col-md-2" [formGroup] = "profStatus" *ngIf="account.role.roleName === 'PROFESSOR'">
-                                                <select name="dataTable_length" id="filterView" aria-controls="dataTable" class="custom-select form-control mb-2" formControlName="filterView" (change)="applyFilter($event)" style="width: 150px;">
-                                                    <option [selected] = "true" value = "ALL">Select Status</option>
-                                                    <option value = "PENDING">Active</option>
-                                                    <option value = "COMPLETED">Inactive</option>
+                                            <div class="col-md-2" [formGroup] = "profStatus" *ngIf="account.role.roleName === 'PROFESSOR' || account.role.roleName === 'ADMINISTRATION' ">
+                                                <select name="dataTable_length" id="statusView" aria-controls="dataTable" class="custom-select form-control mb-2" formControlName="statusView" (change)="applyStatus($event)" style="width: 150px;">
+                                                    <option [disabled] = "true" >Select status</option>
+                                                    <option value = "Active">Active</option>
+                                                    <option value = "Inactive">Inactive</option>
+                                                    <option value = "Away">Away</option>
                                                 </select>
                                             </div>
                                         </div>
