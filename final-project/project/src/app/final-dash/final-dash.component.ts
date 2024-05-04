@@ -7,6 +7,8 @@ import { RequestService } from '../service/request.service';
 import { Employee } from '../model/employee';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Student } from '../model/student';
+import { EmployeeService } from '../service/employee.service';
+import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { SignoutDialogComponent } from '../signout-dialog/signout-dialog.component';
 
@@ -21,6 +23,7 @@ export class FinalDashComponent implements OnInit{
   filteredRequests: Request[] = [];
   isDataLoaded: boolean = false;
   account: Account;
+  emp: Employee;
   filterTable: FormGroup;
   searchTable: FormGroup;
   profStatus: FormGroup;
@@ -28,8 +31,9 @@ export class FinalDashComponent implements OnInit{
   pendingCount: Number = 0
   rejectedCount: Number = 0
   user: any
+  file: File
 
-  constructor(private requestService: RequestService, private router: Router, private dataService: DataService, private fb: FormBuilder, private dialog: MatDialog) {
+  constructor(private datePipe: DatePipe,private requestService: RequestService, private employeeService: EmployeeService, private router: Router, private dataService: DataService, private fb: FormBuilder, private dialog: MatDialog) {
     this.filterTable = this.fb.group({
       tableView : ''
     });
@@ -37,19 +41,24 @@ export class FinalDashComponent implements OnInit{
       searchView : ''
     });
     this.profStatus = this.fb.group({
-      filterView : ''
+      statusView : ''
     });
   }
 
   ngOnInit(): void {
     this.user = this.dataService.getDataPersistent('model');
     this.account = this.dataService.getDataPersistent('account');
+    
     //this.accountCheck();
     this.prepareRelevantRequests()
   }
 
   prepareRelevantRequests(){
     if(this.account.role.roleName === 'ADMINISTRATION') {
+      this.employeeService.getEmployee(this.user.myId).subscribe ((data: Employee) => {
+        this.emp = data
+        this.profStatus.get('statusView')?.setValue(this.emp.status);
+      })
       this.requestService.getRequests().subscribe((data: Request[]) => {
       this.requests = data
       this.completeCount = this.requests.filter(request => request.status.name === "COMPLETED").length
@@ -59,6 +68,11 @@ export class FinalDashComponent implements OnInit{
       this.isDataLoaded = true;
     });
   } else if (this.account.role.roleName === 'PROFESSOR'){
+      this.employeeService.getEmployee(this.user.myId).subscribe ((data: Employee) => {
+        this.emp = data
+        this.profStatus.get('statusView')?.setValue(this.emp.status);
+      })
+
       this.requestService.getProfessorRequest(this.user.employeeID).subscribe((data: Request[]) => {
       this.requests = data
       this.completeCount = this.requests.filter(request => request.status.name === "COMPLETED").length
@@ -77,7 +91,7 @@ export class FinalDashComponent implements OnInit{
       this.filteredRequests = this.requests
       this.isDataLoaded = true;});
     }
-
+    
   }
 
   onSignOut() {
@@ -98,6 +112,12 @@ export class FinalDashComponent implements OnInit{
     
   }
 
+  createPhoto(photo: any){
+    const blob = new Blob([photo], { type: 'image/jpeg' });
+    const file = new File([blob], 'photo.jpg', { type: 'image/jpeg' });
+    return file;
+  }
+
   clearSearch() {
     const inputField = document.getElementById('searchInput') as HTMLInputElement;
     if (inputField) {
@@ -108,6 +128,31 @@ export class FinalDashComponent implements OnInit{
     // Reset filteredRequests array to its original state
 
 }
+
+formatDate(date: Date): string {
+  // Use DatePipe to format the date
+  return this.datePipe.transform(date, 'yyyy-MM-dd HH:mm:ss')!;
+}
+
+  applyStatus(event: any){
+    const selectedValue = event.target.value;
+    const user = new FormData();
+    this.file = this.createPhoto(this.emp.photo)
+    user.append('myId', this.emp.myId.toString());
+    user.append('employeeID', this.emp.employeeID)
+    user.append('firstName', this.emp.firstName)
+    user.append('lastName', this.emp.lastName)
+    user.append('middleName', this.emp.middleName)
+    user.append('position', this.emp.position)
+    user.append('department', this.emp.department.id.toString())
+    user.append('email', this.emp.email)
+    user.append('gender', this.emp.gender)
+    user.append('dateAdded', this.formatDate(this.emp.dateAdded))
+    user.append('status', selectedValue)
+    user.append('photoBytes', this.file);
+    this.employeeService.updateEmployee(this.emp.myId, user).subscribe();
+  }
+
 
   applySearch(event: any){
     const searchValue = event.target.value;

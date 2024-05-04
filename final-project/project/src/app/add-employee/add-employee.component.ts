@@ -117,6 +117,7 @@ onUpload(){
   employee.append('position', this.newEmployee.value.position);
   employee.append('dateAdded', this.getCurrentDate())
   employee.append('department', this.newEmployee.value.department.toString());
+  employee.append('status', 'Active')
   if (this.showOtherTextbox === true){
     employee.append('gender', this.newEmployee.value.otherGender);
   } else {
