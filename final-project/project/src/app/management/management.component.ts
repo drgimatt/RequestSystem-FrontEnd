@@ -21,7 +21,7 @@ export class ManagementComponent implements OnInit {
   account: Account;
   user: Employee;
 
-  constructor(private studentService: StudentService,private router: Router, private dataService: DataService, private fb: FormBuilder) { 
+  constructor(private studentService: StudentService, private router: Router, private dataService: DataService, private fb: FormBuilder) { 
     this.filterTable = this.fb.group({
       tableView : ''
     });
@@ -41,12 +41,11 @@ export class ManagementComponent implements OnInit {
   }
 
   editEntry(entryID: number){
-    //this.router.navigate(['/edit-student']);
+    //this.router.navigate(['/edit-student',entryID]);
   }
 
   deleteEntry(entryID: number){
     if(confirm("Do you want to delete this entry?")){
-      alert("bonak ka")
       this.studentService.deleteStudent(entryID).subscribe(response => {
           // Delete operation was successful
           alert('Delete operation successful');
@@ -56,15 +55,12 @@ export class ManagementComponent implements OnInit {
         console.error('Delete operation failed:', error);
       })
     } else {
-      alert("di ka bonak")
     }
   }
 
   applySearch(){
     const inputField = document.getElementById('searchInput') as HTMLInputElement;
     const searchValue = inputField.value;
-  //   this.filterTable.get('tableView').setValue('ALL')
-  //   console.log("Value = ", searchValue)
     if (searchValue == "") {
       this.filteredStudents = this.students;
     }
@@ -89,12 +85,6 @@ export class ManagementComponent implements OnInit {
     this.router.navigate(['/admin-student-form']);
   }
 
-  onSignOut() {
-    this.dataService.removeDataPersistent('model');
-    this.dataService.removeDataPersistent('account');
-    this.router.navigate(['/index']);
-  
-  }
 
   // accountCheck(){
   //   if (this.account == null || this.user == null || this.account.role.roleName !== "ADMINISTRATOR" || this.account.role.roleName !== "STUDENT" || this.account.role.roleName !== "PROFESSOR"){ 

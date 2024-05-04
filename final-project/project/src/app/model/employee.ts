@@ -15,4 +15,5 @@ export class Employee {
     gender: string = '';    
     subjects: Subjects[] = [];
     dateAdded: Date = new Date();
+    status: string = '';
 }
