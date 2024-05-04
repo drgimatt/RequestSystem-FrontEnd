@@ -146,7 +146,7 @@ export class ModifyStudentFormComponent implements OnInit {
       otherGender: this.request.student.gender
     });
 
-    if(this.studentForm.value.subjects.toString() !== null){
+    if(this.studentForm.value.subjects !== null){
       this.showSubjectsBox = true;
     }
     if (this.studentForm.value.otherAdvisingType !== ""){
