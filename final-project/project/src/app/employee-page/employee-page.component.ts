@@ -84,11 +84,11 @@ navigateToAdminStudentForm() {
 }
 
 
-// accountCheck(){
-//   if (this.account == null || this.user == null || this.account.role.roleName !== "ADMINISTRATOR" || this.account.role.roleName !== "STUDENT" || this.account.role.roleName !== "PROFESSOR"){ 
-//     this.dataService.removeDataPersistent('model');
-//     this.dataService.removeDataPersistent('account');
-//     this.router.navigate(['index']);
-//   }
-// }
+accountCheck(){
+  if (this.account == null || this.user == null || this.account.role.roleName !== "ADMINISTRATOR" ){ 
+    this.dataService.removeDataPersistent('model');
+    this.dataService.removeDataPersistent('account');
+    this.router.navigate(['index']);
+  }
+}
 }

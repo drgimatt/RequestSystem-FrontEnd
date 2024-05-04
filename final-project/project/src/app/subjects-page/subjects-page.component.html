@@ -31,9 +31,9 @@
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.html">
-                    <div class="sidebar-brand-icon rotate-n-15">
-                        
+                <a class="sidebar-brand d-flex align-items-center justify-content-center">
+                    <div class="sidebar-brand-icon ">
+                        <img src="assets/logo.svg" alt="Logo" width="50" height="50"> 
                     </div>
                     <div class="sidebar-brand-text mx-3">Mapua CSA </div>
                 </a>
@@ -43,7 +43,7 @@
     
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="dashboard.html">
+                    <a class="nav-link" href="/dashboard">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
@@ -119,7 +119,7 @@
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link" href="#" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.firstName + " " + user.lastName}}</span>
                                     
                                 </a>
                             
@@ -146,7 +146,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Example Table</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Subjects Table</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -172,7 +172,7 @@
                                 <label for="dataTable_filter" class="mr-2">Search:</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="search" class="form-control mb-2">
+                                <input type="search" class="form-control mb-2" (input)="applySearch($event)">
                             </div>
                         </div>
                     </div>
@@ -180,17 +180,30 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>Course Code</th>
                             <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                            <th>Action</th>
+                            <th>Department</th>
+                            <th>Relevant Employees</th>
+                            <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr *ngFor="let subject of filteredSubjects">
+                            <td>{{subject.courseCode}}</td>
+                            <td>{{subject.name}}</td>
+                            <td>{{subject.department.name}}</td>
+                            <!-- <td *ngFor = "let employee of subject.employees">{{employee.firstName + " " + employee.lastName}}</td> -->
+                            <td>
+                                <ul>
+                                    <li *ngFor="let employee of subject.employees">{{ employee.firstName + " " + employee.lastName }}</li>
+                                </ul>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-outline-info btn-sm mr-1" (click)="editEntry(subject.myId)">Edit</button>
+                                <button class="btn btn-outline-danger btn-sm" (click)="deleteEntry(subject.myId)">Delete</button>
+                            </td>
+                        </tr>                        
+                        <!-- <tr>
                             <td>Tiger Nixon</td>
                             <td>System Architect</td>
                             <td>Edinburgh</td>
@@ -358,7 +371,7 @@
                                 <button class="btn btn-outline-info btn-sm mr-1">Edit</button>
                                 <button class="btn btn-outline-danger btn-sm">Archive</button>
                             </td>
-                        </tr>
+                        </tr> -->
                      
                     </tbody>                  
                 </table>

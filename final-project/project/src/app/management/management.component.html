@@ -32,8 +32,8 @@
     
                 <!-- Sidebar - Brand -->
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
-                    <div class="sidebar-brand-icon rotate-n-15">
-                        
+                    <div class="sidebar-brand-icon ">
+                        <img src="assets/logo.svg" alt="Logo" width="50" height="50"> 
                     </div>
                     <div class="sidebar-brand-text mx-3">Mapua CSA </div>
                 </a>
@@ -179,7 +179,7 @@
                 </div>
                 
             
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"  *ngIf="isDataLoaded">
                     <thead>
                         <tr>
                             <th>Student ID</th>

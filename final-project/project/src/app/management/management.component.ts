@@ -4,7 +4,6 @@ import { DataService } from '../data.service';
 import { Student } from '../model/student';
 import { Account } from '../model/account';
 import { Employee } from '../model/employee';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { StudentService } from '../service/student.service';
 
 @Component({
@@ -13,21 +12,14 @@ import { StudentService } from '../service/student.service';
   styleUrls: ['./management.component.css']
 })
 export class ManagementComponent implements OnInit {
-  filterTable: FormGroup;
-  searchTable: FormGroup;
   students: Student[] = [];
   filteredStudents: Student[] = [];
   isDataLoaded: boolean = false;
   account: Account;
   user: Employee;
 
-  constructor(private studentService: StudentService, private router: Router, private dataService: DataService, private fb: FormBuilder) { 
-    this.filterTable = this.fb.group({
-      tableView : ''
-    });
-    this.searchTable = this.fb.group({
-      searchView : ''
-    });    
+  constructor(private studentService: StudentService, private router: Router, private dataService: DataService) { 
+
   }
   ngOnInit(): void {
     this.user = this.dataService.getDataPersistent('model');
@@ -85,11 +77,11 @@ export class ManagementComponent implements OnInit {
   }
 
 
-  // accountCheck(){
-  //   if (this.account == null || this.user == null || this.account.role.roleName !== "ADMINISTRATOR" || this.account.role.roleName !== "STUDENT" || this.account.role.roleName !== "PROFESSOR"){ 
-  //     this.dataService.removeDataPersistent('model');
-  //     this.dataService.removeDataPersistent('account');
-  //     this.router.navigate(['index']);
-  //   }
-  // }
+  accountCheck(){
+    if (this.account == null || this.user == null || this.account.role.roleName !== "ADMINISTRATOR" ){ 
+      this.dataService.removeDataPersistent('model');
+      this.dataService.removeDataPersistent('account');
+      this.router.navigate(['index']);
+    }
+  }
 }
