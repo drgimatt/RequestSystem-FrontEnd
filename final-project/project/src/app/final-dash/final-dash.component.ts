@@ -15,11 +15,15 @@ import { Student } from '../model/student';
 })
 export class FinalDashComponent implements OnInit{
   requests: Request[] = [];
+  SpecificRequest: Request;
   filteredRequests: Request[] = [];
   isDataLoaded: boolean = false;
   account: Account;
   filterTable: FormGroup;
   searchTable: FormGroup;
+  completeCount: Number = 0
+  pendingCount: Number = 0
+  rejectedCount: Number = 0
   user: any
 
   constructor(private requestService: RequestService, private router: Router, private dataService: DataService, private fb: FormBuilder) {
@@ -42,19 +46,28 @@ export class FinalDashComponent implements OnInit{
     if(this.account.role.roleName === 'ADMINISTRATION') {
       this.requestService.getRequests().subscribe((data: Request[]) => {
       this.requests = data
+      this.completeCount = this.requests.filter(request => request.status.name === "COMPLETED").length
+      this.pendingCount = this.requests.filter(request => request.status.name === "PENDING").length
+      this.rejectedCount = this.requests.filter(request => request.status.name === "REJECTED").length
       this.filteredRequests = this.requests
       this.isDataLoaded = true;
     });
   } else if (this.account.role.roleName === 'PROFESSOR'){
       this.requestService.getProfessorRequest(this.user.employeeID).subscribe((data: Request[]) => {
       this.requests = data
+      this.completeCount = this.requests.filter(request => request.status.name === "COMPLETED").length
+      this.pendingCount = this.requests.filter(request => request.status.name === "PENDING").length
+      this.rejectedCount = this.requests.filter(request => request.status.name === "REJECTED").length
       this.filteredRequests = this.requests
       this.isDataLoaded = true;
     });
     }
     else if (this.account.role.roleName === 'STUDENT'){
       this.requestService.getRequests().subscribe((data: Request[]) => {
-        this.requests = data.filter(request => request.student.studentID === this.user.studentID);
+      this.requests = data.filter(request => request.student.studentID === this.user.studentID);
+      this.completeCount = this.requests.filter(request => request.status.name === "COMPLETED").length
+      this.pendingCount = this.requests.filter(request => request.status.name === "PENDING").length
+      this.rejectedCount = this.requests.filter(request => request.status.name === "REJECTED").length
       this.filteredRequests = this.requests
       this.isDataLoaded = true;});
     }
@@ -67,12 +80,14 @@ export class FinalDashComponent implements OnInit{
     this.router.navigate(['/index']);
   }
 
-  viewRequest(requestID: number){
+  viewRequest(SpecificRequestID: number){
 
-    if (this.account.role.roleName === "PROFESSOR"){
-      this.router.navigate(['/modify-request/',requestID]);
-    } else {
-      this.router.navigate(['/view-request/',requestID]);
+    this.SpecificRequest = this.filteredRequests.find(req => req.requestId === SpecificRequestID)
+
+    if (this.account.role.roleName === "PROFESSOR" || this.account.role.roleName === "ADMINISTRATION"){
+      this.router.navigate(['/modify-request/',SpecificRequestID]);
+    } else if (this.account.role.roleName === "STUDENT" || (this.account.role.roleName === "ADMINISTRATION" && this.SpecificRequest.advisingType.name === "Mentoring / Clarification on the Topic of the Subjects Enrolled" || this.SpecificRequest.advisingType.name === "Requirements in Course Enrolled")){
+      this.router.navigate(['/view-request/',SpecificRequestID]);
     }
     
   }
