@@ -37,6 +37,8 @@ import { ConcernsPageComponent } from './concerns-page/concerns-page.component';
 import { SubjectsPageComponent } from './subjects-page/subjects-page.component';
 import { StudentLoginComponent } from './student-login/student-login.component';
 import { FinalDashComponent } from './final-dash/final-dash.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { SignoutDialogComponent } from './signout-dialog/signout-dialog.component';
 
 
 
@@ -69,6 +71,7 @@ import { FinalDashComponent } from './final-dash/final-dash.component';
     SubjectsPageComponent,
     FinalDashComponent,
     StudentLoginComponent,
+    SignoutDialogComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -80,6 +83,7 @@ import { FinalDashComponent } from './final-dash/final-dash.component';
     CommonModule,
     NgbModule,
     MatSelectModule,
+    MatDialogModule,
   ],
   exports:[RouterModule],
   providers: [

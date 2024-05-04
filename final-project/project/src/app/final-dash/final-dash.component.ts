@@ -7,6 +7,8 @@ import { RequestService } from '../service/request.service';
 import { Employee } from '../model/employee';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Student } from '../model/student';
+import { MatDialog } from '@angular/material/dialog';
+import { SignoutDialogComponent } from '../signout-dialog/signout-dialog.component';
 
 @Component({
   selector: 'app-final-dash',
@@ -27,7 +29,7 @@ export class FinalDashComponent implements OnInit{
   rejectedCount: Number = 0
   user: any
 
-  constructor(private requestService: RequestService, private router: Router, private dataService: DataService, private fb: FormBuilder) {
+  constructor(private requestService: RequestService, private router: Router, private dataService: DataService, private fb: FormBuilder, private dialog: MatDialog) {
     this.filterTable = this.fb.group({
       tableView : ''
     });
@@ -166,5 +168,17 @@ export class FinalDashComponent implements OnInit{
       this.dataService.removeDataPersistent('account');
       this.router.navigate(['index']);
     }
+  }
+
+  // for the dialog box
+  openDialog(): void {
+    const dialogRef = this.dialog.open(SignoutDialogComponent, {
+      width: '350px',
+      height: '200px'
+    });
+
+    dialogRef.afterClosed().subscribe((result)=> {
+      console.log("dialog has been closed");
+    });
   }
 }
