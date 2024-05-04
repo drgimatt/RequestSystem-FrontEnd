@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { StudentService } from '../service/student.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DepartmentService } from '../service/department.service';
@@ -25,18 +25,18 @@ export class AddStudentComponent implements OnInit{
 
 constructor(private departmentService: DepartmentService, private studentService: StudentService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe){
   this.newStudent = this.fb.group({
-    studentID: '',
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    program: '',
+    studentID: ['', [Validators.required, Validators.maxLength(11)]],
+    firstName: ['', [Validators.required]],
+    middleName: ['', [Validators.required]],
+    lastName:['', [Validators.required]],
+    program: ['', [Validators.required]],
     department: 0,
     yearLevel: 0,
-    email: '',
+    email: ['', [Validators.required, emailFormat]],
     gender: '',
     otherGender: '',    
     photo: null,
-  })
+  });
 
 }
   ngOnInit(): void {
@@ -215,7 +215,12 @@ onEdit(){
   );   
 }
 
+}
 
-
-
+export function emailFormat(control: AbstractControl): { [key: string]: boolean } | null {
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (control.value && !emailPattern.test(control.value)) {
+    return { 'emailFormat': true };
+  }
+  return null;
 }

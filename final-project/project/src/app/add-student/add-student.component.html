@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Student</title>
-        <!-- Add Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="add-student.component.css">
-        <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <!-- Popper.js -->
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-        <!-- Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="add-student.component.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+</head>
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -39,31 +39,37 @@
             <div class="moodra pt-5 col-md-6">
                 <div class="card rounded-card shadow p-4">
                     <h2 class="text-center">Add a Student</h2>
-                    <!-- <form [formGroup]="newDepartment" (ngSubmit)="checkFields()">                                                                                    
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter Name of Department" required>
-                        </div>   
-                        <button type="submit" class="btn btn-success">Add Department</button>
-                    </form> -->
                     <form [formGroup]="newStudent" (ngSubmit)="checkFields()">
 
                         <div class="form-group">
                             <label for="studentID">Student ID</label>
-                            <input type="text" formControlName="studentID" class="form-control" id="studentId" placeholder="Enter student id" required>
+                            <input type="text" formControlName="studentID" class="form-control" id="studentId" placeholder="Enter Student ID" required>
+                            <div *ngIf="newStudent.get('studentID').invalid && (newStudent.get('studentID').dirty || newStudent.get('studentID').touched)" class="text-danger">
+                                <div *ngIf="newStudent.get('studentID').hasError('required')" class="text-danger">Student ID is required.</div>
+                                <div *ngIf="newStudent.get('studentID').hasError('maxlength')" class="text-danger">Student ID must not exceed 11 characters.</div>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label for="firstName">First Name</label>
-                            <input type="text" formControlName="firstName" class="form-control" id="firstname" placeholder="Enter First name" required>
+                            <input type="text" formControlName="firstName" class="form-control" id="firstname" placeholder="Enter First Name" required>
+                            <div *ngIf="newStudent.get('firstName').invalid && (newStudent.get('firstName').dirty || newStudent.get('firstName').touched)" class="text-danger">
+                                <div *ngIf="newStudent.get('firstName').hasError('required')" class="text-danger">First Name is required.</div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="middlename">Middle Name</label>
-                            <input type="text" formControlName="middleName" class="form-control" id="middlename" placeholder="Enter Middle name" required>
+                            <input type="text" formControlName="middleName" class="form-control" id="middlename" placeholder="Enter Middle Name" required>
+                            <div *ngIf="newStudent.get('middleName').invalid && (newStudent.get('middleName').dirty || newStudent.get('middleName').touched)" class="text-danger">
+                                <div *ngIf="newStudent.get('middleName').hasError('required')" class="text-danger">Middle Name is required.</div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="lastname">Last Name</label>
-                            <input type="text" formControlName="lastName" class="form-control" id="lastname" placeholder="Enter Last name" required>
+                            <input type="text" formControlName="lastName" class="form-control" id="lastname" placeholder="Enter Last Name" required>
+                            <div *ngIf="newStudent.get('lastName').invalid && (newStudent.get('lastName').dirty || newStudent.get('lastName').touched)" class="text-danger">
+                                <div *ngIf="newStudent.get('lastName').hasError('required')" class="text-danger">Last Name is required.</div>
+                            </div>
                         </div>                        
                         
                         <div class="form-group">
@@ -76,7 +82,10 @@
     
                         <div class="form-group">
                             <label for="program">Program</label>
-                            <input type="text" formControlName="program" class="form-control" id="program" placeholder="Enter program" required>
+                            <input type="text" formControlName="program" class="form-control" id="program" placeholder="Enter Program" required>
+                            <div *ngIf="newStudent.get('program').invalid && (newStudent.get('program').dirty || newStudent.get('program').touched)" class="text-danger">
+                                <div *ngIf="newStudent.get('program').hasError('required')" class="text-danger">Program is required.</div>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -84,11 +93,17 @@
                             <select formControlName="department" class="form-control form-select" id="department" required *ngIf="isDataLoaded">
                                 <option *ngFor="let department of departmentList" value="{{department.id}}">{{department.name}}</option>
                             </select>
+                            <div *ngIf="newStudent.get('department').invalid && (newStudent.get('department').dirty || newStudent.get('department').touched)" class="text-danger">
+                                <div *ngIf="newStudent.get('department').hasError('required')" class="text-danger">Department is required.</div>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" formControlName="email" class="form-control" id="email" placeholder="Enter email" required>
+                            <input type="text" formControlName="email" class="form-control" id="email" placeholder="Enter Email" required>
+                            <div *ngIf="newStudent.get('email').invalid && (newStudent.get('email').dirty || newStudent.get('email').touched)" class="text-danger">
+                                <div *ngIf="newStudent.get('email').hasError('required')" class="text-danger">Email is required.</div>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -98,19 +113,28 @@
                                 <option value="Female">Female</option>
                                 <option value="Other">Others</option>
                             </select>
+                            <div *ngIf="newStudent.get('gender').invalid && (newStudent.get('gender').dirty || newStudent.get('gender').touched)" class="text-danger">
+                                <div *ngIf="newStudent.get('gender').hasError('required')" class="text-danger">Gender is required.</div>
+                            </div>
                         </div>
                         
                         <div class="form-group" *ngIf="showOtherTextbox">
                             <label for="otherGender">Other Gender</label>
                             <input type="text" formControlName="otherGender" class="form-control" id="otherGender" placeholder="Enter other gender">
+                            <div *ngIf="newStudent.get('otherGender').invalid && (newStudent.get('otherGender').dirty || newStudent.get('otherGender').touched)" class="text-danger">
+                                <div *ngIf="newStudent.get('otherGender').hasError('required')" class="text-danger">Other Gender is required.</div>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label for="yearlevel">Year Level</label>
                             <input type="number" formControlName="yearLevel" class="form-control" id="yearlevel" placeholder="Enter Year level" required>
+                            <div *ngIf="newStudent.get('yearLevel').invalid && (newStudent.get('yearLevel').dirty || newStudent.get('yearLevel').touched)" class="text-danger">
+                                <div *ngIf="newStudent.get('yearLevel').hasError('required')" class="text-danger">Year Level is required.</div>
+                            </div>
                         </div>
     
-                        <button type="submit" id = "submitButton" class="btn bg-primary" style="color: #fff;">{{ forEditing ? 'Update Student' : 'Add Student' }}</button>
+                        <button type="submit" id="submitButton" class="btn bg-primary" style="color: #fff;">{{ forEditing ? 'Update Student' : 'Add Student' }}</button>
                     </form>
                 </div>
             </div>
@@ -126,5 +150,4 @@
 
 
 </body>
-
 </html>
