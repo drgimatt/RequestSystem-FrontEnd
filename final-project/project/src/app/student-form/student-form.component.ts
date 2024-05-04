@@ -42,6 +42,7 @@ export class StudentFormComponent implements OnInit {
   showOtherTextBoxFormType: boolean = false;
   showSubjectsBox: boolean = false;
   showOtherTextBoxAdvisingType: boolean = false;
+  showOtherAction: boolean = false;
 
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router, private datePipe: DatePipe,
               private requestService: RequestService, private advisingTypeService: AdvisingtypeService,
@@ -64,6 +65,7 @@ export class StudentFormComponent implements OnInit {
                   otherFormType: '',
                   priority: '',
                   status: '',
+                  otherActionTaken: ''
                 });
               }
 
@@ -129,6 +131,7 @@ export class StudentFormComponent implements OnInit {
 
   initializeForm() {
     console.log('this is being called')
+    this.student = this.request.student;
     this.studentForm = this.fb.group({
       student: this.request.student,
       title: this.request.title,
@@ -142,14 +145,34 @@ export class StudentFormComponent implements OnInit {
       description: this.request.description,
       actionTaken: this.request.actionTaken,
       phoneNumber: this.request.phoneNumber,
+      otherActionTaken: '',
       // formType: this.request.formType.id,
       // otherFormType: this.request.otherFormType,
       priority: this.request.priority.id,
       status: this.request.status.id,
-      otherGender: this.request.student.gender
+      otherGender: this.request.student.gender,
     });
-    this.studentForm.get('advisingType').disable()
-    this.studentForm.get('otherAdvisingType').disable()
+
+    if(this.studentForm.value.subjects !== null){
+      this.showSubjectsBox = true;
+    }
+    if (this.studentForm.value.otherAdvisingType !== ""){
+      this.showOtherTextBoxAdvisingType = true;
+    }
+    if (this.request.actionTaken !== "Awaiting Information" && this.request.actionTaken !== "Clarification Needed" && this.request.actionTaken !== "Under Review" && this.request.actionTaken !== "Scheduled"){
+      this.showOtherAction = true;      
+      this.studentForm.get('actionTaken')?.setValue('Others');
+      this.studentForm.get('otherActionTaken')?.setValue(this.request.actionTaken);
+    }
+      this.isDataLoaded = true;
+      this.studentForm.get('advisingType').disable()
+      this.studentForm.get('otherAdvisingType').disable()
+      this.studentForm.get('subjects').disable()
+      this.studentForm.get('status').disable()
+      this.studentForm.get('actionTaken').disable()
+      this.studentForm.get('otherActionTaken').disable()
+      this.studentForm.get('priority').disable()
+
   }
 
 
@@ -245,7 +268,7 @@ private getDateStamp() {
     request.append('advisingType',this.studentForm.value.advisingType.toString());
     request.append('subject', this.studentForm.value.subjects.toString());
     request.append('description',this.studentForm.value.description);
-    request.append('actionTaken',this.studentForm.value.actiontaken);
+    request.append('actionTaken','Under Review');
     request.append('otherFormType',this.studentForm.value.otherFormType);
     request.append('otherAdvisingType',this.studentForm.value.otherAdvisingType);
     request.append('phoneNumber',this.account.phoneNumber.toString());
