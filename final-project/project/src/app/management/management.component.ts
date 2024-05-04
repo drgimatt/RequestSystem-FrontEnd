@@ -33,7 +33,7 @@ export class ManagementComponent implements OnInit {
   }
 
   editEntry(entryID: number){
-    //this.router.navigate(['/edit-student',entryID]);
+    this.router.navigate(['/edit-student',entryID]);
   }
 
   deleteEntry(entryID: number){

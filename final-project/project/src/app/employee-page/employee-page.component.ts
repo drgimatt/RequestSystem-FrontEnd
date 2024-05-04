@@ -41,7 +41,7 @@ ngOnInit(): void {
 }
 
 editEntry(entryID: number){
-  //this.router.navigate(['/edit-employee',entryID]);
+  this.router.navigate(['/edit-employee',entryID]);
 }
 
 deleteEntry(entryID: number){

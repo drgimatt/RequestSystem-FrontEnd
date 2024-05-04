@@ -31,7 +31,7 @@ export class SubjectsPageComponent implements OnInit {
     this.isDataLoaded = true;});
   }
   editEntry(entryID: number){
-    //this.router.navigate(['/edit-subject',entryID]);
+    this.router.navigate(['/edit-subject',entryID]);
   }
 
   deleteEntry(entryID: number){

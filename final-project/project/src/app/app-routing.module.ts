@@ -109,6 +109,22 @@ const routes: Routes = [
     component: StudentFormComponent 
   },
   { 
+    path: 'edit-student/:id', 
+    component: AddStudentComponent
+  },
+  { 
+    path: 'edit-employee/:id', 
+    component: AddEmployeeComponent
+  },
+  { 
+    path: 'edit-subject/:id', 
+    component: AddSubjectsComponent
+  },
+  { 
+    path: 'edit-concern/:id', 
+    component: AddAdvisingtypeComponent
+  },
+  { 
     path: 'aboutus', 
     component: AboutusComponent 
   },

@@ -29,7 +29,7 @@ export class ConcernsPageComponent implements OnInit{
   }
 
   editEntry(entryID: number){
-    //this.router.navigate(['/edit-advisingtypes',entryID]);
+    this.router.navigate(['/edit-concern',entryID]);
   }
 
   deleteEntry(entryID: number){

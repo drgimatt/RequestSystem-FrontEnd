@@ -110,7 +110,7 @@
                             <input type="number" formControlName="yearLevel" class="form-control" id="yearlevel" placeholder="Enter Year level" required>
                         </div>
     
-                        <button type="submit" class="btn bg-primary" style="color: #fff;">Add Student</button>
+                        <button type="submit" id = "submitButton" class="btn bg-primary" style="color: #fff;">{{ forEditing ? 'Update Student' : 'Add Student' }}</button>
                     </form>
                 </div>
             </div>
