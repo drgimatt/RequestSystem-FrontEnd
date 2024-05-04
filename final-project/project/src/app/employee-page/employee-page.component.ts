@@ -58,26 +58,25 @@ deleteEntry(entryID: number){
   }
 }
 
-applySearch(){
-  const inputField = document.getElementById('searchInput') as HTMLInputElement;
-  const searchValue = inputField.value;
+applySearch(event: any){
+  const searchValue = event.target.value;
   if (searchValue == "") {
     this.filteredEmployees = this.employees;
   } 
-//   else {
-//     // Filter the requests based on search input value
-//     this.filteredStudents = this.students.filter(student => {
-//         // Ensure that all required properties are not null before accessing their properties
-//         return (student && student.firstName.toLowerCase().includes(searchValue)) ||
-//                (student && student.lastName.toLowerCase().includes(searchValue)) ||
-//                (student && student.studentID.toString().includes(searchValue)) ||
-//                (student && student.department.name.toLowerCase().includes(searchValue)) ||
-//                (student && student.program.toLowerCase().includes(searchValue)) ||
-//                (student && student.yearLevel.toString().includes(searchValue)) ||
-//                (student && student.email.toLowerCase().includes(searchValue)) ||
-//                (student && student.gender.toLowerCase().includes(searchValue));
-//     });
-// }
+  else {
+    // Filter the requests based on search input value
+    this.filteredEmployees = this.employees.filter(employee => {
+        // Ensure that all required properties are not null before accessing their properties
+        return (employee && employee.firstName.toLowerCase().includes(searchValue)) ||
+               (employee && employee.lastName.toLowerCase().includes(searchValue)) ||
+               (employee && employee.employeeID.toString().includes(searchValue)) ||
+               (employee && employee.department.name.toLowerCase().includes(searchValue)) ||
+               (employee && employee.position.toLowerCase().includes(searchValue)) ||
+               (employee && employee.status?.toString().includes(searchValue)) ||
+               (employee && employee.email.toLowerCase().includes(searchValue)) ||
+               (employee && employee.gender.toLowerCase().includes(searchValue));
+    });
+}
 }
 
 navigateToAdminStudentForm() {

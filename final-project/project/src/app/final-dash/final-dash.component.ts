@@ -88,9 +88,8 @@ export class FinalDashComponent implements OnInit{
 
 }
 
-  applySearch(){
-    const inputField = document.getElementById('searchInput') as HTMLInputElement;
-    const searchValue = inputField.value;
+  applySearch(event: any){
+    const searchValue = event.target.value;
     this.filterTable.get('tableView').setValue('ALL')
     console.log("Value = ", searchValue)
     if (searchValue == "") {

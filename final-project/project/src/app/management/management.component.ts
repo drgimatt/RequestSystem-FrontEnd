@@ -58,9 +58,8 @@ export class ManagementComponent implements OnInit {
     }
   }
 
-  applySearch(){
-    const inputField = document.getElementById('searchInput') as HTMLInputElement;
-    const searchValue = inputField.value;
+  applySearch(event: any){
+    const searchValue = event.target.value;
     if (searchValue == "") {
       this.filteredStudents = this.students;
     }
