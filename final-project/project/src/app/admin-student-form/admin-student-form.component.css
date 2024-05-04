@@ -1,18 +1,24 @@
 /* Global styles */
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #f8f9fa; 
+  background-color: #f8f9fa;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  background-image: url('/assets/contact.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
 .container {
   flex: 1;
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
   margin: 0; /* Reset margin */
   padding: 0; /* Reset padding */
 }
@@ -33,7 +39,6 @@ body {
 
 /* Bootstrap Overrides */
 .btn-primary {
- 
   color: #fff;
   padding: 8px 20px; 
   border: none;
@@ -44,3 +49,15 @@ body {
   margin-bottom: 30px;
 }
 
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.navbar-nav .nav-item .nav-link {
+  color: #940C0C !important;
+  font-weight: bold;
+}
