@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup, Validators, AbstractControl} from '@angular/forms';
 import { EmployeeService } from '../service/employee.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Department } from '../model/department';
@@ -30,16 +30,16 @@ export class AddEmployeeComponent implements OnInit{
 
 constructor(private departmentService: DepartmentService, private subjectService: SubjectsService, private employeeService: EmployeeService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe){
   this.newEmployee = this.fb.group({
-    employeeID: '',
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    position: '',
+    employeeID: ['',[Validators.required, Validators.pattern('^[0-9]+$')]],
+    firstName: ['',[Validators.required]],
+    middleName: ['',[Validators.required]],
+    lastName: ['',[Validators.required]],
+    position: ['',[Validators.required]],
     department: 0,
     subjects: [],
-    email: '',
-    gender: '',
-    otherGender: '',    
+    email: ['', [Validators.required, Validators.email]],
+    gender:['',[Validators.required]],
+    otherGender: ['',[Validators.required]],    
     photo: null,
     status: ''
   })
@@ -74,6 +74,11 @@ onFileChanged(event){
 }
 
 checkFields(): boolean {
+  // Check form fields including email format
+  if (this.newEmployee.get('email').invalid) {
+    alert('Please enter a valid email.');
+    return false;
+  }
   for (const controlName in this.newEmployee.controls) {
     if (this.newEmployee.get(controlName).hasError('required')) {
       alert('Please fill out all the required fields.');
@@ -144,4 +149,12 @@ onUpload(){
 }
 
 
+}
+
+export function emailFormat(control: AbstractControl): { [key: string]: boolean } | null {
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (control.value && !emailPattern.test(control.value)) {
+    return { 'emailFormat': true };
+  }
+  return null;
 }

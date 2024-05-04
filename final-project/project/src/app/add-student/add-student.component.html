@@ -100,11 +100,13 @@
 
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" formControlName="email" class="form-control" id="email" placeholder="Enter Email" required>
-                            <div *ngIf="newStudent.get('email').invalid && (newStudent.get('email').dirty || newStudent.get('email').touched)" class="text-danger">
-                                <div *ngIf="newStudent.get('email').hasError('required')" class="text-danger">Email is required.</div>
-                            </div>
+                        <input type="email" formControlName="email" class="form-control" id="email" placeholder="Enter email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                        <div *ngIf="newStudent.get('email').invalid && (newStudent.get('email').dirty || newStudent.get('email').touched)" class="text-danger">
+                            <div *ngIf="newStudent.get('email').hasError('required')">Email is required.</div>
+                            <div *ngIf="newStudent.get('email').hasError('email')">Invalid email format.</div>
                         </div>
+                    </div>
+                        
 
                         <div class="form-group">
                             <label for="gender">Gender</label>

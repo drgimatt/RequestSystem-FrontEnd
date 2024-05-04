@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Employee</title>
-        <!-- Add Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="add-employee.component.css">
-        <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <!-- Popper.js -->
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-        <!-- Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Employee</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="add-employee.component.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+</head>
 <body>
-      <!-- Navigation Bar -->
-      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <a class="navbar-brand">
             <img src="/assets/logo.svg" height="50px" alt="Your Logo">
         </a>
@@ -29,82 +29,83 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/employee-page">Back</a>
                 </li>
-               
             </ul>
         </div>
-
     </nav>
     <div class="container">
-       <!--  <app-management></app-management>-->
-            <div class="moodra pt-5 col-md-6 mt-0">
-                <div class="card rounded-card shadow p-4">
-                    <h2 class="text-center">Add an Employee</h2>
-                    <form [formGroup]="newEmployee" (ngSubmit)="checkFields()">
-
-                        <div class="form-group">
-                            <label for="employeeID">Employee ID</label>
-                            <input type="text" formControlName="employeeID" class="form-control" id="employeeId" placeholder="Enter Employee id" required>
+        <div class="moodra pt-5 col-md-6 mt-0">
+            <div class="card rounded-card shadow p-4">
+                <h2 class="text-center">Add an Employee</h2>
+                <form [formGroup]="newEmployee" (ngSubmit)="checkFields()">
+                    <div class="form-group">
+                        <label for="employeeID">Employee ID</label>
+                        <input type="text" formControlName="employeeID" class="form-control" id="employeeId" placeholder="Enter Employee id" required>
+                        <div *ngIf="newEmployee.get('employeeID').invalid && (newEmployee.get('employeeID').dirty || newEmployee.get('employeeID').touched)" class="text-danger">
+                            <div *ngIf="newEmployee.get('employeeID').hasError('required')">Employee ID is required.</div>
+                            <div *ngIf="newEmployee.get('employeeID').hasError('pattern')">Employee ID must be a number.</div>
                         </div>
-
-                        <div class="form-group">
-                            <label for="firstName">First Name</label>
-                            <input type="text" formControlName="firstName" class="form-control" id="firstname" placeholder="Enter First name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" formControlName="firstName" class="form-control" id="firstname" placeholder="Enter First name" required>
+                        <div *ngIf="newEmployee.get('firstName').invalid && (newEmployee.get('firstName').dirty || newEmployee.get('firstName').touched)" class="text-danger">First Name is required.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="middlename">Middle Name</label>
+                        <input type="text" formControlName="middleName" class="form-control" id="middlename" placeholder="Enter Middle name">
+                        <div *ngIf="newEmployee.get('middleName').invalid && (newEmployee.get('middleName').dirty || newEmployee.get('middleName').touched)" class="text-danger">Middle Name is required.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">Last Name</label>
+                        <input type="text" formControlName="lastName" class="form-control" id="lastname" placeholder="Enter Last name" required>
+                        <div *ngIf="newEmployee.get('lastName').invalid && (newEmployee.get('lastName').dirty || newEmployee.get('lastName').touched)" class="text-danger">Last Name is required.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="photo">Photo</label>
+                        <div class="custom-file">
+                            <input type="file" (change)="onFileChanged($event)" class="custom-file-input" id="photo" accept="image/*">
+                            <label class="custom-file-label text-left text-truncate" for="photo">{{ selectedFileName || 'Choose file' }}</label>
                         </div>
-                        <div class="form-group">
-                            <label for="middlename">Middle Name</label>
-                            <input type="text" formControlName="middleName" class="form-control" id="middlename" placeholder="Enter Middle name">
+                    </div>
+                    <div class="form-group">
+                        <label for="position">Position</label>
+                        <input type="text" formControlName="position" class="form-control" id="position" placeholder="Enter position" required>
+                        <div *ngIf="newEmployee.get('position').invalid && (newEmployee.get('position').dirty || newEmployee.get('position').touched)" class="text-danger">Position is required.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <select formControlName="department" class="form-control form-select" id="department" required *ngIf="isDataLoaded">
+                            <option *ngFor="let department of departmentList" value="{{department.id}}">{{department.name}}</option>
+                        </select>
+                        <div *ngIf="newEmployee.get('department').invalid && (newEmployee.get('department').dirty || newEmployee.get('department').touched)" class="text-danger">Department is required.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" formControlName="email" class="form-control" id="email" placeholder="Enter email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                        <div *ngIf="newEmployee.get('email').invalid && (newEmployee.get('email').dirty || newEmployee.get('email').touched)" class="text-danger">
+                            <div *ngIf="newEmployee.get('email').hasError('required')">Email is required.</div>
+                            <div *ngIf="newEmployee.get('email').hasError('email')">Invalid email format.</div>
                         </div>
-                        <div class="form-group">
-                            <label for="lastname">Last Name</label>
-                            <input type="text" formControlName="lastName" class="form-control" id="lastname" placeholder="Enter Last name" required>
-                        </div>                        
-                        
-                        <div class="form-group">
-                            <label for="photo">Photo</label>
-                            <div class="custom-file">
-                                <input type="file" (change)="onFileChanged($event)" class="custom-file-input" id="photo" accept="image/*">
-                                <label class="custom-file-label text-left text-truncate" for="photo">{{ selectedFileName || 'Choose file' }}</label>
-                            </div>
-                        </div>                                                                                       
-    
-                        <div class="form-group">
-                            <label for="position">Position</label>
-                            <input type="text" formControlName="position" class="form-control" id="position" placeholder="Enter position" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="department">Department</label>
-                            <select formControlName="department" class="form-control form-select" id="department" required *ngIf="isDataLoaded">
-                                <option *ngFor="let department of departmentList" value="{{department.id}}">{{department.name}}</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="text" formControlName="email" class="form-control" id="email" placeholder="Enter email" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="gender">Gender</label>
-                            <select formControlName="gender" class="form-control" id="gender" required (change)="onGenderChange($event)">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Others</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group" *ngIf="showOtherTextbox">
-                            <label for="otherGender">Other Gender</label>
-                            <input type="text" formControlName="otherGender" class="form-control" id="otherGender" placeholder="Enter other gender">
-                        </div>
-    
-                        <button type="submit" class="btn bg-primary" style="color:#fff;">Add Employee</button>
-                    </form>
-                </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select formControlName="gender" class="form-control" id="gender" required (change)="onGenderChange($event)">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Others</option>
+                        </select>
+                        <div *ngIf="newEmployee.get('gender').invalid && (newEmployee.get('gender').dirty || newEmployee.get('gender').touched)" class="text-danger">Gender is required.</div>
+                    </div>
+                    <div class="form-group" *ngIf="showOtherTextbox">
+                        <label for="otherGender">Other Gender</label>
+                        <input type="text" formControlName="otherGender" class="form-control" id="otherGender" placeholder="Enter other gender">
+                        <div *ngIf="newEmployee.get('otherGender').invalid && (newEmployee.get('otherGender').dirty || newEmployee.get('otherGender').touched)" class="text-danger">Other Gender is required.</div>
+                    </div>
+                    <button type="submit" class="btn bg-primary" style="color:#fff;">Add Employee</button>
+                </form>
             </div>
-       
+        </div>
     </div>
-
     <footer class="bg-info text-center text-lg-start fixed-bottom" style="background-color: #940C0C !important; color: white;">
         <!-- Copyright -->
         <div class="text-center p-3">
@@ -112,12 +113,5 @@
         </div>
         <!-- Copyright -->
     </footer>
-
-
 </body>
-
-
-
-
-
 </html>

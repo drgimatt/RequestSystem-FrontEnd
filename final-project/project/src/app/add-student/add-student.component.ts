@@ -32,7 +32,7 @@ constructor(private departmentService: DepartmentService, private studentService
     program: ['', [Validators.required]],
     department: 0,
     yearLevel: 0,
-    email: ['', [Validators.required, emailFormat]],
+    email: ['', [Validators.required, Validators.email]],
     gender: '',
     otherGender: '',    
     photo: null,
@@ -122,6 +122,11 @@ onFileChanged(event){
 }
 
 checkFields(): boolean {
+  // Check form fields including email format
+  if (this.newStudent.get('email').invalid) {
+    alert('Please enter a valid email.');
+    return false;
+  }
   for (const controlName in this.newStudent.controls) {
     if (this.newStudent.get(controlName).hasError('required')) {
       alert('Please fill out all the required fields.');
@@ -130,8 +135,7 @@ checkFields(): boolean {
   }
   if (this.forEditing === false) {
     this.onUpload();
-  }
-  else {
+  } else {
     this.onEdit();
   }
   return true;
