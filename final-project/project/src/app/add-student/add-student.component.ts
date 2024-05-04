@@ -25,7 +25,7 @@ export class AddStudentComponent implements OnInit{
 
 constructor(private departmentService: DepartmentService, private studentService: StudentService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe){
   this.newStudent = this.fb.group({
-    studentID: ['', [Validators.required, Validators.maxLength(11)]],
+    studentID: ['', [Validators.required, Validators.maxLength(11), Validators.pattern('^[0-9]+$')]],
     firstName: ['', [Validators.required]],
     middleName: ['', [Validators.required]],
     lastName:['', [Validators.required]],
@@ -86,6 +86,16 @@ constructor(private departmentService: DepartmentService, private studentService
     }
       this.isDataLoaded = true;
 
+  }
+
+  onSubmit() {
+    if (this.newStudent.valid) {
+      // Form is valid, proceed with form submission
+      this.onUpload();
+    } else {
+      // Form is invalid, display error message or handle accordingly
+      alert('Please fill out all required fields and ensure correct formats.');
+    }
   }
 
   createPhoto(photo: any){

@@ -39,14 +39,13 @@
             <div class="moodra pt-5 col-md-6">
                 <div class="card rounded-card shadow p-4">
                     <h2 class="text-center">Add a Student</h2>
-                    <form [formGroup]="newStudent" (ngSubmit)="checkFields()">
-
+                    <form [formGroup]="newStudent" (ngSubmit)="onSubmit()">
                         <div class="form-group">
                             <label for="studentID">Student ID</label>
-                            <input type="text" formControlName="studentID" class="form-control" id="studentId" placeholder="Enter Student ID" required>
+                            <input type="text" formControlName="studentID" class="form-control" id="studentId" placeholder="Enter Student ID" required pattern="[0-9]+">
                             <div *ngIf="newStudent.get('studentID').invalid && (newStudent.get('studentID').dirty || newStudent.get('studentID').touched)" class="text-danger">
                                 <div *ngIf="newStudent.get('studentID').hasError('required')" class="text-danger">Student ID is required.</div>
-                                <div *ngIf="newStudent.get('studentID').hasError('maxlength')" class="text-danger">Student ID must not exceed 11 characters.</div>
+                                <div *ngIf="newStudent.get('studentID').hasError('pattern')" class="text-danger">Student ID must be a number.</div>
                             </div>
                         </div>
 

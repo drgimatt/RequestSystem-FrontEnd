@@ -30,7 +30,7 @@ export class AddEmployeeComponent implements OnInit{
 
 constructor(private departmentService: DepartmentService, private subjectService: SubjectsService, private employeeService: EmployeeService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe){
   this.newEmployee = this.fb.group({
-    employeeID: ['',[Validators.required, Validators.pattern('^[0-9]+$')]],
+    employeeID: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     firstName: ['',[Validators.required]],
     middleName: ['',[Validators.required]],
     lastName: ['',[Validators.required]],
@@ -64,6 +64,16 @@ constructor(private departmentService: DepartmentService, private subjectService
   }
 );
 
+  }
+
+  onSubmit() {
+    if (this.newEmployee.valid) {
+      // Form is valid, proceed with form submission
+      this.onUpload();
+    } else {
+      // Form is invalid, display error message or handle accordingly
+      alert('Please fill out all required fields and ensure correct formats.');
+    }
   }
 
 onFileChanged(event){ 

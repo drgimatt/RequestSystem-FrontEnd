@@ -36,10 +36,10 @@
         <div class="moodra pt-5 col-md-6 mt-0">
             <div class="card rounded-card shadow p-4">
                 <h2 class="text-center">Add an Employee</h2>
-                <form [formGroup]="newEmployee" (ngSubmit)="checkFields()">
+                <form [formGroup]="newEmployee" (ngSubmit)="onSubmit()">
                     <div class="form-group">
                         <label for="employeeID">Employee ID</label>
-                        <input type="text" formControlName="employeeID" class="form-control" id="employeeId" placeholder="Enter Employee id" required>
+                        <input type="text" formControlName="employeeID" class="form-control" id="employeeId" placeholder="Enter Employee ID" required pattern="[0-9]+">
                         <div *ngIf="newEmployee.get('employeeID').invalid && (newEmployee.get('employeeID').dirty || newEmployee.get('employeeID').touched)" class="text-danger">
                             <div *ngIf="newEmployee.get('employeeID').hasError('required')">Employee ID is required.</div>
                             <div *ngIf="newEmployee.get('employeeID').hasError('pattern')">Employee ID must be a number.</div>
