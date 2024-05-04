@@ -21,6 +21,7 @@ export class FinalDashComponent implements OnInit{
   account: Account;
   filterTable: FormGroup;
   searchTable: FormGroup;
+  profStatus: FormGroup;
   completeCount: Number = 0
   pendingCount: Number = 0
   rejectedCount: Number = 0
@@ -32,6 +33,9 @@ export class FinalDashComponent implements OnInit{
     });
     this.searchTable = this.fb.group({
       searchView : ''
+    });
+    this.profStatus = this.fb.group({
+      filterView : ''
     });
   }
 
