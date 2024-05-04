@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from '../service/employee.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Department } from '../model/department';
 import { Subjects } from '../model/subjects';
 import { DepartmentService } from '../service/department.service';
 import { SubjectsService } from '../service/subjects.service';
+import { DatePipe } from '@angular/common';
+import { Employee } from '../model/employee';
 
 
 @Component({
@@ -15,8 +17,8 @@ import { SubjectsService } from '../service/subjects.service';
 })
 export class AddEmployeeComponent implements OnInit{
 
-
   newEmployee: FormGroup;
+  employee: Employee
   selectedFile : File;
   selectedFileName: string; 
   departmentList: Department[] = [];
@@ -26,7 +28,7 @@ export class AddEmployeeComponent implements OnInit{
   showOtherTextbox: boolean = false;
 
 
-constructor(private departmentService: DepartmentService, private subjectService: SubjectsService,private employeeService: EmployeeService, private fb: FormBuilder, private router: Router){
+constructor(private departmentService: DepartmentService, private subjectService: SubjectsService, private employeeService: EmployeeService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe){
   this.newEmployee = this.fb.group({
     employeeID: '',
     firstName: '',
@@ -39,6 +41,7 @@ constructor(private departmentService: DepartmentService, private subjectService
     gender: '',
     otherGender: '',    
     photo: null,
+    status: ''
   })
 
 }

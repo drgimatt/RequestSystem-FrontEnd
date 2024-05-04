@@ -152,7 +152,7 @@ export class ModifyStudentFormComponent implements OnInit {
     if(this.studentForm.value.subjects !== null){
       this.showSubjectsBox = true;
     }
-    if (this.studentForm.value.otherAdvisingType !== ""){
+    if (this.studentForm.value.otherAdvisingType !== null){
       this.showOtherTextBoxAdvisingType = true;
     }
     if (this.request.actionTaken !== "Awaiting Information" && this.request.actionTaken !== "Clarification Needed" && this.request.actionTaken !== "Under Review" && this.request.actionTaken !== "Scheduled"){
