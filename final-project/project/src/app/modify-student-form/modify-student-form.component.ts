@@ -279,7 +279,9 @@ private getDateStamp() {
       request.append('actionTaken',this.studentForm.value.actionTaken);
     }
     request.append('advisingType',this.studentForm.value.advisingType.toString());
-    request.append('subject', this.studentForm.value.subjects.toString());
+    if (this.studentForm.value.subjects != null) {
+      request.append('subject', this.studentForm.value.subjects.toString());
+    }
     request.append('description',this.studentForm.value.description);
     
     request.append('otherFormType',this.studentForm.value.otherFormType);
