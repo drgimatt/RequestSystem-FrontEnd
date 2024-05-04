@@ -42,6 +42,7 @@ export class ModifyStudentFormComponent implements OnInit {
   showOtherTextBoxFormType: boolean = false;
   showSubjectsBox: boolean = false;
   showOtherTextBoxAdvisingType: boolean = false;
+  showOtherAction: boolean = false;
 
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router, private datePipe: DatePipe,
               private requestService: RequestService, private advisingTypeService: AdvisingtypeService,
@@ -64,6 +65,7 @@ export class ModifyStudentFormComponent implements OnInit {
                   otherFormType: '',
                   priority: '',
                   status: '',
+                  otherActionTaken: ''
                 });
               }
 
@@ -139,11 +141,12 @@ export class ModifyStudentFormComponent implements OnInit {
       description: this.request.description,
       actionTaken: this.request.actionTaken,
       phoneNumber: this.request.phoneNumber,
+      otherActionTaken: '',
       // formType: this.request.formType.id,
       // otherFormType: this.request.otherFormType,
       priority: this.request.priority.id,
       status: this.request.status.id,
-      otherGender: this.request.student.gender
+      otherGender: this.request.student.gender,
     });
 
     if(this.studentForm.value.subjects !== null){
@@ -152,10 +155,27 @@ export class ModifyStudentFormComponent implements OnInit {
     if (this.studentForm.value.otherAdvisingType !== ""){
       this.showOtherTextBoxAdvisingType = true;
     }
+    if (this.request.actionTaken !== "Awaiting Information" && this.request.actionTaken !== "Clarification Needed" && this.request.actionTaken !== "Under Review" && this.request.actionTaken !== "Scheduled"){
+      this.showOtherAction = true;      
+      this.studentForm.get('actionTaken')?.setValue('Others');
+      this.studentForm.get('otherActionTaken')?.setValue(this.request.actionTaken);
+    }
       this.isDataLoaded = true;
 
   }
 
+  onActionTakenChange(event: any) {
+    const selectedValue = event.target.value;
+    if (selectedValue === 'Others') {
+      this.showOtherAction = true;
+      this.studentForm.get('otherActionTaken')?.setValidators(Validators.required);
+    } else {
+      this.showOtherAction = false;
+      this.studentForm.get('otherActionTaken')?.clearValidators();
+      this.studentForm.get('otherActionTaken')?.setValue('');
+    }
+    this.studentForm.get('otherActionTaken')?.updateValueAndValidity();
+  }
 
   onFormTypeChange(event: any) {
     const selectedValue = event.target.value;
@@ -253,10 +273,15 @@ private getDateStamp() {
     if (this.studentForm.value.status === 1){
       request.append('dateResolved',this.getDateStamp());
     }
+    if (this.showOtherAction === true) {
+      request.append('actionTaken',this.studentForm.value.otherActionTaken);
+    } else {
+      request.append('actionTaken',this.studentForm.value.actionTaken);
+    }
     request.append('advisingType',this.studentForm.value.advisingType.toString());
     request.append('subject', this.studentForm.value.subjects.toString());
     request.append('description',this.studentForm.value.description);
-    request.append('actionTaken',this.studentForm.value.actionTaken);
+    
     request.append('otherFormType',this.studentForm.value.otherFormType);
     request.append('otherAdvisingType',this.studentForm.value.otherAdvisingType);
     request.append('phoneNumber',this.account.phoneNumber.toString());
