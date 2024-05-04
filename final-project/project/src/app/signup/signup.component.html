@@ -26,6 +26,7 @@
                                 <div *ngIf="newAccount.get('userid').invalid && (newAccount.get('userid').dirty || newAccount.get('userid').touched)" class="text-danger">
                                     <div *ngIf="newAccount.get('userid').hasError('required')" class="text-danger">User ID is required.</div>
                                 </div>
+                                <small class="text-muted">e.g 2021100764</small>
                             </div>
                             
                             <div class="form-group">
@@ -35,6 +36,7 @@
                                     <div *ngIf="newAccount.get('phoneNumber').hasError('required')" class="text-danger">Phone Number is required.</div>
                                     <div *ngIf="newAccount.get('phoneNumber').hasError('pattern')" class="text-danger">Phone Number must be 10 digits.</div>
                                 </div>
+                                <small class="text-muted"> e.g 09196541237</small>
                             </div>
                             
                             <div class="form-group">
@@ -51,6 +53,7 @@
                                 <div *ngIf="newAccount.get('username').invalid && (newAccount.get('username').dirty || newAccount.get('username').touched)" class="text-danger">
                                     <div *ngIf="newAccount.get('username').hasError('required')" class="text-danger">Username is required.</div>
                                 </div>
+                                <small class="text-muted">e.g juandelacruz</small>
                             </div>
                             
                             <div class="form-group">

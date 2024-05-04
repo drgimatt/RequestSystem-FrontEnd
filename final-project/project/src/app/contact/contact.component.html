@@ -73,6 +73,9 @@
                     <form [formGroup]="form" id="inquiryForm" (submit)="send()">
                         <h3 style="color: #940C0C"><strong>Ask us anything!</strong></h3>
                         <input formControlName="from_email" type="email" name="email" placeholder="Your email">
+                        <div>
+                        <small class="text-muted">e.g jdcruz&#64;mapua.edu.ph</small>
+                    </div>
                         <textarea formControlName="message" name="inquiry" placeholder="Write your inquiry here"></textarea>
                         <button type="submit" class="btn btn-danger mt-3 custom-button">Submit</button>
                     </form>

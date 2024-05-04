@@ -59,10 +59,11 @@
                 <form id="loginForm" [formGroup]="accountCheck" (ngSubmit)="checkUser()">
                     <div class="header-text mb-4">
                          <h1>Center For Student Advising</h1>
-                         <p>We are happy to have you back.</p>
+                         <p>Welcome!</p>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control form-control-lg bg-light fs-6" formControlName="username" id="username" name="username" placeholder="Enter username" required>
+                        <small class="text-muted">e.g juandelacruz</small>
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control form-control-lg bg-light fs-6" formControlName="password" id="password" name="password" placeholder="Enter password" required>
@@ -72,7 +73,7 @@
                     </div>
                     <div class="row">
                         <small>Don't have account yet? <a href="/signup">Sign Up</a></small> 
-                        <small>Already a student? <a href="/student-login">Click here</a></small> 
+                        <small>I'm a student. <a href="/student-login">Click here</a></small> 
                     </div>
                 </form>
                 <div *ngIf="errorMessage" class="error-message" style="color: #ff0000; font-size: 14px; margin-top: 10px; text-align: center;">
