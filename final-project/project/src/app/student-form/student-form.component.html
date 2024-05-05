@@ -89,7 +89,7 @@
         <div class="form-group">
           <label>Advising Type</label>
           <select class="form-control" id="advisingType" formControlName="advisingType" (change)="onAdvisingTypeChange($event)" [disabled]="!forSubmitting">
-            <option selected disabled></option>
+            <option selected disabled>Select advising type:</option>
             <option *ngFor="let advisingType of advisingTypeArray" [value]="advisingType.id">{{ advisingType.name }}</option>
           </select>
         </div>        

@@ -164,7 +164,7 @@
                        
                         
  <!-- Nav Item - Alerts -->
- <li class="nav-item dropdown no-arrow mx-1">
+ <li class="nav-item dropdown no-arrow mx-1" *ngIf="account.role.roleName === 'ADMINISTRATION'" >
     <a class="nav-link dropdown-toggle" href="/notification" id="alertsDropdown" role="button"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <img src="/assets/bell.png" alt="Bell Icon">
@@ -214,7 +214,7 @@
     </div>-->
 </li>
 
-<div class="topbar-divider d-none d-sm-block"></div>
+<div class="topbar-divider d-none d-sm-block" *ngIf="account.role.roleName === 'ADMINISTRATION'"></div>
 
 <!-- Nav Item - User Information -->
 <li class="nav-item dropdown no-arrow">

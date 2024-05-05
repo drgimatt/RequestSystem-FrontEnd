@@ -26,11 +26,11 @@ export class NotificationService {
       return this.http.get<Notification[]> (this.requestsUrl + '/notifications-generalized/' + query);
     }
 
-    public createNotification(notification : Notification)  {
+    public createNotification(notification : FormData)  {
       return this.http.post<any>(this.requestsUrl + '/create-notification/', notification);
     }
 
-    public updateNotification(id: number, notification : Notification)  {
+    public updateNotification(id: number, notification : FormData)  {
       return this.http.post<any>(this.requestsUrl + '/update-notification/' + id.toString(), notification);
     }
 
