@@ -37,7 +37,7 @@ export class ConcernsPageComponent implements OnInit{
       this.advisingTypeService.deleteType(entryID).subscribe(response => {
           // Delete operation was successful
           alert('Delete operation successful');
-          this.router.navigate(['/management']);
+          this.router.navigate(['/concerns-page']);
       },
       error => {
         console.error('Delete operation failed:', error);
