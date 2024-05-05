@@ -111,7 +111,7 @@ export class AddSubjectsComponent {
     }
     subjectData.append('department', this.newSubject.value.department.toString());
     console.log('SubjectDATA:', subjectData);
-    this.subjectService.createSubject(subjectData)
+    this.subjectService.updateSubject(this.subject.myId, subjectData)
     .subscribe(
       (response) => {
         console.log('Subject added (RESPONSE):', response);
@@ -128,7 +128,7 @@ export class AddSubjectsComponent {
         console.log('Course name: ', this.newSubject.value.courseName);
         console.log('Department: ', this.newSubject.value.department);
         console.log('Employee: ',this.employees.getRawValue());
-        console.error('Error adding request:', error);
+        console.error('Error updating request:', error);
       }
     );
   }
@@ -143,7 +143,7 @@ export class AddSubjectsComponent {
     }
     subjectData.append('department', this.newSubject.value.department.toString());
     console.log('SubjectDATA:', subjectData);
-    this.subjectService.updateSubject(this.subject.myId,subjectData)
+    this.subjectService.createSubject(subjectData)
     .subscribe(
       (response) => {
         console.log('Subject added (RESPONSE):', response);
