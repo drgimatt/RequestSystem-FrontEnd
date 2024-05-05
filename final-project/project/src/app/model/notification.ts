@@ -7,8 +7,9 @@ export class Notification {
     title: string = '';
     message: string = '';
     eventType: string = '';
-    seenNotif: number = 0;
+    hasSeenNotif: number = 0;
     date: Date = new Date();
-    person: Employee | Student | null = null;
+    notifyPerson: Employee | Student | null = null;
+    eventPerson: Employee | Student | null = null;
     request: Request | null = null;
 }
