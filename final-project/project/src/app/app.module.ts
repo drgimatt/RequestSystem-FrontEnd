@@ -6,9 +6,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ManagementComponent } from './management/management.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { AdminDashboardComponent } from './admin_dash/admin_dash.component';
-import { ProfessorDashboardComponent } from './professor-dashboard/professor-dashboard.component';
 import { IndexComponent } from './index/index.component';
 import { LoginComponent } from './login/login.component';
 import { ContactComponent } from './contact/contact.component';
@@ -19,7 +16,6 @@ import { FormsModule } from '@angular/forms';
 import { StudentFormComponent } from './student-form/student-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SignupComponent } from './signup/signup.component';
-import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
 import { CommonModule } from '@angular/common';
 import { AddDepartmentComponent } from './add-department/add-department.component';
 import { AddStudentComponent } from './add-student/add-student.component';
@@ -46,12 +42,9 @@ import { SignoutDialogComponent } from './signout-dialog/signout-dialog.componen
 @NgModule({
   declarations: [
     AppComponent,
-    StudentDashboardComponent,
-    AdminDashboardComponent,
-    DashboardComponent,
+
     IndexComponent,
     LoginComponent,
-    ProfessorDashboardComponent,
     ContactComponent,
     ManagementComponent,
     AboutusComponent,

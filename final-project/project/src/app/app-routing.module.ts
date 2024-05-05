@@ -24,22 +24,6 @@ import { SubjectsPageComponent } from './subjects-page/subjects-page.component';
 import { FinalDashComponent } from './final-dash/final-dash.component';
 import { StudentLoginComponent } from './student-login/student-login.component';
 
-/* const routes: Routes = [
-  {path: '', redirectTo: 'index', pathMatch: 'full' }, 
-  {path: 'index', component: IndexComponent },
-  {path: 'dashboard', component: DashboardComponent },
-  {path: 'user-dashboard', component: UserDashboardComponent },
-  {path: 'login', component: LoginComponent },
-  {path: 'contact', component: ContactComponent },
-  {path: 'add-dog', component: AddDogComponent},
-  {path: 'view-dog-info/:id', component: ViewDogInfoComponent},
-  {path: 'user-view-dog-info/:id', component: UserViewDogInfoComponent},
-  {path: 'aboutus', component: AboutusComponent},
-  {path: 'request-form', component: RequestFormComponent},
-  {path: 'create-account', component: SignupComponent}
-];
- */
-
 const routes: Routes = [
   { path: '', 
     redirectTo: 'index', 
