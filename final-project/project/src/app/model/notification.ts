@@ -9,7 +9,7 @@ export class Notification {
     eventType: string = '';
     hasSeenNotif: number = 0;
     date: Date = new Date();
-    notifyPerson: Employee | Student | null = null;
-    eventPerson: Employee | Student | null = null;
+    notifyPersons: Employee[] | Student[] | null = null;
+    eventUser: Employee | Student | null = null;
     request: Request | null = null;
 }

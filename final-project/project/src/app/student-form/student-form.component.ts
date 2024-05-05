@@ -18,6 +18,9 @@ import { Status } from '../model/status';
 import { Request } from '../model/request';
 import { Employee } from '../model/employee';
 import { DatePipe } from '@angular/common';
+import { NotificationService } from '../service/notification.service';
+import { Notification } from '../model/notification';
+import { EmployeeService } from '../service/employee.service';
 
 
 @Component({
@@ -30,10 +33,13 @@ export class StudentFormComponent implements OnInit {
   student: Student;
   employee: Employee;
   account: Account;
+  notification: Notification;
   advisingTypeArray: AdvisingType[];
   subjectsArray: Subjects[];
   formTypeArray: Formtype[];
   priorityArray: Priority[];
+  employeeArray: Employee[];
+  filteredEmployeeArray: Employee[];
   statusArray: Status[];
   request: Request;
   forSubmitting: boolean = true;
@@ -45,8 +51,8 @@ export class StudentFormComponent implements OnInit {
   showOtherAction: boolean = false;
 
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router, private datePipe: DatePipe,
-              private requestService: RequestService, private advisingTypeService: AdvisingtypeService,
-              private subjectsService: SubjectsService, private formTypeService: FormtypeService,
+              private requestService: RequestService, private advisingTypeService: AdvisingtypeService, private employeeService: EmployeeService,
+              private subjectsService: SubjectsService, private formTypeService: FormtypeService, private notificationService: NotificationService,
               private priorityService: PriorityService, private statusService: StatusService, private route: ActivatedRoute) {
                 this.studentForm = this.fb.group({
                   student: '',
@@ -111,13 +117,13 @@ export class StudentFormComponent implements OnInit {
       this.isDataLoaded = false;
     }
   );
-  this.subjectsService.getSubjects().subscribe((data: Subjects[]) => {
-    this.subjectsArray = data;
-  },
-  (error) => {
-    this.isDataLoaded = false;
-  }
-);
+    this.subjectsService.getSubjects().subscribe((data: Subjects[]) => {
+      this.subjectsArray = data;
+    },
+    (error) => {
+      this.isDataLoaded = false;
+    }
+  );
     this.statusService.getStatuses().subscribe((data: Status[]) => {
       this.statusArray = data;
     },
@@ -125,7 +131,14 @@ export class StudentFormComponent implements OnInit {
       this.isDataLoaded = false;
     }
   );      
-
+    this.employeeService.getEmployees().subscribe((data: Employee[]) => {
+      this.employeeArray = data;
+      this.filteredEmployeeArray = data.filter(employee => !employee.position.toLowerCase().includes('Professor'));
+    },
+    (error) => {
+      this.isDataLoaded = false;
+    }
+  ); 
     this.account = this.dataService.getDataPersistent('account');
   }
 
@@ -258,6 +271,7 @@ private getDateStamp() {
   }
 
   onSubmit() {
+
     const request = new FormData();
     request.append('student',this.student.myId.toString());
     //request.append('employees', this.studentForm.value.subjects.);
@@ -275,21 +289,46 @@ private getDateStamp() {
     //request.append('formType',this.studentForm.value.formType.toString());
     request.append('priority',"1");
     request.append('status',"2");
-    //request.append('isDeleted',"0");
+    request.append('isDeleted',"0");
+
     this.requestService.createRequest(request)
     .subscribe(
       (response) => {
         console.log('Request added:', response);
         console.log(request);
-        alert('Request has been submitted successfully!');
-        this.onCancel();
+        //alert('Request has been submitted successfully!');
+        //this.onCancel();
       },
       (error) => {
         console.log(request);
         alert('Request submission has failed. Please try again.');
-        console.error('Error adding request:', error);
+        console.error('Error adding request: ', error);
       }
     ); 
+
     
+    const notification = new FormData();
+    notification.append('title', "New Student Request")
+    notification.append('message',"A new request has been made by " + this.student.firstName + " " + this.student.lastName)
+    notification.append('eventType','newRequest')
+    notification.append('hasSeenNotif', '0')
+    notification.append('date', this.getDateStamp())
+    const employeeIds = this.filteredEmployeeArray.map(employee => employee.myId);
+    notification.append('notifyPersons', employeeIds.join(','));
+    notification.append('eventUser', this.student.myId.toString())
+    //notification.append('request', this.request)
+    
+    this.notificationService.createNotification(notification)
+    .subscribe(
+      (response) => {
+        alert('Request has been submitted successfully!');
+        this.onCancel();
+      },
+      (error) => {
+        console.error('Error adding notification: ', error);
+      }
+    );
+
+
   }
 }
