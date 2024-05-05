@@ -22,6 +22,10 @@ export class NotificationService {
       return this.http.get<Notification[]> (this.requestsUrl + '/notifications/' + id);
     }  
 
+    public getGeneralizedNotifications(query: String): Observable<Notification[]>{
+      return this.http.get<Notification[]> (this.requestsUrl + '/notifications-generalized/' + query);
+    }
+
     public createNotification(notification : Notification)  {
       return this.http.post<any>(this.requestsUrl + '/create-notification/', notification);
     }

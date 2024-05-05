@@ -26,6 +26,10 @@ export class RequestService {
         return this.http.get<Request[]>(this.requestsUrl + '/show-professor-requests/' + id);
     }
 
+    public getGeneralizedRequests(query: String): Observable<Request[]>{
+        return this.http.get<Request[]> (this.requestsUrl + '/requests-generalized/' + query);
+      }
+
     public createRequest(formData: FormData)  {
         return this.http.post<any>(this.requestsUrl + '/create-request/', formData);
     }
