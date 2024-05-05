@@ -179,14 +179,14 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" *ngIf="isDataLoaded">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <!-- <th>#</th> -->
                             <th>Type</th>
                             <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let advisingType of filteredAdvisingTypes; let i = index">
-                            <td>{{advisingType.id}}</td>
+                            <!-- <td>{{advisingType.id}}</td> -->
                             <td>{{advisingType.name}}</td>
                             <td class="text-center">
                                 <button class="btn btn-outline-info btn-sm mr-1"  [disabled]="i < 8" (click)="editEntry(advisingType.id)">Edit</button>
