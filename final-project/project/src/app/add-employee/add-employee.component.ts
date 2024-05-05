@@ -8,6 +8,9 @@ import { DepartmentService } from '../service/department.service';
 import { SubjectsService } from '../service/subjects.service';
 import { DatePipe } from '@angular/common';
 import { Employee } from '../model/employee';
+import { AddDialogComponent } from '../add-dialog/add-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AddDialogService } from '../service/add-dialog.service';
 
 
 @Component({
@@ -16,7 +19,7 @@ import { Employee } from '../model/employee';
   styleUrls: ['./add-employee.component.css']
 })
 export class AddEmployeeComponent implements OnInit{
-
+  action:string;
   newEmployee: FormGroup;
   employee: Employee
   selectedFile : File;
@@ -28,7 +31,7 @@ export class AddEmployeeComponent implements OnInit{
   showOtherTextbox: boolean = false;
   forEditing: boolean = false;
 
-constructor(private departmentService: DepartmentService, private subjectService: SubjectsService, private employeeService: EmployeeService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe){
+constructor(private departmentService: DepartmentService, private subjectService: SubjectsService, private employeeService: EmployeeService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog, private shared:AddDialogService){
   this.newEmployee = this.fb.group({
     employeeID: ['', [Validators.required, Validators.maxLength(11), Validators.pattern('^[0-9]+$')]],
     firstName: ['',[Validators.required]],
@@ -45,6 +48,7 @@ constructor(private departmentService: DepartmentService, private subjectService
 
 }
   ngOnInit(): void {
+    this.shared.currentAction.subscribe(action => this.action = action);
     this.departmentService.getDepartments().subscribe((data: Department[]) => {
       this.departmentList = data;
       this.isDataLoaded = true;
@@ -256,6 +260,23 @@ onEdit(){
       console.error('Error updating request:', error);
     }
   );    
+}
+// for the dialog box
+openDialog(): void {
+  const dialogRef = this.dialog.open(AddDialogComponent, {
+    width: '400px',
+    height: '250px'
+  });
+  dialogRef.afterClosed().subscribe((result)=> {
+    if (this.action === 'confirm') {
+      // Proceed with form submission
+      this.onSubmit();
+      this.action = "";
+    } else {
+      console.log("Dialog canceled or closed without confirmation.");
+      this.action = "";
+    }
+  });
 }
 
 }

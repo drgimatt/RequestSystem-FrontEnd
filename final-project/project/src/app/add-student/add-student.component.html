@@ -134,7 +134,7 @@
                                 <div *ngIf="newStudent.get('yearLevel').hasError('required')" class="text-danger">Year Level is required.</div>
                             </div>
                         </div>
-                        <button (click)="openDialog()" class="btn bg-primary" style="color: #fff;">Add Student</button>
+                        <button (click)="openDialog()" class="btn bg-primary" style="color: #fff;">{{ forEditing ? 'Update Student' : 'Add Student' }}</button>
                     </form>
                 </div>
             </div>

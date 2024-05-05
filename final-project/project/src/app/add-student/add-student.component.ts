@@ -235,8 +235,8 @@ onEdit(){
   // for the dialog box
   openDialog(): void {
     const dialogRef = this.dialog.open(AddDialogComponent, {
-      width: '350px',
-      height: '200px'
+      width: '400px',
+      height: '250px'
     });
     dialogRef.afterClosed().subscribe((result)=> {
       if (this.action === 'confirm') {

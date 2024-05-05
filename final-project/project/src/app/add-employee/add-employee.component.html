@@ -36,7 +36,7 @@
         <div class="moodra pt-5 col-md-6 mt-0">
             <div class="card rounded-card shadow p-4">
                 <h2 class="text-center">{{ forEditing ? 'Update an Employee' : 'Add an Employee' }}</h2>
-                <form [formGroup]="newEmployee" (ngSubmit)="onSubmit()">
+                <form [formGroup]="newEmployee">
                     <div class="form-group">
                         <label for="employeeID">Employee ID</label>
                         <input type="text" formControlName="employeeID" class="form-control" id="employeeId" placeholder="Enter Employee ID" required pattern="[0-9]+">
@@ -101,7 +101,7 @@
                         <input type="text" formControlName="otherGender" class="form-control" id="otherGender" placeholder="Enter other gender">
                         <div *ngIf="newEmployee.get('otherGender').invalid && (newEmployee.get('otherGender').dirty || newEmployee.get('otherGender').touched)" class="text-danger">Other Gender is required.</div>
                     </div>
-                    <button type="submit" class="btn bg-primary" style="color:#fff;">{{ forEditing ? 'Update Employee' : 'Add Employee' }}</button>
+                    <button (click)="openDialog()" class="btn bg-primary" style="color:#fff;">{{ forEditing ? 'Update Employee' : 'Add Employee' }}</button>
                 </form>
             </div>
         </div>

@@ -34,7 +34,7 @@
                                 <input type="text" id="phoneNumber" formControlName="phoneNumber" class="form-control" required="" maxlength="11">
                                 <div *ngIf="newAccount.get('phoneNumber').invalid && (newAccount.get('phoneNumber').dirty || newAccount.get('phoneNumber').touched)" class="text-danger">
                                     <div *ngIf="newAccount.get('phoneNumber').hasError('required')" class="text-danger">Phone Number is required.</div>
-                                    <div *ngIf="newAccount.get('phoneNumber').hasError('pattern')" class="text-danger">Phone Number must be 10 digits.</div>
+                                    <div *ngIf="newAccount.get('phoneNumber').hasError('pattern')" class="text-danger">Phone Number must be 11 digits.</div>
                                 </div>
                                 <small class="text-muted"> e.g 09196541237</small>
                             </div>

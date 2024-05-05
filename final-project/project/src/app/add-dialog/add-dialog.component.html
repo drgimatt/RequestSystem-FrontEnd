@@ -15,13 +15,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <h2 mat-dialog-title style="text-align: center;">You are about to Add an item.</h2>
+    <h2 mat-dialog-title style="text-align: center;">You are about to Change the Database.</h2>
     <mat-dialog-content cdkFocusInitial>
-        <p style="text-align: center;">This action will add a new item directly to the Database. Continue?</p>
+        <p style="text-align: center;">This action will add/modify items directly to the Database. Continue?</p>
     </mat-dialog-content>
 
     <mat-dialog-actions>
-        <button type="button" id="submitButton" class="btn btn-outline-success me-1 ms-auto" mat-button mat-dialog-close (click)="confirmAction()">{{ forEditing ? 'Update Student' : 'Yes' }}</button>
+        <button type="button" id="submitButton" class="btn btn-outline-success me-1 ms-auto" mat-button mat-dialog-close (click)="confirmAction()">Yes</button>
         <button type="button" class="btn btn-outline-danger me-auto ms-1" mat-button mat-dialog-close (click)="cancelAction()">No</button>
     </mat-dialog-actions>
 </body>
