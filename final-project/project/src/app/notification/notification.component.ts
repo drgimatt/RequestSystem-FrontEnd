@@ -19,10 +19,5 @@ export class NotificationComponent {
   
   }
 
-  onSignOut() {
-    this.dataService.removeDataPersistent('model');
-    this.dataService.removeDataPersistent('account');
-    this.router.navigate(['/index']);
-  
-  }
+
 }
