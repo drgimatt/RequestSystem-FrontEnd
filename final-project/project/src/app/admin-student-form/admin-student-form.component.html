@@ -51,12 +51,12 @@
   <div class="moodra pt-5 col-md-6">
       <div class="card rounded-card shadow p-4">
           <h2 class="text-center">{{ forEditing ? 'Update a Concern' : 'Add a Concern' }}</h2>
-          <form [formGroup]="newConcerns" (ngSubmit)="checkFields()">                                                                                    
+          <form [formGroup]="newConcerns">                                                                                    
               <div class="form-group">
                   <label for="name">Name</label>
                   <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter concern" required>
               </div>   
-              <button type="submit" class="btn btn-danger">{{ forEditing ? 'Update Concern' : 'Add Concern' }}</button>
+              <button (click)="openDialog()" class="btn btn-danger">{{ forEditing ? 'Update Concern' : 'Add Concern' }}</button>
           </form>
       </div>
   </div>

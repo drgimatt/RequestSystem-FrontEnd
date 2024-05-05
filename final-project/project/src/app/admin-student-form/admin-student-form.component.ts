@@ -3,6 +3,9 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AdvisingType } from '../model/advisingtype';
 import { AdvisingtypeService } from '../service/advisingtype.service';
+import { AddDialogComponent } from '../add-dialog/add-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AddDialogService } from '../service/add-dialog.service';
 
 @Component({
   selector: 'app-admin-student-form',
@@ -10,18 +13,19 @@ import { AdvisingtypeService } from '../service/advisingtype.service';
   styleUrls: ['./admin-student-form.component.css']
 })
 export class AdminStudentFormComponent implements OnInit{
+  action: string;
   newConcerns: FormGroup
   forEditing: boolean = false;
   advisingType: AdvisingType;
 
-  constructor(private advisingService: AdvisingtypeService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
+  constructor(private advisingService: AdvisingtypeService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private shared:AddDialogService) {
     this.newConcerns = this.fb.group({
       name: ''
     });
 
   }
   ngOnInit(): void {
-
+    this.shared.currentAction.subscribe(action => this.action = action);
     this.route.params.forEach((params: Params) => {  
         if (params['id'] !== undefined) {
           this.forEditing = true;
@@ -97,5 +101,23 @@ export class AdminStudentFormComponent implements OnInit{
         console.error('Error adding advising type:', error);
       }
     );
+  }
+
+  // for the dialog box
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddDialogComponent, {
+      width: '400px',
+      height: '250px'
+    });
+    dialogRef.afterClosed().subscribe((result)=> {
+      if (this.action === 'confirm') {
+        // Proceed with form submission
+        this.checkFields();
+        this.action = "";
+      } else {
+        console.log("Dialog canceled or closed without confirmation.");
+        this.action = "";
+      }
+    });
   }
 }
