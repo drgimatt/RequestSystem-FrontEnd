@@ -39,7 +39,7 @@
             <div class="moodra  col-md-6">
                 <div class="card rounded-card shadow p-4">
                     <h2 class="text-center">{{ forEditing ? 'Update a Subject' : 'Add a Subject' }}</h2>
-                    <form [formGroup]="newSubject" (ngSubmit)="checkFields()">                                                                                    
+                    <form [formGroup]="newSubject" (ngSubmit)="openDialog()">                                                                                    
                         <div class="form-row">
                             <div class="form-group col-md-4">
                               <label for="courseCode">Course Code</label>

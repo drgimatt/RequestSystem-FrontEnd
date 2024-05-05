@@ -8,6 +8,9 @@ import { EmployeeService } from '../service/employee.service';
 import { SubjectsService } from '../service/subjects.service';
 import { DatePipe } from '@angular/common';
 import { Subjects } from '../model/subjects';
+import { AddDialogComponent } from '../add-dialog/add-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AddDialogService } from '../service/add-dialog.service';
 
 @Component({
   selector: 'app-add-subjects',
@@ -15,6 +18,7 @@ import { Subjects } from '../model/subjects';
   styleUrls: ['./add-subjects.component.css']
 })
 export class AddSubjectsComponent {
+  action:string;
   newSubject: FormGroup;
   employees = new FormControl('');
   subject: Subjects
@@ -24,7 +28,7 @@ export class AddSubjectsComponent {
   isDataLoaded: boolean = false;
   selectedValues: string[] = []
 
-  constructor(private subjectService: SubjectsService, private departmentService: DepartmentService, private employeeService: EmployeeService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe) {
+  constructor(private subjectService: SubjectsService, private departmentService: DepartmentService, private employeeService: EmployeeService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog, private shared:AddDialogService) {
     this.newSubject = this.fb.group({
       courseCode: ['', [Validators.required]],
       courseName: ['', [Validators.required]],
@@ -35,6 +39,7 @@ export class AddSubjectsComponent {
   }
 
   ngOnInit(): void {
+    this.shared.currentAction.subscribe(action => this.action = action);
     this.departmentService.getDepartments().subscribe((data: Department[]) => {
       this.departmentList = data;
       this.isDataLoaded = true;
@@ -163,5 +168,22 @@ export class AddSubjectsComponent {
         console.error('Error adding request:', error);
       }
     );
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddDialogComponent, {
+      width: '400px',
+      height: '250px'
+    });
+    dialogRef.afterClosed().subscribe((result)=> {
+      if (this.action === 'confirm') {
+        // Proceed with form submission
+        this.checkFields();
+        this.action = "";
+      } else {
+        console.log("Dialog canceled or closed without confirmation.");
+        this.action = "";
+      }
+    });
   }
 }
