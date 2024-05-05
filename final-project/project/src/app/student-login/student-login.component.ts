@@ -33,16 +33,11 @@ export class StudentLoginComponent implements OnInit{
   }
 
   checkUser(){
-
     this.accountService.checkAccount(this.accountCheck.value.username, this.accountCheck.value.password).subscribe(
         
       (account: Account) => {
         // Handle successful response
         this.account = account;
-        // console.log('Username: ',this.account.username);
-        // console.log('Password: ', this.account.password);
-        // console.log('Account Type ID: ', this.account.role.myId);
-        // console.log('Account Type Name: ', this.account.role.roleName);
         if (this.account && this.account.role) {
           this.dataService.setDataPersistent('account', this.account);
           this.dataService.setDataPersistent('userType',"STUDENT")

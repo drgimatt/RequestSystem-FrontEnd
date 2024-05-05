@@ -21,6 +21,8 @@ export class SignupComponent implements OnInit {
   isDataLoaded: boolean = false;
   isUserPresent: boolean = false;
   accountError: string = "";
+  isCreatorEmployee: boolean = false;
+  isCreatorStudent: boolean = false;
 
   constructor(
     private studentService: StudentService,
@@ -32,7 +34,7 @@ export class SignupComponent implements OnInit {
     this.newAccount = this.fb.group({
       userid: ['', [Validators.required, Validators.minLength(10)]],
       username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/[!@#$%^&*(),.?":{}|<>]/)]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/[!@#$%^&*(),.?=":{}|<>]/)]],
       phoneNumber: ['', [Validators.required, Validators.minLength(11), Validators.pattern('[0-9]+')]],
       birthDate: [new Date(), Validators.required],
       roleid: [-1, Validators.required],
@@ -40,6 +42,19 @@ export class SignupComponent implements OnInit {
     });
   }
 
+  updateUsernameValidator(): void {
+    const usernameControl = this.newAccount.get('username');
+    if (this.isCreatorStudent) {
+      // Disable Validators.required if creator is student
+      usernameControl.clearValidators();
+      usernameControl.updateValueAndValidity();
+    } else {
+      // Enable Validators.required if creator is not student
+      usernameControl.setValidators([Validators.required]);
+      usernameControl.updateValueAndValidity();
+    }
+}
+  
   ngOnInit(): void {
     this.isDataLoaded = true;
     this.studentService.getStudents().subscribe(res => {
@@ -73,6 +88,49 @@ export class SignupComponent implements OnInit {
     return formattedDate;
   }
 
+  checkUserType(event: any) {
+    const userID = event.target.value;
+    this.isUserPresent = false;
+    this.isCreatorEmployee = false;
+    this.isCreatorStudent = false;
+    let isUserFound = false; // Flag to track if user is found in either array
+    console.log('Input value changed: ', userID);
+
+    // Check student array
+    if (this.studentArray && this.studentArray.length !== 0) {
+        for (let i = 0; i < this.studentArray.length; i++) {
+            if (userID === this.studentArray[i].studentID) {
+                this.isUserPresent = true;
+                this.isCreatorStudent = true
+                this.isCreatorEmployee = false;
+                isUserFound = true; // Set flag to true if user is found
+                break;
+            }
+        }
+    }
+
+    // Check employee array if user is not found in student array
+    if (!isUserFound && this.employeeArray && this.employeeArray.length !== 0) {
+        for (let i = 0; i < this.employeeArray.length; i++) {
+            if (userID === this.employeeArray[i].employeeID) {
+                this.isUserPresent = true;
+                this.isCreatorEmployee = true;
+                this.isCreatorStudent = false
+                isUserFound = true; // Set flag to true if user is found
+                break;
+            }
+        }
+    }
+
+    // If user is not found in either array, set error message
+    if (!isUserFound) {
+        this.accountError = "Invalid ID.";
+    } else {
+        this.accountError = ""; // Reset error message if user is found
+    }
+
+    this.updateUsernameValidator()
+}
 
   
   doesAccountExists() {
@@ -92,10 +150,15 @@ export class SignupComponent implements OnInit {
     return false;
   }
 
+
   createAccount(): void {
     const accountData = new FormData();
     this.checkUserIsPresent();
-    accountData.append('username', this.newAccount.value.username);
+    if (this.isCreatorEmployee) {
+      accountData.append('username', this.newAccount.value.username);
+    } else {
+      accountData.append('username', this.newAccount.value.userid);
+    }
     accountData.append('password', this.newAccount.value.password);
     accountData.append('dateCreated', this.getCurrentDate());
     accountData.append('userID', this.newAccount.value.userid);
