@@ -39,7 +39,7 @@
             <div class="moodra pt-5 col-md-6">
                 <div class="card rounded-card shadow p-4">
                     <h2 class="text-center">{{ forEditing ? 'Update a Student' : 'Add a Student' }}</h2>
-                    <form [formGroup]="newStudent" (ngSubmit)="onSubmit()">
+                    <form [formGroup]="newStudent">
                         <div class="form-group">
                             <label for="studentID">Student ID</label>
                             <input type="text" formControlName="studentID" class="form-control" id="studentId" placeholder="Enter Student ID" required pattern="[0-9]+">
@@ -134,8 +134,7 @@
                                 <div *ngIf="newStudent.get('yearLevel').hasError('required')" class="text-danger">Year Level is required.</div>
                             </div>
                         </div>
-    
-                        <button type="submit" id="submitButton" class="btn bg-primary" style="color: #fff;">{{ forEditing ? 'Update Student' : 'Add Student' }}</button>
+                        <button (click)="openDialog()" class="btn bg-primary" style="color: #fff;">Add Student</button>
                     </form>
                 </div>
             </div>

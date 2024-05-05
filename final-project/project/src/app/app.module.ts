@@ -36,6 +36,7 @@ import { StudentLoginComponent } from './student-login/student-login.component';
 import { FinalDashComponent } from './final-dash/final-dash.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SignoutDialogComponent } from './signout-dialog/signout-dialog.component';
+import { AddDialogComponent } from './add-dialog/add-dialog.component';
 
 
 
@@ -66,6 +67,7 @@ import { SignoutDialogComponent } from './signout-dialog/signout-dialog.componen
     FinalDashComponent,
     StudentLoginComponent,
     SignoutDialogComponent,
+    AddDialogComponent,
   ],
   imports: [
     ReactiveFormsModule,

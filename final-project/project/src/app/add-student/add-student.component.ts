@@ -6,6 +6,9 @@ import { DepartmentService } from '../service/department.service';
 import { Department } from '../model/department';
 import { Student } from '../model/student';
 import { DatePipe } from '@angular/common';
+import { AddDialogComponent } from '../add-dialog/add-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AddDialogService } from '../service/add-dialog.service';
 
 @Component({
   selector: 'app-add-student',
@@ -13,7 +16,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./add-student.component.css']
 })
 export class AddStudentComponent implements OnInit{
-
+  action:string;
   newStudent: FormGroup;
   student : Student;
   selectedFile : File;
@@ -23,7 +26,7 @@ export class AddStudentComponent implements OnInit{
   forEditing: boolean = false;
   showOtherTextbox: boolean = false;
 
-constructor(private departmentService: DepartmentService, private studentService: StudentService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe){
+constructor(private departmentService: DepartmentService, private studentService: StudentService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog, private shared:AddDialogService){
   this.newStudent = this.fb.group({
     studentID: ['', [Validators.required, Validators.maxLength(11), Validators.pattern('^[0-9]+$')]],
     firstName: ['', [Validators.required]],
@@ -40,6 +43,7 @@ constructor(private departmentService: DepartmentService, private studentService
 
 }
   ngOnInit(): void {
+    this.shared.currentAction.subscribe(action => this.action = action);
     this.departmentService.getDepartments().subscribe((data: Department[]) => {
       this.departmentList = data;
       this.isDataLoaded = true;
@@ -184,7 +188,7 @@ onUpload(){
     (response) => {
       console.log('Student added:', response);
       console.log(student);
-      alert('Student has been added!');
+      // alert('Student has been added!');
       this.router.navigate(['/management']);
     },
     (error) => {
@@ -228,6 +232,23 @@ onEdit(){
     }
   );   
 }
+  // for the dialog box
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddDialogComponent, {
+      width: '350px',
+      height: '200px'
+    });
+    dialogRef.afterClosed().subscribe((result)=> {
+      if (this.action === 'confirm') {
+        // Proceed with form submission
+        this.onSubmit();
+        this.action = "";
+      } else {
+        console.log("Dialog canceled or closed without confirmation.");
+        this.action = "";
+      }
+    });
+  }
 
 }
 
