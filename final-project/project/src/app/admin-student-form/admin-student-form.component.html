@@ -54,7 +54,7 @@
           <form [formGroup]="newConcerns" (ngSubmit)="checkFields()">                                                                                    
               <div class="form-group">
                   <label for="name">Name</label>
-                  <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter Name of Department" required>
+                  <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter concern" required>
               </div>   
               <button type="submit" class="btn btn-danger">{{ forEditing ? 'Update Concern' : 'Add Concern' }}</button>
           </form>

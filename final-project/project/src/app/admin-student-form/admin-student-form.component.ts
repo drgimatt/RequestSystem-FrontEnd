@@ -74,7 +74,7 @@ export class AdminStudentFormComponent implements OnInit{
       (error) => {
         console.log(advisingTypeData);
         console.log(this.newConcerns.value.name);
-        console.error('Error adding advising type:', error);
+        console.error('Error editing advising type:', error);
       }
     );
   }
