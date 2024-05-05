@@ -38,7 +38,7 @@
         <!--<app-management></app-management>-->
             <div class="moodra pt-5 col-md-6">
                 <div class="card rounded-card shadow p-4">
-                    <h2 class="text-center">Add a Student</h2>
+                    <h2 class="text-center">{{ forEditing ? 'Update a Student' : 'Add a Student' }}</h2>
                     <form [formGroup]="newStudent" (ngSubmit)="onSubmit()">
                         <div class="form-group">
                             <label for="studentID">Student ID</label>

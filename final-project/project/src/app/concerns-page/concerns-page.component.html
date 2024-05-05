@@ -119,7 +119,7 @@
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link" href="#" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.firstName + " " + user.lastName}}</span>
                                     
                                 </a>
                             
@@ -139,7 +139,7 @@
 
     <!-- Add Student Button -->
     <div class="text-right mb-3">
-        <a class="btn btn-outline-success" href="/admin-student-form">Add Concerns</a>
+        <a class="btn btn-outline-success" href="/add-concerns">Add Concerns</a>
     </div>
 
     <!-- DataTales Example -->
@@ -191,6 +191,8 @@
                             <td class="text-center">
                                 <button class="btn btn-outline-info btn-sm mr-1"  [disabled]="i < 8" (click)="editEntry(advisingType.id)">Edit</button>
                                 <button class="btn btn-outline-danger btn-sm"  [disabled]="i < 8" (click)="deleteEntry(advisingType.id)">Delete</button>
+                                <!-- <button class="btn btn-outline-info btn-sm mr-1"   (click)="editEntry(advisingType.id)">Edit</button>
+                                <button class="btn btn-outline-danger btn-sm"   (click)="deleteEntry(advisingType.id)">Delete</button> -->
                             </td>
                         </tr>
                     </tbody>                  

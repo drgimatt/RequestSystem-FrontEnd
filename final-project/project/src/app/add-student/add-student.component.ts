@@ -224,7 +224,7 @@ onEdit(){
     (error) => {
       console.log(student);
       console.log(student.get('photoBytes'))
-      console.error('Error adding student:', error);
+      console.error('Error updating student:', error);
     }
   );   
 }

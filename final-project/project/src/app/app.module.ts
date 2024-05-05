@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -83,6 +84,7 @@ import { SignoutDialogComponent } from './signout-dialog/signout-dialog.componen
     CommonModule,
     NgbModule,
     MatSelectModule,
+    MatFormFieldModule,
     MatDialogModule,
   ],
   exports:[RouterModule],

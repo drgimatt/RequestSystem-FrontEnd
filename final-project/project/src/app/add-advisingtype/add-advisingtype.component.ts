@@ -1,57 +1,99 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdvisingtypeService } from '../service/advisingtype.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { AdvisingType } from '../model/advisingtype';
 
 @Component({
   selector: 'app-add-advisingtype',
   templateUrl: './add-advisingtype.component.html',
   styleUrls: ['./add-advisingtype.component.css']
 })
-export class AddAdvisingtypeComponent {
-  newAdvisingtype: FormGroup
+export class AddAdvisingtypeComponent implements OnInit {
+  newConcerns: FormGroup
+  forEditing: boolean = false;
+  advisingType: AdvisingType;
 
-  constructor(private advisingService: AdvisingtypeService, private fb: FormBuilder, private router: Router) {
-    this.newAdvisingtype = this.fb.group({
-      advisingtypeName: ''
+  constructor(private advisingService: AdvisingtypeService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
+    this.newConcerns = this.fb.group({
+      name: ''
     });
 
   }
+  ngOnInit(): void {
 
-
+    this.route.params.forEach((params: Params) => {  
+        if (params['id'] !== undefined) {
+          this.forEditing = true;
+          this.newConcerns.get('');
+          const id = params['id'];
+          this.advisingService.getType(id).subscribe(data => {
+            this.advisingType = data;
+            this.newConcerns = this.fb.group({
+              name: this.advisingType.name
+            });
+          });
+        } 
+  
+    }); 
+    
+  }
 
   navigateToHome() {
     this.router.navigate(['index']);
   }
 
   checkFields(): boolean {
-    for (const controlName in this.newAdvisingtype.controls) {
-      if (this.newAdvisingtype.get(controlName).hasError('required')) {
+    for (const controlName in this.newConcerns.controls) {
+      if (this.newConcerns.get(controlName).hasError('required')) {
         alert('Please fill out all the required fields.');
         return false;
       }
     }
-    this.onUpload();
+    if (this.forEditing === false) {
+      this.onUpload();
+    } else {
+      this.onEdit();
+    }
     return true;
 
   }
 
-
-
-  onUpload() {
+  onEdit(){
     const advisingTypeData = new FormData();
-    advisingTypeData.append('name', this.newAdvisingtype.value.advisingtypeName);
+    advisingTypeData.append('id', this.advisingType.id.toString())
+    advisingTypeData.append('name', this.newConcerns.value.name);
     this.advisingService.createType(advisingTypeData)
     .subscribe(
       (response) => {
         console.log('Advising type added:', response);
-        console.log(this.newAdvisingtype.value.advisingtypeName);
-
-        alert('This is working!');
+        console.log(this.newConcerns.value.name);
+        alert('Advising Type has been updated!');
+        this.router.navigate(['/concerns-page']);
       },
       (error) => {
         console.log(advisingTypeData);
-        console.log(this.newAdvisingtype.value.advisingtypeName);
+        console.log(this.newConcerns.value.name);
+        console.error('Error adding advising type:', error);
+      }
+    );
+  }
+  
+
+  onUpload() {
+    const advisingTypeData = new FormData();
+    advisingTypeData.append('name', this.newConcerns.value.name);
+    this.advisingService.createType(advisingTypeData)
+    .subscribe(
+      (response) => {
+        console.log('Advising type added:', response);
+        console.log(this.newConcerns.value.name);
+        alert('Advising Type has been added!');
+        this.router.navigate(['/concerns-page']);
+      },
+      (error) => {
+        console.log(advisingTypeData);
+        console.log(this.newConcerns.value.name);
         console.error('Error adding advising type:', error);
       }
     );

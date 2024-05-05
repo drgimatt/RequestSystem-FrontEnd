@@ -39,63 +39,29 @@
   <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
           <li class="nav-item">
-              <a class="nav-link" href="/management">Back</a>
+              <a class="nav-link" href="/concerns-page">Back</a>
           </li>
          
       </ul>
   </div>
 
 </nav>
-  <div class="container">
-    <!--<app-management></app-management>-->
-      <div class="moodra pt-5 col-md-6">
-        <div class="card rounded-card shadow p-4">
-      <h1 class="text-center">Admin Student Dashboard</h1>
-    <hr>
-    <!-- Add Option Form -->
-    <div class="row">
-      <div class="col-md-6 offset-md-2">
-        <form>
-          <div class="form-group">
-            <label for="newOption">Add New Option:</label>
-            <input type="text" class="form-control" id="newOption" placeholder="Enter new option">
-          </div>
-          <button type="submit" class="btn btn-primary mt-1">Add Option</button>
-        </form>
+
+<div class="container">
+  <div class="moodra pt-5 col-md-6">
+      <div class="card rounded-card shadow p-4">
+          <h2 class="text-center">{{ forEditing ? 'Update a Concern' : 'Add a Concern' }}</h2>
+          <form [formGroup]="newConcerns" (ngSubmit)="checkFields()">                                                                                    
+              <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter Name of Department" required>
+              </div>   
+              <button type="submit" class="btn btn-danger">{{ forEditing ? 'Update Concern' : 'Add Concern' }}</button>
+          </form>
       </div>
-    </div>
-    <hr>
-   <!-- Edit/Delete Options -->
-<div class="row">
-  <div class="col-md-8 offset-md-2"> 
-    <h4>Edit/Delete Options:</h4>
-    <div class="list-group">
-      <div class="list-group-item">
-        <div class="d-flex justify-content-between align-items-center">
-          <span>Thesis/Design Subject concerns</span>
-         
-            <button type="button" class="btn btn-sm btn-info mr-2 ml-2">Edit</button>
-            <button type="button" class="btn btn-sm btn-danger">Delete</button>
-       
-        </div>
-      </div>
-      <div class="list-group-item">
-        <div class="d-flex justify-content-between align-items-center">
-          <span>Requirements in Courses Enrolled</span>
-          
-            <button type="button" class="btn btn-sm btn-info mr-2">Edit</button>
-            <button type="button" class="btn btn-sm btn-danger">Delete</button>
-         
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 
-    
-  </div>
-  </div>
-</div>
 <footer class="bg-info text-center text-lg-start fixed-bottom" style="background-color: #940C0C !important; color: white;">
   <!-- Copyright -->
   <div class="text-center p-3">

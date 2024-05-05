@@ -1,9 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
-import { ProfessorDashboardComponent } from './professor-dashboard/professor-dashboard.component';
-import { AdminDashboardComponent } from './admin_dash/admin_dash.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { IndexComponent } from './index/index.component';
 import { AddRoleComponent } from './add-role/add-role.component';
 import { LoginComponent } from './login/login.component';
@@ -54,10 +50,10 @@ const routes: Routes = [
   },  
   { 
     path: 'add-advisingtype', 
-    component: AddAdvisingtypeComponent
+    component: AdminStudentFormComponent
   },
   { 
-    path: 'admin-student-form', 
+    path: 'add-concerns', 
     component: AdminStudentFormComponent
   },
   { 
@@ -122,7 +118,7 @@ const routes: Routes = [
   },
   { 
     path: 'edit-concern/:id', 
-    component: AddAdvisingtypeComponent
+    component: AdminStudentFormComponent
   },
   { 
     path: 'aboutus', 
