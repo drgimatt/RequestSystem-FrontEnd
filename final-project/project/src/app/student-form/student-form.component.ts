@@ -314,7 +314,7 @@ private getDateStamp() {
     notification.append('hasSeenNotif', '0')
     notification.append('date', this.getDateStamp())
     const employeeIds = this.filteredEmployeeArray.map(employee => employee.myId);
-    notification.append('notifyPersons', employeeIds.join(','));
+    employeeIds.forEach(id => notification.append('notifyPersons', id.toString()));
     notification.append('eventUser', this.student.myId.toString())
     //notification.append('request', this.request)
     
