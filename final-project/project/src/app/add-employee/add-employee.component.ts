@@ -38,9 +38,9 @@ constructor(private departmentService: DepartmentService, private subjectService
     middleName: ['',[Validators.required]],
     lastName: ['',[Validators.required]],
     position: ['',[Validators.required]],
-    department: 0,
+    department: 1,
     email: ['', [Validators.required, Validators.email]],
-    gender:['',[Validators.required]],
+    gender:['Male',[Validators.required]],
     otherGender: ['',[Validators.required]],    
     photo: null,
     status: ''

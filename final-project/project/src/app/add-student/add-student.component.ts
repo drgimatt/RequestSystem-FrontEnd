@@ -33,11 +33,11 @@ constructor(private departmentService: DepartmentService, private studentService
     middleName: ['', [Validators.required]],
     lastName:['', [Validators.required]],
     program: ['', [Validators.required]],
-    department: 0,
-    yearLevel: 0,
+    department: 1,
+    yearLevel: 1,
     email: ['', [Validators.required, Validators.email]],
-    gender: '',
-    otherGender: '',    
+    gender: ['Male',[Validators.required]],
+    otherGender: ['',[Validators.required]],    
     photo: null,
   });
 

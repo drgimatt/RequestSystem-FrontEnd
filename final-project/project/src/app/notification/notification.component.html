@@ -39,6 +39,19 @@
       </div>
     </div>
     
+    <div class="card notification-card notification-reminder" *ngFor="let notification of notificationArray">
+      <div class="card-body">
+        <table>
+          <tr>{{notification.title}}</tr>
+          <tr>
+            <td style="width:70%"><div class="card-title">{{notification.message}}</div></td>
+            <td style="width:30%"><button class="btn btn-primary" (click)="onDismiss(notification.id)">Dismiss</button></td>
+          </tr>
+          <tr>{{notification.date}}</tr>
+        </table>
+      </div>
+    </div>
+
     <!-- <div class="card notification-card notification-danger">
       <div class="card-body">
          <table>

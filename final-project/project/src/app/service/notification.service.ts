@@ -30,8 +30,8 @@ export class NotificationService {
       return this.http.post<any>(this.requestsUrl + '/create-notification/', notification);
     }
 
-    public updateNotification(id: number, notification : FormData)  {
-      return this.http.post<any>(this.requestsUrl + '/update-notification/' + id.toString(), notification);
+    public updateNotification(id: number, notification : FormData )  {
+      return this.http.put<any>(this.requestsUrl + '/update-notification/' + id.toString(), notification);
     }
 
     public deleteRequest(id: number): Observable<void> {
