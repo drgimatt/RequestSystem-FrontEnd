@@ -270,8 +270,12 @@ openDialog(): void {
   dialogRef.afterClosed().subscribe((result)=> {
     if (this.action === 'confirm') {
       // Proceed with form submission
-      this.onSubmit();
-      this.action = "";
+      if(this.forEditing === false) {
+        this.onSubmit();
+      }
+      else {
+        this.onEdit();
+      }
     } else {
       console.log("Dialog canceled or closed without confirmation.");
       this.action = "";

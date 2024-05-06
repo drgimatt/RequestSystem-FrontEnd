@@ -241,7 +241,12 @@ onEdit(){
     dialogRef.afterClosed().subscribe((result)=> {
       if (this.action === 'confirm') {
         // Proceed with form submission
-        this.onSubmit();
+        if(this.forEditing === false) {
+          this.onUpload();
+        }
+        else {
+          this.onEdit();
+        }
         this.action = "";
       } else {
         console.log("Dialog canceled or closed without confirmation.");
