@@ -41,7 +41,7 @@ constructor(private departmentService: DepartmentService, private subjectService
     department: 1,
     email: ['', [Validators.required, Validators.email]],
     gender:['Male',[Validators.required]],
-    otherGender: ['',[Validators.required]],    
+    otherGender:'',  
     photo: null,
     status: ''
   })
