@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { StudentService } from '../service/student.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DepartmentService } from '../service/department.service';
@@ -9,6 +9,8 @@ import { DatePipe } from '@angular/common';
 import { AddDialogComponent } from '../add-dialog/add-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDialogService } from '../service/add-dialog.service';
+import { Employee } from '../model/employee';
+import { EmployeeService } from '../service/employee.service';
 
 @Component({
   selector: 'app-add-student',
@@ -19,16 +21,18 @@ export class AddStudentComponent implements OnInit{
   action:string;
   newStudent: FormGroup;
   student : Student;
-  selectedFile : File;
-  selectedFileName: string; 
+  studentArray: Student[] = [];
+  employeeArray: Employee[] = [];
   departmentList: Department[] = [];
   isDataLoaded: boolean = false;
+  isUserPresent: boolean = true;
   forEditing: boolean = false;
   showOtherTextbox: boolean = false;
+  counter: number = -1;
 
-constructor(private departmentService: DepartmentService, private studentService: StudentService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog, private shared:AddDialogService){
+constructor(private departmentService: DepartmentService, private employeeService: EmployeeService, private studentService: StudentService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog, private shared:AddDialogService){
   this.newStudent = this.fb.group({
-    studentID: ['', [Validators.required, Validators.maxLength(11), Validators.pattern('^[0-9]+$')]],
+    studentID: ['', [Validators.required, Validators.maxLength(11), Validators.pattern('^[0-9]+$'),this.isIDPresent()]],
     firstName: ['', [Validators.required]],
     middleName: ['', [Validators.required]],
     lastName:['', [Validators.required]],
@@ -38,7 +42,6 @@ constructor(private departmentService: DepartmentService, private studentService
     email: ['', [Validators.required, Validators.email]],
     gender: ['Male',[Validators.required]],
     otherGender: '',    
-    photo: null,
   });
 
 }
@@ -52,6 +55,25 @@ constructor(private departmentService: DepartmentService, private studentService
       this.isDataLoaded = false;
     }
   );
+
+    this.employeeService.getEmployees().subscribe((data: Employee[]) => {
+      this.employeeArray = data;
+      this.isDataLoaded = true;
+    },
+    (error) => {
+      this.isDataLoaded = false;
+    }
+  );
+
+    this.studentService.getStudents().subscribe((data: Student[]) => {
+      this.studentArray = data;
+      this.isDataLoaded = true;
+    },
+    (error) => {
+      this.isDataLoaded = false;
+    }
+  ); 
+
   this.route.params.forEach((params: Params) => {  
       if (params['id'] !== undefined) {
         this.forEditing = true;
@@ -67,6 +89,56 @@ constructor(private departmentService: DepartmentService, private studentService
   
   }
 
+  isIDPresent(){
+    return (control: FormControl) => {
+      const userID = control.value;
+      console.log('UserID: ', userID)
+      console.log('counter: ', this.counter)
+  
+      if (userID !== '' && this.isUserPresent === true && this.counter !== 2) {
+        return { conflictID: true };
+      }
+
+      this.counter++;
+      console.log('counter: ', this.counter)
+      // Return null if validation succeeds
+      return { conflictID: false };
+      
+    };
+  }
+
+  checkUserType(event: any) {
+    const userID = event.target.value;
+    this.isUserPresent = false;
+    // console.log('Input value changed: ', userID);
+
+    // Check student array
+    if (this.studentArray && this.studentArray.length !== 0) {
+        for (let i = 0; i < this.studentArray.length; i++) {
+            if (userID === this.studentArray[i].studentID) {
+                this.isUserPresent = true;
+                break;
+            }
+        }
+    }
+
+    // Check employee array if user is not found in student array
+    if (!this.isUserPresent && this.employeeArray && this.employeeArray.length !== 0) {
+        for (let i = 0; i < this.employeeArray.length; i++) {
+            if (userID === this.employeeArray[i].employeeID) {
+                this.isUserPresent = true;
+                break;
+            }
+        }
+    }
+
+    if(userID === ''){
+      this.isUserPresent = true;
+    }
+
+
+}  
+
   initializeForm() {
 
     this.newStudent = this.fb.group({
@@ -80,10 +152,8 @@ constructor(private departmentService: DepartmentService, private studentService
       email: this.student.email,
       gender: this.student.gender,
       otherGender: this.student.gender,    
-      photo: this.student.photo,
     });
-    this.selectedFile = this.createPhoto(this.student.photo)
-    this.selectedFileName = this.selectedFile.name
+    this.newStudent.get('studentID').disable()
     if(this.student.gender != "Male" && this.student.gender != "Female"){
       this.showOtherTextbox = true;
       this.newStudent.get('gender').setValue('Other')
@@ -102,11 +172,6 @@ constructor(private departmentService: DepartmentService, private studentService
     }
   }
 
-  createPhoto(photo: any){
-    const blob = new Blob([photo], { type: 'image/jpeg' });
-    const file = new File([blob], 'photo.jpg', { type: 'image/jpeg' });
-    return file;
-  }
 
   onGenderChange(event: any) {
     const selectedValue = event.target.value;
@@ -128,12 +193,6 @@ constructor(private departmentService: DepartmentService, private studentService
     return formattedDate;
   }
 
-onFileChanged(event){ 
-  this.selectedFile = event.target.files[0];
-  if (this.selectedFile) {
-    this.selectedFileName = this.selectedFile.name;
-  }
-}
 
 checkFields(): boolean {
   // Check form fields including email format
@@ -166,9 +225,7 @@ navigateToHome() {
 }
 
 onUpload(){
-  console.log(this.selectedFile);
   const student = new FormData();
-  student.append('photoBytes', this.selectedFile);
   student.append('studentID', this.newStudent.value.studentID);
   student.append('firstName', this.newStudent.value.firstName);
   student.append('middleName', this.newStudent.value.middleName);
@@ -202,8 +259,7 @@ onUpload(){
 onEdit(){
   const student = new FormData();
   student.append('myId', this.student.myId.toString());
-  student.append('photoBytes', this.selectedFile);
-  student.append('studentID', this.newStudent.value.studentID);
+  student.append('studentID', this.student.studentID);
   student.append('firstName', this.newStudent.value.firstName);
   student.append('middleName', this.newStudent.value.middleName);
   student.append('lastName', this.newStudent.value.lastName);

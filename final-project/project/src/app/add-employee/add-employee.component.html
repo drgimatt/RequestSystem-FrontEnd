@@ -38,48 +38,42 @@
                 <h2 class="text-center">{{ forEditing ? 'Update an Employee' : 'Add an Employee' }}</h2>
                 <form [formGroup]="newEmployee">
                     <div class="form-group">
-                        <label for="employeeID">Employee ID</label>
-                        <input type="text" formControlName="employeeID" class="form-control" id="employeeId" placeholder="Enter Employee ID" required pattern="[0-9]+">
+                        <label for="employeeID">Employee Number</label>
+                        <input type="text" formControlName="employeeID" class="form-control" id="employeeId" placeholder="Enter Employee ID" required pattern="[0-9]+" (input)="checkUserType($event)" (blur)="checkUserType($event)" (change)="checkUserType($event)">
                         <div *ngIf="newEmployee.get('employeeID').invalid && (newEmployee.get('employeeID').dirty || newEmployee.get('employeeID').touched)" class="text-danger">
                             <div *ngIf="newEmployee.get('employeeID').hasError('required')">Employee ID is required.</div>
                             <div *ngIf="newEmployee.get('employeeID').hasError('pattern')">Employee ID must be a number.</div>
+                            <div *ngIf="this.counter !== 2 && this.isUserPresent === true && !newEmployee.get('employeeID').hasError('required')">Provided Number already exists in the Database!</div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="!isUserPresent">
                         <label for="firstName">First Name</label>
                         <input type="text" formControlName="firstName" class="form-control" id="firstname" placeholder="Enter First name" required>
                         <div *ngIf="newEmployee.get('firstName').invalid && (newEmployee.get('firstName').dirty || newEmployee.get('firstName').touched)" class="text-danger">First Name is required.</div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="!isUserPresent">
                         <label for="middlename">Middle Name</label>
                         <input type="text" formControlName="middleName" class="form-control" id="middlename" placeholder="Enter Middle name">
                         <div *ngIf="newEmployee.get('middleName').invalid && (newEmployee.get('middleName').dirty || newEmployee.get('middleName').touched)" class="text-danger">Middle Name is required.</div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="!isUserPresent">
                         <label for="lastname">Last Name</label>
                         <input type="text" formControlName="lastName" class="form-control" id="lastname" placeholder="Enter Last name" required>
                         <div *ngIf="newEmployee.get('lastName').invalid && (newEmployee.get('lastName').dirty || newEmployee.get('lastName').touched)" class="text-danger">Last Name is required.</div>
                     </div>
-                    <div class="form-group">
-                        <label for="photo">Photo</label>
-                        <div class="custom-file">
-                            <input type="file" (change)="onFileChanged($event)" class="custom-file-input" id="photo" accept="image/*">
-                            <label class="custom-file-label text-left text-truncate" for="photo">{{ selectedFileName || 'Choose file' }}</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="!isUserPresent">
                         <label for="position">Position</label>
                         <input type="text" formControlName="position" class="form-control" id="position" placeholder="Enter position" required>
                         <div *ngIf="newEmployee.get('position').invalid && (newEmployee.get('position').dirty || newEmployee.get('position').touched)" class="text-danger">Position is required.</div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="!isUserPresent">
                         <label for="department">Department</label>
                         <select formControlName="department" class="form-control form-select" id="department" required *ngIf="isDataLoaded">
                             <option *ngFor="let department of departmentList" value="{{department.id}}">{{department.name}}</option>
                         </select>
                         <div *ngIf="newEmployee.get('department').invalid && (newEmployee.get('department').dirty || newEmployee.get('department').touched)" class="text-danger">Department is required.</div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="!isUserPresent">
                         <label for="email">Email</label>
                         <input type="email" formControlName="email" class="form-control" id="email" placeholder="Enter email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
                         <div *ngIf="newEmployee.get('email').invalid && (newEmployee.get('email').dirty || newEmployee.get('email').touched)" class="text-danger">
@@ -87,7 +81,7 @@
                             <div *ngIf="newEmployee.get('email').hasError('email')">Invalid email format.</div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="!isUserPresent">
                         <label for="gender">Gender</label>
                         <select formControlName="gender" class="form-control" id="gender" required (change)="onGenderChange($event)">
                             <option value="Male">Male</option>
@@ -96,12 +90,12 @@
                         </select>
                         <div *ngIf="newEmployee.get('gender').invalid && (newEmployee.get('gender').dirty || newEmployee.get('gender').touched)" class="text-danger">Gender is required.</div>
                     </div>
-                    <div class="form-group" *ngIf="showOtherTextbox">
+                    <div class="form-group" *ngIf="showOtherTextbox && !isUserPresent">
                         <label for="otherGender">Other Gender</label>
                         <input type="text" formControlName="otherGender" class="form-control" id="otherGender" placeholder="Enter other gender">
                         <div *ngIf="newEmployee.get('otherGender').invalid && (newEmployee.get('otherGender').dirty || newEmployee.get('otherGender').touched)" class="text-danger">Other Gender is required.</div>
                     </div>
-                    <button (click)="openDialog()" class="btn bg-primary" style="color:#fff;">{{ forEditing ? 'Update Employee' : 'Add Employee' }}</button>
+                    <button *ngIf="!isUserPresent" (click)="openDialog()" class="btn bg-primary" style="color:#fff;">{{ forEditing ? 'Update Employee' : 'Add Employee' }}</button>
                 </form>
             </div>
         </div>

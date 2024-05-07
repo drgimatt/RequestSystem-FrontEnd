@@ -31,7 +31,6 @@ export class FinalDashComponent implements OnInit{
   pendingCount: Number = 0
   rejectedCount: Number = 0
   user: any
-  file: File
 
   constructor(private datePipe: DatePipe,private requestService: RequestService, private employeeService: EmployeeService, private router: Router, private dataService: DataService, private fb: FormBuilder, private dialog: MatDialog) {
     this.filterTable = this.fb.group({
@@ -112,12 +111,6 @@ export class FinalDashComponent implements OnInit{
     
   }
 
-  createPhoto(photo: any){
-    const blob = new Blob([photo], { type: 'image/jpeg' });
-    const file = new File([blob], 'photo.jpg', { type: 'image/jpeg' });
-    return file;
-  }
-
   clearSearch() {
     const inputField = document.getElementById('searchInput') as HTMLInputElement;
     if (inputField) {
@@ -137,7 +130,6 @@ formatDate(date: Date): string {
   applyStatus(event: any){
     const selectedValue = event.target.value;
     const user = new FormData();
-    this.file = this.createPhoto(this.emp.photo)
     user.append('myId', this.emp.myId.toString());
     user.append('employeeID', this.emp.employeeID)
     user.append('firstName', this.emp.firstName)
@@ -149,7 +141,6 @@ formatDate(date: Date): string {
     user.append('gender', this.emp.gender)
     user.append('dateAdded', this.formatDate(this.emp.dateAdded))
     user.append('status', selectedValue)
-    user.append('photoBytes', this.file);
     this.employeeService.updateEmployee(this.emp.myId, user).subscribe();
   }
 

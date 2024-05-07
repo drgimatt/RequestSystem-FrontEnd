@@ -11,6 +11,5 @@ export class Student {
     yearLevel: number = 0;
     email: string = '';
     gender: string = '';    
-    photo: File;
     dateAdded: Date = new Date();
 }

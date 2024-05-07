@@ -11,6 +11,8 @@ import { Employee } from '../model/employee';
 import { AddDialogComponent } from '../add-dialog/add-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDialogService } from '../service/add-dialog.service';
+import { Student } from '../model/student';
+import { StudentService } from '../service/student.service';
 
 
 @Component({
@@ -22,18 +24,20 @@ export class AddEmployeeComponent implements OnInit{
   action:string;
   newEmployee: FormGroup;
   employee: Employee
-  selectedFile : File;
-  selectedFileName: string; 
   departmentList: Department[] = [];
   subjectsList: Subjects[] = [];
+  studentArray: Student[] = [];
+  employeeArray: Employee[] = [];
   isDataLoaded: boolean = false;
   subjects = new FormControl('');
   showOtherTextbox: boolean = false;
   forEditing: boolean = false;
+  isUserPresent: boolean = true;
+  counter: number = -1;
 
-constructor(private departmentService: DepartmentService, private subjectService: SubjectsService, private employeeService: EmployeeService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog, private shared:AddDialogService){
+constructor(private departmentService: DepartmentService, private subjectService: SubjectsService, private employeeService: EmployeeService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog, private shared:AddDialogService, private studentService: StudentService){
   this.newEmployee = this.fb.group({
-    employeeID: ['', [Validators.required, Validators.maxLength(11), Validators.pattern('^[0-9]+$')]],
+    employeeID: ['', [Validators.required, Validators.maxLength(11), Validators.pattern('^[0-9]+$'), this.isIDPresent()]],
     firstName: ['',[Validators.required]],
     middleName: ['',[Validators.required]],
     lastName: ['',[Validators.required]],
@@ -42,7 +46,6 @@ constructor(private departmentService: DepartmentService, private subjectService
     email: ['', [Validators.required, Validators.email]],
     gender:['Male',[Validators.required]],
     otherGender:'',  
-    photo: null,
     status: ''
   })
 
@@ -67,6 +70,24 @@ constructor(private departmentService: DepartmentService, private subjectService
     }
   );
 
+    this.employeeService.getEmployees().subscribe((data: Employee[]) => {
+      this.employeeArray = data;
+      this.isDataLoaded = true;
+    },
+    (error) => {
+      this.isDataLoaded = false;
+    }
+  );
+
+    this.studentService.getStudents().subscribe((data: Student[]) => {
+      this.studentArray = data;
+      this.isDataLoaded = true;
+    },
+    (error) => {
+      this.isDataLoaded = false;
+    }
+  );  
+
     this.route.params.forEach((params: Params) => {  
       if (params['id'] !== undefined) {
         this.forEditing = true;
@@ -81,6 +102,58 @@ constructor(private departmentService: DepartmentService, private subjectService
   }); 
 
   }
+
+  isIDPresent(){
+    return (control: FormControl) => {
+      const userID = control.value;
+      console.log('UserID: ', userID)
+      console.log('counter: ', this.counter)
+
+  
+      if (userID !== '' && this.isUserPresent === true && this.counter !== 2) {
+        return { conflictID: true };
+      }
+
+      this.counter++;
+      console.log('counter: ', this.counter)
+      // Return null if validation succeeds
+      return { conflictID: false };
+      
+    };
+  }
+
+  checkUserType(event: any) {
+    const userID = event.target.value;
+    this.isUserPresent = false;
+    // console.log('Input value changed: ', userID);
+
+    // Check student array
+    if (this.studentArray && this.studentArray.length !== 0) {
+        for (let i = 0; i < this.studentArray.length; i++) {
+            if (userID === this.studentArray[i].studentID) {
+                this.isUserPresent = true;
+                break;
+            }
+        }
+    }
+
+    // Check employee array if user is not found in student array
+    if (!this.isUserPresent && this.employeeArray && this.employeeArray.length !== 0) {
+        for (let i = 0; i < this.employeeArray.length; i++) {
+            if (userID === this.employeeArray[i].employeeID) {
+                this.isUserPresent = true;
+                break;
+            }
+        }
+    }
+
+    if(userID === ''){
+      this.isUserPresent = true;
+    }
+
+
+}
+
 
   initializeForm() {
 
@@ -108,12 +181,9 @@ constructor(private departmentService: DepartmentService, private subjectService
       email: [this.employee.email, [Validators.required, Validators.email]],
       gender:[this.employee.gender,[Validators.required]],
       otherGender: [this.employee.gender,[Validators.required]],    
-      photo: null,
       status: this.employee.status
     })
-
-    this.selectedFile = this.createPhoto(this.employee.photo)
-    this.selectedFileName = this.selectedFile.name
+    this.newEmployee.get('employeeID').disable()
     if(this.employee.gender != "Male" && this.employee.gender != "Female"){
       this.showOtherTextbox = true;
       this.newEmployee.get('gender').setValue('Other')
@@ -122,11 +192,6 @@ constructor(private departmentService: DepartmentService, private subjectService
 
   }
 
-  createPhoto(photo: any){
-    const blob = new Blob([photo], { type: 'image/jpeg' });
-    const file = new File([blob], 'photo.jpg', { type: 'image/jpeg' });
-    return file;
-  }
 
   onSubmit() {
     if (this.newEmployee.valid && this.forEditing === false) {
@@ -140,12 +205,6 @@ constructor(private departmentService: DepartmentService, private subjectService
     }
   }
 
-onFileChanged(event){ 
-  this.selectedFile = event.target.files[0];
-  if (this.selectedFile) {
-    this.selectedFileName = this.selectedFile.name;
-  }
-}
 
 checkFields(): boolean {
   // Check form fields including email format
@@ -194,9 +253,7 @@ getCurrentDate(): string {
 }
 
 onUpload(){
-  console.log(this.selectedFile);
   const employee = new FormData();
-  employee.append('photoBytes', this.selectedFile);
   employee.append('employeeID', this.newEmployee.value.employeeID);
   employee.append('firstName', this.newEmployee.value.firstName);
   employee.append('middleName', this.newEmployee.value.middleName);
@@ -228,11 +285,9 @@ onUpload(){
 }
 
 onEdit(){
-  console.log(this.selectedFile);
   const employee = new FormData();
   employee.append('myId', this.employee.myId.toString())
-  employee.append('photoBytes', this.selectedFile);
-  employee.append('employeeID', this.newEmployee.value.employeeID);
+  employee.append('employeeID', this.employee.employeeID);
   employee.append('firstName', this.newEmployee.value.firstName);
   employee.append('middleName', this.newEmployee.value.middleName);
   employee.append('lastName', this.newEmployee.value.lastName);

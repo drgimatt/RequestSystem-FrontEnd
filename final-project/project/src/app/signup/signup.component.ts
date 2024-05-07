@@ -32,7 +32,7 @@ export class SignupComponent implements OnInit {
     private router: Router
   ) {
     this.newAccount = this.fb.group({
-      userid: ['', [Validators.required, Validators.minLength(10)]],
+      userid: ['', [Validators.required, Validators.maxLength(11), Validators.pattern('^[0-9]+$'),]],
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/[!@#$%^&*(),.?=":{}|<>]/)]],
       phoneNumber: ['', [Validators.required, Validators.minLength(11), Validators.pattern('[0-9]+')]],
