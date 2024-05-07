@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Renderer2  } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { Account } from '../model/account';
@@ -17,7 +17,7 @@ form: FormGroup = this.fb.group({
   message: ''
 });
 
-constructor(private router: Router, private dataService: DataService, private fb: FormBuilder) { }
+constructor(private router: Router, private dataService: DataService, private fb: FormBuilder, private renderer: Renderer2) { }
 
 account : Account;
 
@@ -48,5 +48,22 @@ account : Account;
       // Email failed to send
       alert('An error occurred while sending your message. Please try again later.');
     }
+  }
+  ngOnInit(): void {
+    this.loadBootstrapCSS();
+    this.loadBootstrapJS();
+    }
+
+  loadBootstrapCSS() {
+    const link = this.renderer.createElement('link');
+    this.renderer.setAttribute(link, 'href', 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css');
+    this.renderer.setAttribute(link, 'rel', 'stylesheet');
+    document.head.appendChild(link);
+  }
+
+  loadBootstrapJS() {
+    const script = this.renderer.createElement('script');
+    this.renderer.setAttribute(script, 'src', 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js');
+    document.body.appendChild(script);
   }
 }

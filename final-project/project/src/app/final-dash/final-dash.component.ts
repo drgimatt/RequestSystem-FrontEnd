@@ -6,7 +6,6 @@ import { DataService } from '../data.service';
 import { RequestService } from '../service/request.service';
 import { Employee } from '../model/employee';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Student } from '../model/student';
 import { EmployeeService } from '../service/employee.service';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
@@ -55,6 +54,12 @@ export class FinalDashComponent implements OnInit{
     
     //this.accountCheck();
     this.prepareRelevantRequests()
+  }
+
+  getNotifications(){
+    this.notificationService.getUserNotifications(this.account.userID).subscribe(data => {
+      this.notificationArray = data;
+    });
   }
 
   prepareRelevantRequests(){
