@@ -250,7 +250,6 @@ onUpload(){
     },
     (error) => {
       console.log(student);
-      console.log(student.get('photo'))
       console.error('Error adding student:', error);
     }
   );    
@@ -283,7 +282,6 @@ onEdit(){
     },
     (error) => {
       console.log(student);
-      console.log(student.get('photoBytes'))
       console.error('Error updating student:', error);
     }
   );   
