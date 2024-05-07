@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AccountService } from '../service/account.service';
 import { Router } from '@angular/router';
@@ -20,16 +20,31 @@ export class StudentLoginComponent implements OnInit{
   account : Account;
   errorMessage: string; 
   studentArray: Student[];
-  constructor(private employeeService: EmployeeService, private studentService: StudentService, private accountService: AccountService, private fb: FormBuilder, private router: Router, private dataService: DataService) {
+  constructor(private employeeService: EmployeeService, private studentService: StudentService, private accountService: AccountService, private fb: FormBuilder, private router: Router, private dataService: DataService, private renderer: Renderer2) {
     this.accountCheck = this.fb.group({
       username: '',
       password: '',
     });
   }
   ngOnInit(): void {
+    this.loadBootstrapCSS();
+    this.loadBootstrapJS();
     this.studentService.getStudents().subscribe((data: Student[]) => {
       this.studentArray = data;
     });
+  }
+
+  loadBootstrapCSS() {
+    const link = this.renderer.createElement('link');
+    this.renderer.setAttribute(link, 'href', 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css');
+    this.renderer.setAttribute(link, 'rel', 'stylesheet');
+    document.head.appendChild(link);
+  }
+
+  loadBootstrapJS() {
+    const script = this.renderer.createElement('script');
+    this.renderer.setAttribute(script, 'src', 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js');
+    document.body.appendChild(script);
   }
 
   checkUser(){
