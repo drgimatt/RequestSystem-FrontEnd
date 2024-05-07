@@ -297,9 +297,22 @@
                     </div>
 
                     <!-- Content Row -->
-                    
+                    <div class="card shadow mb-4" *ngIf="!isDataLoaded && !isDataEmpty">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary" *ngIf="!isLoadingFailed">Loading...</h6>
+                            <h6 class="m-0 font-weight-bold text-primary" *ngIf="isLoadingFailed">Connection to database has failed.</h6>
+
+                        </div>                    
+                    </div>
+                    <div class="card shadow mb-4" *ngIf="isDataLoaded && isDataEmpty">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary" *ngIf="account.role.roleName === 'ADMINISTRATION'">There are no requests in the table. Check back later.</h6>
+                            <h6 class="m-0 font-weight-bold text-primary" *ngIf="account.role.roleName === 'PROFESSOR'">There are no currently assigned requests. Check back later.</h6>
+                            <h6 class="m-0 font-weight-bold text-primary" *ngIf="account.role.roleName === 'STUDENT'">There are no requests present. Create a request first.</h6>
+                        </div>                    
+                    </div>
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
+                    <div class="card shadow mb-4" *ngIf="isDataLoaded && !isDataEmpty">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">List of Course / Program Advising Requests</h6>
                         </div>
@@ -357,7 +370,7 @@
                                     </div>
                                     
                                 </div>
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" *ngIf="isDataLoaded">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
                                     
                                     <thead>
                                         <tr>
