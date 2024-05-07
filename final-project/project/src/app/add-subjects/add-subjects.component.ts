@@ -170,6 +170,7 @@ export class AddSubjectsComponent {
     );
   }
 
+  // for the dialog box
   openDialog(): void {
     const dialogRef = this.dialog.open(AddDialogComponent, {
       width: '400px',
