@@ -56,6 +56,12 @@ export class FinalDashComponent implements OnInit{
     this.prepareRelevantRequests()
   }
 
+  getNotifications(){
+    this.notificationService.getUserNotifications(this.account.userID).subscribe(data => {
+      this.notificationArray = data;
+    });
+  }
+
   prepareRelevantRequests(){
     if(this.account.role.roleName === 'ADMINISTRATION') {
       this.employeeService.getEmployee(this.user.myId).subscribe ((data: Employee) => {
