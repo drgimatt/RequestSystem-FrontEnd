@@ -55,16 +55,16 @@ export class StudentFormComponent implements OnInit {
               private subjectsService: SubjectsService, private formTypeService: FormtypeService, private notificationService: NotificationService,
               private priorityService: PriorityService, private statusService: StatusService, private route: ActivatedRoute) {
                 this.studentForm = this.fb.group({
-                  student: '',
-                  title: '',
+                  student:'',
+                  title: ['', [Validators.required]],
                   employees: '',
                   dateCreated: this.getCurrentDate(),
                   dateModified: this.getCurrentDate(),
                   dateResolved: '',
-                  advisingType: '',
+                  advisingType: ['', [Validators.required]],
                   otherAdvisingType: '',
                   subjects: '',
-                  description: '',
+                  description: ['', [Validators.required]],
                   actionTaken: '',
                   phoneNumber: '',
                   formType: '',
@@ -296,8 +296,8 @@ private getDateStamp() {
       (response) => {
         console.log('Request added:', response);
         console.log(request);
-        //alert('Request has been submitted successfully!');
-        //this.onCancel();
+        alert('Request has been submitted successfully!');
+        this.onCancel();
       },
       (error) => {
         console.log(request);
