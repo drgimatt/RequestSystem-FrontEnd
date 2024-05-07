@@ -22,6 +22,8 @@ export class FinalDashComponent implements OnInit{
   SpecificRequest: Request;
   filteredRequests: Request[] = [];
   isDataLoaded: boolean = false;
+  isDataEmpty: boolean = false;
+  isLoadingFailed: boolean = false;
   account: Account;
   emp: Employee;
   filterTable: FormGroup;
@@ -65,31 +67,47 @@ export class FinalDashComponent implements OnInit{
       this.rejectedCount = this.requests.filter(request => request.status.name === "REJECTED").length
       this.filteredRequests = this.requests
       this.isDataLoaded = true;
+      if(this.requests.length === 0) {
+        this.isDataEmpty = true
+      }
+    },(error) => {
+      this.isLoadingFailed = true;
     });
-  } else if (this.account.role.roleName === 'PROFESSOR'){
-      this.employeeService.getEmployee(this.user.myId).subscribe ((data: Employee) => {
-        this.emp = data
-        this.profStatus.get('statusView')?.setValue(this.emp.status);
-      })
-
-      this.requestService.getProfessorRequest(this.user.employeeID).subscribe((data: Request[]) => {
-      this.requests = data
-      this.completeCount = this.requests.filter(request => request.status.name === "COMPLETED").length
-      this.pendingCount = this.requests.filter(request => request.status.name === "PENDING").length
-      this.rejectedCount = this.requests.filter(request => request.status.name === "REJECTED").length
-      this.filteredRequests = this.requests
-      this.isDataLoaded = true;
-    });
-    }
-    else if (this.account.role.roleName === 'STUDENT'){
+    } else if (this.account.role.roleName === 'PROFESSOR'){
+        this.employeeService.getEmployee(this.user.myId).subscribe ((data: Employee) => {
+          this.emp = data
+          this.profStatus.get('statusView')?.setValue(this.emp.status);
+        })
+        this.requestService.getProfessorRequest(this.user.employeeID).subscribe((data: Request[]) => {
+        this.requests = data
+        this.completeCount = this.requests.filter(request => request.status.name === "COMPLETED").length
+        this.pendingCount = this.requests.filter(request => request.status.name === "PENDING").length
+        this.rejectedCount = this.requests.filter(request => request.status.name === "REJECTED").length
+        this.filteredRequests = this.requests
+        this.isDataLoaded = true;
+        if(this.requests.length === 0) {
+          this.isDataEmpty = true
+        }
+      },(error) => {
+        this.isLoadingFailed = true;
+      });
+    } else if (this.account.role.roleName === 'STUDENT'){
       this.requestService.getRequests().subscribe((data: Request[]) => {
       this.requests = data.filter(request => request.student.studentID === this.user.studentID);
       this.completeCount = this.requests.filter(request => request.status.name === "COMPLETED").length
       this.pendingCount = this.requests.filter(request => request.status.name === "PENDING").length
       this.rejectedCount = this.requests.filter(request => request.status.name === "REJECTED").length
       this.filteredRequests = this.requests
-      this.isDataLoaded = true;});
+      this.isDataLoaded = true;
+      if(this.requests.length === 0) {
+        this.isDataEmpty = true
+      }
+    },(error) => {
+      this.isLoadingFailed = true;
+    });
+      
     }
+
     
   }
 
