@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Account } from '../model/account';
 import { Router } from '@angular/router';
@@ -7,16 +7,34 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  styleUrls: ['./index.component.css',]
 })
-export class IndexComponent {
+export class IndexComponent implements OnInit {
   account : Account;
-  constructor(config: NgbCarouselConfig, private router: Router, private dataService: DataService) {
+  isNavbarCollapsed: boolean = false;
+  constructor(config: NgbCarouselConfig, private router: Router, private dataService: DataService, private renderer: Renderer2) {
     config.interval = 2000;
     config.wrap = true;
     config.keyboard = false;
     config.pauseOnHover = true;
   }
+  ngOnInit(): void {
+    this.loadBootstrapCSS();
+    this.loadBootstrapJS();
+    }
+
+    loadBootstrapCSS() {
+      const link = this.renderer.createElement('link');
+      this.renderer.setAttribute(link, 'href', 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css');
+      this.renderer.setAttribute(link, 'rel', 'stylesheet');
+      document.head.appendChild(link);
+    }
+  
+    loadBootstrapJS() {
+      const script = this.renderer.createElement('script');
+      this.renderer.setAttribute(script, 'src', 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js');
+      document.body.appendChild(script);
+    }
 
   navigateToHome(){
     this.account = this.dataService.getDataPersistent('account');
