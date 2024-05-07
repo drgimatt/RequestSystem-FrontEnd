@@ -217,12 +217,25 @@
 <div class="topbar-divider d-none d-sm-block" *ngIf="account.role.roleName === 'ADMINISTRATION'"></div>
 
 <!-- Nav Item - User Information -->
-<li class="nav-item dropdown no-arrow">
+<li class="nav-item dropdown no-arrow" style="display: flex;">
     <a class="nav-link" aria-expanded="false">
         <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.firstName + " " + user.lastName}}</span>
         
     </a>
-
+    <div class="nav-link" style="margin-top: 5px;" *ngIf="account.role.roleName === 'PROFESSOR' || account.role.roleName === 'ADMINISTRATION'">
+        <!-- for professor's only -->
+        <div>
+            <label for="dataTable_length">Status</label>
+        </div>
+        <div class="col-md-2" [formGroup] = "profStatus">
+            <select name="dataTable_length" id="statusView" aria-controls="dataTable" class="custom-select form-control mb-2" formControlName="statusView" (change)="applyStatus($event)" style="width: 150px;">
+                <option [disabled] = "true" >Select status</option>
+                <option value = "Active">Active</option>
+                <option value = "Inactive">Inactive</option>
+                <option value = "Away">Away</option>
+            </select>
+        </div>
+    </div>
 </li>
 
 </ul>
@@ -332,7 +345,7 @@
                                                 </select>
                                             </div>
                                             <!-- for professor's only -->
-                                            <div class="col-md-1" *ngIf="account.role.roleName === 'PROFESSOR' || account.role.roleName === 'ADMINISTRATION' ">
+                                            <!-- <div class="col-md-1" *ngIf="account.role.roleName === 'PROFESSOR' || account.role.roleName === 'ADMINISTRATION' ">
                                                 <label for="dataTable_length">Status</label>
                                             </div>
                                             <div class="col-md-2" [formGroup] = "profStatus" *ngIf="account.role.roleName === 'PROFESSOR' || account.role.roleName === 'ADMINISTRATION' ">
@@ -342,7 +355,7 @@
                                                     <option value = "Inactive">Inactive</option>
                                                     <option value = "Away">Away</option>
                                                 </select>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6">
