@@ -169,7 +169,7 @@
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <img src="/assets/bell.png" alt="Bell Icon">
         <!-- Counter - Alerts -->
-        <span class="badge badge-danger badge-counter">3+</span>
+        <span class="badge badge-danger badge-counter" *ngIf="this.notificationArray.length !== 0">{{this.notificationArray.length}}</span>
     </a>
     <!-- Dropdown - Alerts 
     <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -313,7 +313,7 @@
                     <div class="card shadow mb-4" *ngIf="!isDataLoaded && !isDataEmpty">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary" *ngIf="!isLoadingFailed">Loading...</h6>
-                            <h6 class="m-0 font-weight-bold text-primary" *ngIf="isLoadingFailed">Connection to database has failed.</h6>
+                            <h6 class="m-0 font-weight-bold text-primary" *ngIf="isLoadingFailed">Connection to database has failed. Please reload the page to try again.</h6>
 
                         </div>                    
                     </div>

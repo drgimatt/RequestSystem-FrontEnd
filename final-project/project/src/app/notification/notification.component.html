@@ -25,7 +25,8 @@
 <!------Table Ng Notifications--->
 <main>
   <div class="row notification-container">
-    <h1 class="text-center">My Notifications</h1> <br>
+    <h1 class="text-center"*ngIf="this.notificationArray.length !== 0">My Notifications</h1> <br>
+    <h1 class="text-center" *ngIf="this.notificationArray.length === 0">You have no notifications..</h1> <br>
 
     <!-- <div class="card notification-card notification-reminder">
       <div class="card-body">
@@ -38,6 +39,8 @@
         </table>
       </div>
     </div> -->
+
+
     
     <div class="card notification-card notification-reminder" *ngFor="let notification of notificationArray">
       <div class="card-body">

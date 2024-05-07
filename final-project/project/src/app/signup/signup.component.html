@@ -72,7 +72,7 @@
                                 <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control">
                                 <div *ngIf="newAccount.get('confirmPassword').invalid && (newAccount.get('confirmPassword').dirty || newAccount.get('confirmPassword').touched)" class="text-danger">
                                     <div *ngIf="newAccount.get('confirmPassword').hasError('required')" class="text-danger">Confirm Password is required.</div>
-                                    <div *ngIf="newAccount.get('confirmPassword').hasError('passwordMatch')" class="text-danger">Passwords do not match.</div>
+                                    <div *ngIf="newAccount.get('confirmPassword').value() !== newAccount.get('password').value()">Passwords do not match.</div>
                                 </div>
                             </div>                                                   
                           

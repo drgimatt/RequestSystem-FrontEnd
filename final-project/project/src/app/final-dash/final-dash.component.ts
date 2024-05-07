@@ -11,6 +11,8 @@ import { EmployeeService } from '../service/employee.service';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { SignoutDialogComponent } from '../signout-dialog/signout-dialog.component';
+import { Notification } from '../model/notification';
+import { NotificationService } from '../service/notification.service';
 
 @Component({
   selector: 'app-final-dash',
@@ -21,6 +23,7 @@ export class FinalDashComponent implements OnInit{
   requests: Request[] = [];
   SpecificRequest: Request;
   filteredRequests: Request[] = [];
+  notificationArray: Notification[] = [];
   isDataLoaded: boolean = false;
   isDataEmpty: boolean = false;
   isLoadingFailed: boolean = false;
@@ -34,7 +37,7 @@ export class FinalDashComponent implements OnInit{
   rejectedCount: Number = 0
   user: any
 
-  constructor(private datePipe: DatePipe,private requestService: RequestService, private employeeService: EmployeeService, private router: Router, private dataService: DataService, private fb: FormBuilder, private dialog: MatDialog) {
+  constructor(private datePipe: DatePipe, private requestService: RequestService, private notificationService: NotificationService, private employeeService: EmployeeService, private router: Router, private dataService: DataService, private fb: FormBuilder, private dialog: MatDialog) {
     this.filterTable = this.fb.group({
       tableView : ''
     });
@@ -60,6 +63,9 @@ export class FinalDashComponent implements OnInit{
         this.emp = data
         this.profStatus.get('statusView')?.setValue(this.emp.status);
       })
+      this.notificationService.getUserNotifications(this.account.userID).subscribe(data => {
+        this.notificationArray = data;
+      });
       this.requestService.getRequests().subscribe((data: Request[]) => {
       this.requests = data
       this.completeCount = this.requests.filter(request => request.status.name === "COMPLETED").length
